@@ -1,27 +1,18 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export * from './shared';
 export {
-  PetResource,
-  type Category,
-  type Pet,
-  type PetFindByStatusResponse,
-  type PetFindByTagsResponse,
-  type PetUploadImageResponse,
-  type PetCreateParams,
-  type PetUpdateParams,
-  type PetFindByStatusParams,
-  type PetFindByTagsParams,
-  type PetUpdateByIDParams,
-  type PetUploadImageParams,
-} from './pet';
-export { Store, type StoreListInventoryResponse } from './store/store';
+  Message,
+  type MessageContent,
+  type MessageRetrieveResponse,
+  type MessageListResponse,
+  type MessageDeleteResponse,
+  type MessageListParams,
+} from './message';
+export { ModifyGroup, type ModifyGroupCreateResponse, type ModifyGroupCreateParams } from './modify-group';
+export { SendGroupMessage, type SendGroupMessageSendParams } from './send-group-message';
+export { SendMessage, type MessageResponse, type SendMessageSendParams } from './send-message';
 export {
-  UserResource,
-  type User,
-  type UserLoginResponse,
-  type UserCreateParams,
-  type UserUpdateParams,
-  type UserCreateWithListParams,
-  type UserLoginParams,
-} from './user';
+  UploadMediaObject,
+  type UploadMediaObjectCreateResponse,
+  type UploadMediaObjectCreateParams,
+} from './upload-media-object';

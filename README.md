@@ -26,12 +26,16 @@ The full API of this library can be found in [api.md](api.md).
 import SendblueAPI from 'sendblue-api';
 
 const client = new SendblueAPI({
-  apiKey: process.env['PETSTORE_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted
 });
 
-const order = await client.store.order.create({ petId: 1, quantity: 1, status: 'placed' });
+const messageResponse = await client.sendMessage.send({
+  content: 'REPLACE_ME',
+  from_number: 'REPLACE_ME',
+  number: 'REPLACE_ME',
+});
 
-console.log(order.id);
+console.log(messageResponse.account_email);
 ```
 
 ### Request & Response types
@@ -43,10 +47,15 @@ This library includes TypeScript definitions for all request params and response
 import SendblueAPI from 'sendblue-api';
 
 const client = new SendblueAPI({
-  apiKey: process.env['PETSTORE_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted
 });
 
-const response: SendblueAPI.StoreListInventoryResponse = await client.store.listInventory();
+const params: SendblueAPI.SendMessageSendParams = {
+  content: 'REPLACE_ME',
+  from_number: 'REPLACE_ME',
+  number: 'REPLACE_ME',
+};
+const messageResponse: SendblueAPI.MessageResponse = await client.sendMessage.send(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -59,15 +68,17 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.store.listInventory().catch(async (err) => {
-  if (err instanceof SendblueAPI.APIError) {
-    console.log(err.status); // 400
-    console.log(err.name); // BadRequestError
-    console.log(err.headers); // {server: 'nginx', ...}
-  } else {
-    throw err;
-  }
-});
+const messageResponse = await client.sendMessage
+  .send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' })
+  .catch(async (err) => {
+    if (err instanceof SendblueAPI.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 ```
 
 Error codes are as follows:
@@ -99,7 +110,7 @@ const client = new SendblueAPI({
 });
 
 // Or, configure per-request:
-await client.store.listInventory({
+await client.sendMessage.send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' }, {
   maxRetries: 5,
 });
 ```
@@ -116,7 +127,7 @@ const client = new SendblueAPI({
 });
 
 // Override per-request:
-await client.store.listInventory({
+await client.sendMessage.send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -139,13 +150,17 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new SendblueAPI();
 
-const response = await client.store.listInventory().asResponse();
+const response = await client.sendMessage
+  .send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.store.listInventory().withResponse();
+const { data: messageResponse, response: raw } = await client.sendMessage
+  .send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response);
+console.log(messageResponse.account_email);
 ```
 
 ### Logging
@@ -225,7 +240,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.store.order.create({
+client.sendMessage.send({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',

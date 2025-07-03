@@ -11,36 +11,27 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
-import * as qs from './internal/qs';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
-  Category,
-  Pet,
-  PetCreateParams,
-  PetFindByStatusParams,
-  PetFindByStatusResponse,
-  PetFindByTagsParams,
-  PetFindByTagsResponse,
-  PetResource,
-  PetUpdateByIDParams,
-  PetUpdateParams,
-  PetUploadImageParams,
-  PetUploadImageResponse,
-} from './resources/pet';
+  Message,
+  MessageContent,
+  MessageDeleteResponse,
+  MessageListParams,
+  MessageListResponse,
+  MessageRetrieveResponse,
+} from './resources/message';
+import { ModifyGroup, ModifyGroupCreateParams, ModifyGroupCreateResponse } from './resources/modify-group';
+import { SendGroupMessage, SendGroupMessageSendParams } from './resources/send-group-message';
+import { MessageResponse, SendMessage, SendMessageSendParams } from './resources/send-message';
 import {
-  User,
-  UserCreateParams,
-  UserCreateWithListParams,
-  UserLoginParams,
-  UserLoginResponse,
-  UserResource,
-  UserUpdateParams,
-} from './resources/user';
-import { Store, StoreListInventoryResponse } from './resources/store/store';
+  UploadMediaObject,
+  UploadMediaObjectCreateParams,
+  UploadMediaObjectCreateResponse,
+} from './resources/upload-media-object';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -56,9 +47,14 @@ import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['PETSTORE_API_KEY'].
+   * API Key ID
    */
   apiKey?: string | undefined;
+
+  /**
+   * API Secret Key
+   */
+  apiSecret?: string | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -134,6 +130,7 @@ export interface ClientOptions {
  */
 export class SendblueAPI {
   apiKey: string;
+  apiSecret: string;
 
   baseURL: string;
   maxRetries: number;
@@ -150,8 +147,9 @@ export class SendblueAPI {
   /**
    * API Client for interfacing with the Sendblue API API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['PETSTORE_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['SENDBLUE_API_BASE_URL'] ?? https://petstore3.swagger.io/api/v3] - Override the default base URL for the API.
+   * @param {string | undefined} [opts.apiKey=process.env['SENDBLUE_API_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiSecret=process.env['SENDBLUE_API_API_SECRET'] ?? undefined]
+   * @param {string} [opts.baseURL=process.env['SENDBLUE_API_BASE_URL'] ?? https://api.sendblue.co] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -161,19 +159,26 @@ export class SendblueAPI {
    */
   constructor({
     baseURL = readEnv('SENDBLUE_API_BASE_URL'),
-    apiKey = readEnv('PETSTORE_API_KEY'),
+    apiKey = readEnv('SENDBLUE_API_API_KEY'),
+    apiSecret = readEnv('SENDBLUE_API_API_SECRET'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.SendblueAPIError(
-        "The PETSTORE_API_KEY environment variable is missing or empty; either provide it, or instantiate the SendblueAPI client with an apiKey option, like new SendblueAPI({ apiKey: 'My API Key' }).",
+        "The SENDBLUE_API_API_KEY environment variable is missing or empty; either provide it, or instantiate the SendblueAPI client with an apiKey option, like new SendblueAPI({ apiKey: 'My API Key' }).",
+      );
+    }
+    if (apiSecret === undefined) {
+      throw new Errors.SendblueAPIError(
+        "The SENDBLUE_API_API_SECRET environment variable is missing or empty; either provide it, or instantiate the SendblueAPI client with an apiSecret option, like new SendblueAPI({ apiSecret: 'My API Secret' }).",
       );
     }
 
     const options: ClientOptions = {
       apiKey,
+      apiSecret,
       ...opts,
-      baseURL: baseURL || `https://petstore3.swagger.io/api/v3`,
+      baseURL: baseURL || `https://api.sendblue.co`,
     };
 
     this.baseURL = options.baseURL!;
@@ -194,6 +199,7 @@ export class SendblueAPI {
     this._options = options;
 
     this.apiKey = apiKey;
+    this.apiSecret = apiSecret;
   }
 
   /**
@@ -210,6 +216,7 @@ export class SendblueAPI {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
+      apiSecret: this.apiSecret,
       ...options,
     });
   }
@@ -218,7 +225,7 @@ export class SendblueAPI {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://petstore3.swagger.io/api/v3';
+    return this.baseURL !== 'https://api.sendblue.co';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
@@ -230,11 +237,35 @@ export class SendblueAPI {
   }
 
   protected authHeaders(opts: FinalRequestOptions): NullableHeaders | undefined {
-    return buildHeaders([{ api_key: this.apiKey }]);
+    return buildHeaders([this.apiKeyAuth(opts), this.apiSecretAuth(opts)]);
   }
 
+  protected apiKeyAuth(opts: FinalRequestOptions): NullableHeaders | undefined {
+    return buildHeaders([{ 'sb-api-key-id': this.apiKey }]);
+  }
+
+  protected apiSecretAuth(opts: FinalRequestOptions): NullableHeaders | undefined {
+    return buildHeaders([{ 'sb-api-secret-key': this.apiSecret }]);
+  }
+
+  /**
+   * Basic re-implementation of `qs.stringify` for primitive types.
+   */
   protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+    return Object.entries(query)
+      .filter(([_, value]) => typeof value !== 'undefined')
+      .map(([key, value]) => {
+        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+          return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+        }
+        if (value === null) {
+          return `${encodeURIComponent(key)}=`;
+        }
+        throw new Errors.SendblueAPIError(
+          `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
+        );
+      })
+      .join('&');
   }
 
   private getUserAgent(): string {
@@ -719,42 +750,49 @@ export class SendblueAPI {
 
   static toFile = Uploads.toFile;
 
-  pet: API.PetResource = new API.PetResource(this);
-  store: API.Store = new API.Store(this);
-  user: API.UserResource = new API.UserResource(this);
+  sendMessage: API.SendMessage = new API.SendMessage(this);
+  sendGroupMessage: API.SendGroupMessage = new API.SendGroupMessage(this);
+  modifyGroup: API.ModifyGroup = new API.ModifyGroup(this);
+  uploadMediaObject: API.UploadMediaObject = new API.UploadMediaObject(this);
+  message: API.Message = new API.Message(this);
 }
-SendblueAPI.PetResource = PetResource;
-SendblueAPI.Store = Store;
-SendblueAPI.UserResource = UserResource;
+SendblueAPI.SendMessage = SendMessage;
+SendblueAPI.SendGroupMessage = SendGroupMessage;
+SendblueAPI.ModifyGroup = ModifyGroup;
+SendblueAPI.UploadMediaObject = UploadMediaObject;
+SendblueAPI.Message = Message;
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
-    PetResource as PetResource,
-    type Category as Category,
-    type Pet as Pet,
-    type PetFindByStatusResponse as PetFindByStatusResponse,
-    type PetFindByTagsResponse as PetFindByTagsResponse,
-    type PetUploadImageResponse as PetUploadImageResponse,
-    type PetCreateParams as PetCreateParams,
-    type PetUpdateParams as PetUpdateParams,
-    type PetFindByStatusParams as PetFindByStatusParams,
-    type PetFindByTagsParams as PetFindByTagsParams,
-    type PetUpdateByIDParams as PetUpdateByIDParams,
-    type PetUploadImageParams as PetUploadImageParams,
+    SendMessage as SendMessage,
+    type MessageResponse as MessageResponse,
+    type SendMessageSendParams as SendMessageSendParams,
   };
-
-  export { Store as Store, type StoreListInventoryResponse as StoreListInventoryResponse };
 
   export {
-    UserResource as UserResource,
-    type User as User,
-    type UserLoginResponse as UserLoginResponse,
-    type UserCreateParams as UserCreateParams,
-    type UserUpdateParams as UserUpdateParams,
-    type UserCreateWithListParams as UserCreateWithListParams,
-    type UserLoginParams as UserLoginParams,
+    SendGroupMessage as SendGroupMessage,
+    type SendGroupMessageSendParams as SendGroupMessageSendParams,
   };
 
-  export type Order = API.Order;
+  export {
+    ModifyGroup as ModifyGroup,
+    type ModifyGroupCreateResponse as ModifyGroupCreateResponse,
+    type ModifyGroupCreateParams as ModifyGroupCreateParams,
+  };
+
+  export {
+    UploadMediaObject as UploadMediaObject,
+    type UploadMediaObjectCreateResponse as UploadMediaObjectCreateResponse,
+    type UploadMediaObjectCreateParams as UploadMediaObjectCreateParams,
+  };
+
+  export {
+    Message as Message,
+    type MessageContent as MessageContent,
+    type MessageRetrieveResponse as MessageRetrieveResponse,
+    type MessageListResponse as MessageListResponse,
+    type MessageDeleteResponse as MessageDeleteResponse,
+    type MessageListParams as MessageListParams,
+  };
 }

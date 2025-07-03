@@ -2,7 +2,7 @@
   "name": "sendblue-api",
   "version": "0.0.1-alpha.0",
   "description": "The official TypeScript library for the Sendblue API API",
-  "author": "Sendblue API <>",
+  "author": "Sendblue API <support@sendblue.co>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
