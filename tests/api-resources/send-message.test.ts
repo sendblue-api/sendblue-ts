@@ -4,13 +4,18 @@ import SendblueAPI from 'sendblue-api';
 
 const client = new SendblueAPI({
   apiKey: 'My API Key',
+  apiSecret: 'My API Secret',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource store', () => {
+describe('resource sendMessage', () => {
   // skipped: tests are disabled for the time being
-  test.skip('listInventory', async () => {
-    const responsePromise = client.store.listInventory();
+  test.skip('send: only required params', async () => {
+    const responsePromise = client.sendMessage.send({
+      content: 'Hello, World!',
+      from_number: '+19998887777',
+      number: '+19998887777',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,5 +23,17 @@ describe('resource store', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('send: required and optional params', async () => {
+    const response = await client.sendMessage.send({
+      content: 'Hello, World!',
+      from_number: '+19998887777',
+      number: '+19998887777',
+      media_url: 'https://example.com/image.jpg',
+      send_style: 'imessage',
+      status_callback: 'https://example.com/webhook',
+    });
   });
 });
