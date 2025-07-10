@@ -16,22 +16,18 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import { GroupModifyParams, GroupModifyResponse, GroupSendMessageParams, Groups } from './resources/groups';
+import { MediaObjectUploadParams, MediaObjectUploadResponse, MediaObjects } from './resources/media-objects';
 import {
-  Message,
   MessageContent,
   MessageDeleteResponse,
   MessageListParams,
   MessageListResponse,
+  MessageResponse,
   MessageRetrieveResponse,
-} from './resources/message';
-import { ModifyGroup, ModifyGroupCreateParams, ModifyGroupCreateResponse } from './resources/modify-group';
-import { SendGroupMessage, SendGroupMessageSendParams } from './resources/send-group-message';
-import { MessageResponse, SendMessage, SendMessageSendParams } from './resources/send-message';
-import {
-  UploadMediaObject,
-  UploadMediaObjectCreateParams,
-  UploadMediaObjectCreateResponse,
-} from './resources/upload-media-object';
+  MessageSendParams,
+  Messages,
+} from './resources/messages';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -753,49 +749,37 @@ export class SendblueAPI {
 
   static toFile = Uploads.toFile;
 
-  sendMessage: API.SendMessage = new API.SendMessage(this);
-  sendGroupMessage: API.SendGroupMessage = new API.SendGroupMessage(this);
-  modifyGroup: API.ModifyGroup = new API.ModifyGroup(this);
-  uploadMediaObject: API.UploadMediaObject = new API.UploadMediaObject(this);
-  message: API.Message = new API.Message(this);
+  messages: API.Messages = new API.Messages(this);
+  groups: API.Groups = new API.Groups(this);
+  mediaObjects: API.MediaObjects = new API.MediaObjects(this);
 }
-SendblueAPI.SendMessage = SendMessage;
-SendblueAPI.SendGroupMessage = SendGroupMessage;
-SendblueAPI.ModifyGroup = ModifyGroup;
-SendblueAPI.UploadMediaObject = UploadMediaObject;
-SendblueAPI.Message = Message;
+SendblueAPI.Messages = Messages;
+SendblueAPI.Groups = Groups;
+SendblueAPI.MediaObjects = MediaObjects;
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
 
   export {
-    SendMessage as SendMessage,
-    type MessageResponse as MessageResponse,
-    type SendMessageSendParams as SendMessageSendParams,
-  };
-
-  export {
-    SendGroupMessage as SendGroupMessage,
-    type SendGroupMessageSendParams as SendGroupMessageSendParams,
-  };
-
-  export {
-    ModifyGroup as ModifyGroup,
-    type ModifyGroupCreateResponse as ModifyGroupCreateResponse,
-    type ModifyGroupCreateParams as ModifyGroupCreateParams,
-  };
-
-  export {
-    UploadMediaObject as UploadMediaObject,
-    type UploadMediaObjectCreateResponse as UploadMediaObjectCreateResponse,
-    type UploadMediaObjectCreateParams as UploadMediaObjectCreateParams,
-  };
-
-  export {
-    Message as Message,
+    Messages as Messages,
     type MessageContent as MessageContent,
+    type MessageResponse as MessageResponse,
     type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
     type MessageDeleteResponse as MessageDeleteResponse,
     type MessageListParams as MessageListParams,
+    type MessageSendParams as MessageSendParams,
+  };
+
+  export {
+    Groups as Groups,
+    type GroupModifyResponse as GroupModifyResponse,
+    type GroupModifyParams as GroupModifyParams,
+    type GroupSendMessageParams as GroupSendMessageParams,
+  };
+
+  export {
+    MediaObjects as MediaObjects,
+    type MediaObjectUploadResponse as MediaObjectUploadResponse,
+    type MediaObjectUploadParams as MediaObjectUploadParams,
   };
 }

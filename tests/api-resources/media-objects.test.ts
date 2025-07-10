@@ -8,14 +8,10 @@ const client = new SendblueAPI({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource sendMessage', () => {
+describe('resource mediaObjects', () => {
   // skipped: tests are disabled for the time being
-  test.skip('send: only required params', async () => {
-    const responsePromise = client.sendMessage.send({
-      content: 'Hello, World!',
-      from_number: '+19998887777',
-      number: '+19998887777',
-    });
+  test.skip('upload: only required params', async () => {
+    const responsePromise = client.mediaObjects.upload({ media_url: 'https://example.com/image.jpg' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,14 +22,7 @@ describe('resource sendMessage', () => {
   });
 
   // skipped: tests are disabled for the time being
-  test.skip('send: required and optional params', async () => {
-    const response = await client.sendMessage.send({
-      content: 'Hello, World!',
-      from_number: '+19998887777',
-      number: '+19998887777',
-      media_url: 'https://example.com/image.jpg',
-      send_style: 'imessage',
-      status_callback: 'https://example.com/webhook',
-    });
+  test.skip('upload: required and optional params', async () => {
+    const response = await client.mediaObjects.upload({ media_url: 'https://example.com/image.jpg' });
   });
 });
