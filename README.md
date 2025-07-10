@@ -29,7 +29,7 @@ const client = new SendblueAPI({
   apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted
 });
 
-const messageResponse = await client.sendMessage.send({
+const messageResponse = await client.messages.send({
   content: 'REPLACE_ME',
   from_number: 'REPLACE_ME',
   number: 'REPLACE_ME',
@@ -50,12 +50,12 @@ const client = new SendblueAPI({
   apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted
 });
 
-const params: SendblueAPI.SendMessageSendParams = {
+const params: SendblueAPI.MessageSendParams = {
   content: 'REPLACE_ME',
   from_number: 'REPLACE_ME',
   number: 'REPLACE_ME',
 };
-const messageResponse: SendblueAPI.MessageResponse = await client.sendMessage.send(params);
+const messageResponse: SendblueAPI.MessageResponse = await client.messages.send(params);
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -68,7 +68,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const messageResponse = await client.sendMessage
+const messageResponse = await client.messages
   .send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' })
   .catch(async (err) => {
     if (err instanceof SendblueAPI.APIError) {
@@ -110,7 +110,7 @@ const client = new SendblueAPI({
 });
 
 // Or, configure per-request:
-await client.sendMessage.send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' }, {
+await client.messages.send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' }, {
   maxRetries: 5,
 });
 ```
@@ -127,7 +127,7 @@ const client = new SendblueAPI({
 });
 
 // Override per-request:
-await client.sendMessage.send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' }, {
+await client.messages.send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -150,13 +150,13 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 ```ts
 const client = new SendblueAPI();
 
-const response = await client.sendMessage
+const response = await client.messages
   .send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: messageResponse, response: raw } = await client.sendMessage
+const { data: messageResponse, response: raw } = await client.messages
   .send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
@@ -240,7 +240,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.sendMessage.send({
+client.messages.send({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
