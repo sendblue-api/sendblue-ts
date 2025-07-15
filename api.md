@@ -43,3 +43,13 @@ Types:
 Methods:
 
 - <code title="get /api/evaluate-service">client.lookups.<a href="./src/resources/lookups.ts">lookupNumber</a>({ ...params }) -> LookupLookupNumberResponse</code>
+
+# TypingIndicator
+
+Types:
+
+- <code><a href="./src/resources/typing-indicator.ts">TypingIndicatorSendResponse</a></code>
+
+Methods:
+
+- <code title="post /api/send-typing-indicator">client.typingIndicator.<a href="./src/resources/typing-indicator.ts">send</a>({ ...params }) -> TypingIndicatorSendResponse</code>

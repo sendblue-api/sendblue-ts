@@ -28,6 +28,11 @@ import {
   MessageSendParams,
   Messages,
 } from './resources/messages';
+import {
+  TypingIndicator,
+  TypingIndicatorSendParams,
+  TypingIndicatorSendResponse,
+} from './resources/typing-indicator';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -753,11 +758,13 @@ export class SendblueAPI {
   groups: API.Groups = new API.Groups(this);
   mediaObjects: API.MediaObjects = new API.MediaObjects(this);
   lookups: API.Lookups = new API.Lookups(this);
+  typingIndicator: API.TypingIndicator = new API.TypingIndicator(this);
 }
 SendblueAPI.Messages = Messages;
 SendblueAPI.Groups = Groups;
 SendblueAPI.MediaObjects = MediaObjects;
 SendblueAPI.Lookups = Lookups;
+SendblueAPI.TypingIndicator = TypingIndicator;
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
 
@@ -788,5 +795,11 @@ export declare namespace SendblueAPI {
     Lookups as Lookups,
     type LookupLookupNumberResponse as LookupLookupNumberResponse,
     type LookupLookupNumberParams as LookupLookupNumberParams,
+  };
+
+  export {
+    TypingIndicator as TypingIndicator,
+    type TypingIndicatorSendResponse as TypingIndicatorSendResponse,
+    type TypingIndicatorSendParams as TypingIndicatorSendParams,
   };
 }
