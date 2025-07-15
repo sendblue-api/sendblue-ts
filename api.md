@@ -1,3 +1,13 @@
+# Shared
+
+Types:
+
+- <code><a href="./src/resources/shared.ts">SendTypingIndicatorResponse</a></code>
+
+Methods:
+
+- <code title="post /api/send-typing-indicator">client.shared.<a href="./src/resources/shared.ts">sendTypingIndicator</a>({ ...params }) -> SendTypingIndicatorResponse</code>
+
 # Messages
 
 Types:

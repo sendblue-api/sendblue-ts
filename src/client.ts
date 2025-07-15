@@ -802,4 +802,6 @@ export declare namespace SendblueAPI {
     type TypingIndicatorSendResponse as TypingIndicatorSendResponse,
     type TypingIndicatorSendParams as TypingIndicatorSendParams,
   };
+
+  export type SendTypingIndicatorResponse = API.SendTypingIndicatorResponse;
 }
