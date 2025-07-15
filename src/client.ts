@@ -20,11 +20,9 @@ import { GroupModifyParams, GroupModifyResponse, GroupSendMessageParams, Groups 
 import { MediaObjectUploadParams, MediaObjectUploadResponse, MediaObjects } from './resources/media-objects';
 import {
   MessageContent,
-  MessageDeleteResponse,
   MessageListParams,
   MessageListResponse,
   MessageResponse,
-  MessageRetrieveResponse,
   MessageSendParams,
   Messages,
 } from './resources/messages';
@@ -763,9 +761,7 @@ export declare namespace SendblueAPI {
     Messages as Messages,
     type MessageContent as MessageContent,
     type MessageResponse as MessageResponse,
-    type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
-    type MessageDeleteResponse as MessageDeleteResponse,
     type MessageListParams as MessageListParams,
     type MessageSendParams as MessageSendParams,
   };

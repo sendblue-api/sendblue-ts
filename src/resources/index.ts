@@ -11,9 +11,7 @@ export {
   Messages,
   type MessageContent,
   type MessageResponse,
-  type MessageRetrieveResponse,
   type MessageListResponse,
-  type MessageDeleteResponse,
   type MessageListParams,
   type MessageSendParams,
 } from './messages';

@@ -1,4 +1,4 @@
-configured_endpoints: 7
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/sendblue%2Fsendblue-api-4968df78cb0ebfcd864b49156f2c79fe525f0b845b565455d67f3bd9a4b7b7f3.yml
-openapi_spec_hash: 73e8317cf6c1e39fe9658188ac30121c
-config_hash: af4f9687eb0180f41e66ba672f5a67fd
+configured_endpoints: 5
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/sendblue%2Fsendblue-api-6e2c51ee09f263e73681bc81c0b6cdde6400b42dcf16c9b3296b002e0d01fcbd.yml
+openapi_spec_hash: 2fb09aeed7eb0d22142aa271547f3b1e
+config_hash: 3bf405ae6b1172525f3c9597f2cf5158
