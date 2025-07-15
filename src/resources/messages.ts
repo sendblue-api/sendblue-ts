@@ -99,7 +99,20 @@ export interface MessageContent {
    */
   message_handle?: string;
 
-  send_style?: 'imessage' | 'sms';
+  send_style?:
+    | 'celebration'
+    | 'shooting_star'
+    | 'fireworks'
+    | 'lasers'
+    | 'love'
+    | 'confetti'
+    | 'balloons'
+    | 'spotlight'
+    | 'echo'
+    | 'invisible'
+    | 'gentle'
+    | 'loud'
+    | 'slam';
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'READ' | 'ERROR' | 'RECEIVED';
 
@@ -166,9 +179,22 @@ export interface MessageResponse {
   number?: string;
 
   /**
-   * How the message was sent
+   * The iMessage expressive message style
    */
-  send_style?: 'imessage' | 'sms';
+  send_style?:
+    | 'celebration'
+    | 'shooting_star'
+    | 'fireworks'
+    | 'lasers'
+    | 'love'
+    | 'confetti'
+    | 'balloons'
+    | 'spotlight'
+    | 'echo'
+    | 'invisible'
+    | 'gentle'
+    | 'loud'
+    | 'slam';
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'READ' | 'ERROR';
 }
@@ -274,9 +300,22 @@ export namespace MessageRetrieveResponse {
     plan?: string;
 
     /**
-     * How the message was sent
+     * The iMessage expressive message style
      */
-    send_style?: string;
+    send_style?:
+      | 'celebration'
+      | 'shooting_star'
+      | 'fireworks'
+      | 'lasers'
+      | 'love'
+      | 'confetti'
+      | 'balloons'
+      | 'spotlight'
+      | 'echo'
+      | 'invisible'
+      | 'gentle'
+      | 'loud'
+      | 'slam';
 
     /**
      * Sendblue phone number used
@@ -412,9 +451,22 @@ export namespace MessageListResponse {
     plan?: string;
 
     /**
-     * How the message was sent
+     * The iMessage expressive message style
      */
-    send_style?: string;
+    send_style?:
+      | 'celebration'
+      | 'shooting_star'
+      | 'fireworks'
+      | 'lasers'
+      | 'love'
+      | 'confetti'
+      | 'balloons'
+      | 'spotlight'
+      | 'echo'
+      | 'invisible'
+      | 'gentle'
+      | 'loud'
+      | 'slam';
 
     /**
      * Sendblue phone number used
@@ -610,9 +662,22 @@ export interface MessageSendParams {
   media_url?: string;
 
   /**
-   * Message delivery style
+   * The iMessage expressive message style
    */
-  send_style?: 'imessage' | 'sms';
+  send_style?:
+    | 'celebration'
+    | 'shooting_star'
+    | 'fireworks'
+    | 'lasers'
+    | 'love'
+    | 'confetti'
+    | 'balloons'
+    | 'spotlight'
+    | 'echo'
+    | 'invisible'
+    | 'gentle'
+    | 'loud'
+    | 'slam';
 
   /**
    * Webhook URL for message status updates
