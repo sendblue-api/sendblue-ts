@@ -89,7 +89,7 @@ describe('resource messages', () => {
       from_number: '+19998887777',
       number: '+19998887777',
       media_url: 'https://example.com/image.jpg',
-      send_style: 'imessage',
+      send_style: 'celebration',
       status_callback: 'https://example.com/webhook',
     });
   });
