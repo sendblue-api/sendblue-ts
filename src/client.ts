@@ -17,6 +17,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { GroupModifyParams, GroupModifyResponse, GroupSendMessageParams, Groups } from './resources/groups';
+import { LookupLookupNumberParams, LookupLookupNumberResponse, Lookups } from './resources/lookups';
 import { MediaObjectUploadParams, MediaObjectUploadResponse, MediaObjects } from './resources/media-objects';
 import {
   MessageContent,
@@ -751,10 +752,12 @@ export class SendblueAPI {
   messages: API.Messages = new API.Messages(this);
   groups: API.Groups = new API.Groups(this);
   mediaObjects: API.MediaObjects = new API.MediaObjects(this);
+  lookups: API.Lookups = new API.Lookups(this);
 }
 SendblueAPI.Messages = Messages;
 SendblueAPI.Groups = Groups;
 SendblueAPI.MediaObjects = MediaObjects;
+SendblueAPI.Lookups = Lookups;
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
 
@@ -779,5 +782,11 @@ export declare namespace SendblueAPI {
     MediaObjects as MediaObjects,
     type MediaObjectUploadResponse as MediaObjectUploadResponse,
     type MediaObjectUploadParams as MediaObjectUploadParams,
+  };
+
+  export {
+    Lookups as Lookups,
+    type LookupLookupNumberResponse as LookupLookupNumberResponse,
+    type LookupLookupNumberParams as LookupLookupNumberParams,
   };
 }
