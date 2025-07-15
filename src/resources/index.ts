@@ -11,6 +11,7 @@ export {
   Messages,
   type MessageContent,
   type MessageResponse,
+  type MessageRetrieveResponse,
   type MessageListResponse,
   type MessageListParams,
   type MessageSendParams,
