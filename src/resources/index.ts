@@ -17,3 +17,8 @@ export {
   type MessageListParams,
   type MessageSendParams,
 } from './messages';
+export {
+  TypingIndicator,
+  type TypingIndicatorSendResponse,
+  type TypingIndicatorSendParams,
+} from './typing-indicator';
