@@ -37,6 +37,21 @@ export class Messages extends APIResource {
   }
 
   /**
+   * Retrieve the current status of a message using its message handle. Useful for
+   * resolving pending message statuses and avoiding duplicate messages.
+   *
+   * @example
+   * ```ts
+   * const messageResponse = await client.messages.getStatus({
+   *   handle: 'msg_abc123def456',
+   * });
+   * ```
+   */
+  getStatus(query: MessageGetStatusParams, options?: RequestOptions): APIPromise<MessageResponse> {
+    return this._client.get('/api/status', { query, ...options });
+  }
+
+  /**
    * Send an iMessage, SMS, or MMS to a single recipient
    *
    * @example
@@ -638,6 +653,13 @@ export interface MessageListParams {
   worker_id?: string;
 }
 
+export interface MessageGetStatusParams {
+  /**
+   * The message handle of the message you want to check status for
+   */
+  handle: string;
+}
+
 export interface MessageSendParams {
   /**
    * Message text content
@@ -692,6 +714,7 @@ export declare namespace Messages {
     type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
     type MessageListParams as MessageListParams,
+    type MessageGetStatusParams as MessageGetStatusParams,
     type MessageSendParams as MessageSendParams,
   };
 }
