@@ -4,15 +4,11 @@ Types:
 
 - <code><a href="./src/resources/messages.ts">MessageContent</a></code>
 - <code><a href="./src/resources/messages.ts">MessageResponse</a></code>
-- <code><a href="./src/resources/messages.ts">MessageRetrieveResponse</a></code>
 - <code><a href="./src/resources/messages.ts">MessageListResponse</a></code>
-- <code><a href="./src/resources/messages.ts">MessageDeleteResponse</a></code>
 
 Methods:
 
-- <code title="get /api/message/{message_handle}">client.messages.<a href="./src/resources/messages.ts">retrieve</a>(messageHandle) -> MessageRetrieveResponse</code>
-- <code title="get /api/message">client.messages.<a href="./src/resources/messages.ts">list</a>({ ...params }) -> MessageListResponse</code>
-- <code title="delete /api/message/{message_handle}">client.messages.<a href="./src/resources/messages.ts">delete</a>(messageHandle) -> MessageDeleteResponse</code>
+- <code title="get /api/v2/messages">client.messages.<a href="./src/resources/messages.ts">list</a>({ ...params }) -> MessageListResponse</code>
 - <code title="post /api/send-message">client.messages.<a href="./src/resources/messages.ts">send</a>({ ...params }) -> MessageResponse</code>
 
 # Groups
