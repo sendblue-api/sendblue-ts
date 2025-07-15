@@ -33,3 +33,13 @@ Types:
 Methods:
 
 - <code title="post /api/upload-media-object">client.mediaObjects.<a href="./src/resources/media-objects.ts">upload</a>({ ...params }) -> MediaObjectUploadResponse</code>
+
+# Lookups
+
+Types:
+
+- <code><a href="./src/resources/lookups.ts">LookupLookupNumberResponse</a></code>
+
+Methods:
+
+- <code title="get /api/evaluate-service">client.lookups.<a href="./src/resources/lookups.ts">lookupNumber</a>({ ...params }) -> LookupLookupNumberResponse</code>
