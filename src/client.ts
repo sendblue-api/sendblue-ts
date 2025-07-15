@@ -21,6 +21,7 @@ import { LookupLookupNumberParams, LookupLookupNumberResponse, Lookups } from '.
 import { MediaObjectUploadParams, MediaObjectUploadResponse, MediaObjects } from './resources/media-objects';
 import {
   MessageContent,
+  MessageGetStatusParams,
   MessageListParams,
   MessageListResponse,
   MessageResponse,
@@ -775,6 +776,7 @@ export declare namespace SendblueAPI {
     type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
     type MessageListParams as MessageListParams,
+    type MessageGetStatusParams as MessageGetStatusParams,
     type MessageSendParams as MessageSendParams,
   };
 

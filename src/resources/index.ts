@@ -15,6 +15,7 @@ export {
   type MessageRetrieveResponse,
   type MessageListResponse,
   type MessageListParams,
+  type MessageGetStatusParams,
   type MessageSendParams,
 } from './messages';
 export {

@@ -67,6 +67,23 @@ describe('resource messages', () => {
   });
 
   // skipped: tests are disabled for the time being
+  test.skip('getStatus: only required params', async () => {
+    const responsePromise = client.messages.getStatus({ handle: 'msg_abc123def456' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('getStatus: required and optional params', async () => {
+    const response = await client.messages.getStatus({ handle: 'msg_abc123def456' });
+  });
+
+  // skipped: tests are disabled for the time being
   test.skip('send: only required params', async () => {
     const responsePromise = client.messages.send({
       content: 'Hello, World!',
