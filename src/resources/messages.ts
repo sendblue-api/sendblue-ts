@@ -3,8 +3,23 @@
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
+import { path } from '../internal/utils/path';
 
 export class Messages extends APIResource {
+  /**
+   * Retrieve details of a specific message by its ID
+   *
+   * @example
+   * ```ts
+   * const message = await client.messages.retrieve(
+   *   'msg_abc123def456',
+   * );
+   * ```
+   */
+  retrieve(messageID: string, options?: RequestOptions): APIPromise<MessageRetrieveResponse> {
+    return this._client.get(path`/api/v2/messages/${messageID}`, options);
+  }
+
   /**
    * Retrieve a list of messages for the authenticated account with comprehensive
    * filtering capabilities. Rate limited to 100 requests per 10 seconds per account.
@@ -156,6 +171,142 @@ export interface MessageResponse {
   send_style?: 'imessage' | 'sms';
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'READ' | 'ERROR';
+}
+
+export interface MessageRetrieveResponse {
+  data?: MessageRetrieveResponse.Data;
+
+  status?: string;
+}
+
+export namespace MessageRetrieveResponse {
+  export interface Data {
+    /**
+     * Email of the account
+     */
+    accountEmail?: string;
+
+    /**
+     * Message content
+     */
+    content?: string;
+
+    /**
+     * When the message was sent
+     */
+    date_sent?: string;
+
+    /**
+     * When the message was last updated
+     */
+    date_updated?: string;
+
+    /**
+     * Numeric error code if message failed
+     */
+    error_code?: number | null;
+
+    /**
+     * Detailed error information
+     */
+    error_detail?: string | null;
+
+    /**
+     * Error message if message failed
+     */
+    error_message?: string | null;
+
+    /**
+     * Error reason if message failed
+     */
+    error_reason?: string | null;
+
+    /**
+     * Sender phone number
+     */
+    from_number?: string;
+
+    /**
+     * Display name for group messages
+     */
+    group_display_name?: string | null;
+
+    /**
+     * Group ID for group messages
+     */
+    group_id?: string | null;
+
+    /**
+     * Whether this is an outbound message
+     */
+    is_outbound?: boolean;
+
+    /**
+     * URL of attached media
+     */
+    media_url?: string | null;
+
+    /**
+     * Unique message identifier
+     */
+    message_handle?: string;
+
+    message_type?: 'message' | 'group';
+
+    /**
+     * Primary phone number (to_number for outbound, from_number for inbound)
+     */
+    number?: string;
+
+    /**
+     * Whether the recipient has opted out
+     */
+    opted_out?: boolean;
+
+    /**
+     * List of participants for group messages
+     */
+    participants?: Array<string>;
+
+    /**
+     * Account plan used for this message
+     */
+    plan?: string;
+
+    /**
+     * How the message was sent
+     */
+    send_style?: string;
+
+    /**
+     * Sendblue phone number used
+     */
+    sendblue_number?: string | null;
+
+    service?: 'iMessage' | 'SMS';
+
+    status?:
+      | 'REGISTERED'
+      | 'PENDING'
+      | 'SENT'
+      | 'DELIVERED'
+      | 'RECEIVED'
+      | 'QUEUED'
+      | 'ERROR'
+      | 'DECLINED'
+      | 'ACCEPTED'
+      | 'SUCCESS';
+
+    /**
+     * Recipient phone number
+     */
+    to_number?: string;
+
+    /**
+     * Whether the message was downgraded from iMessage to SMS
+     */
+    was_downgraded?: boolean;
+  }
 }
 
 export interface MessageListResponse {
@@ -473,6 +624,7 @@ export declare namespace Messages {
   export {
     type MessageContent as MessageContent,
     type MessageResponse as MessageResponse,
+    type MessageRetrieveResponse as MessageRetrieveResponse,
     type MessageListResponse as MessageListResponse,
     type MessageListParams as MessageListParams,
     type MessageSendParams as MessageSendParams,
