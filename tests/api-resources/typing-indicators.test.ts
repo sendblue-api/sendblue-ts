@@ -8,10 +8,10 @@ const client = new SendblueAPI({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource typingIndicator', () => {
+describe('resource typingIndicators', () => {
   // skipped: tests are disabled for the time being
   test.skip('send: only required params', async () => {
-    const responsePromise = client.typingIndicator.send({ number: '+19998887777' });
+    const responsePromise = client.typingIndicators.send({ number: '+19998887777' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,6 +23,6 @@ describe('resource typingIndicator', () => {
 
   // skipped: tests are disabled for the time being
   test.skip('send: required and optional params', async () => {
-    const response = await client.typingIndicator.send({ number: '+19998887777' });
+    const response = await client.typingIndicators.send({ number: '+19998887777' });
   });
 });

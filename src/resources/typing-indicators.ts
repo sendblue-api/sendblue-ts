@@ -4,7 +4,7 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
-export class TypingIndicator extends APIResource {
+export class TypingIndicators extends APIResource {
   /**
    * Send an indication that you are typing to a user. This shows up as the animated
    * three dots on the recipient's device. Only available for existing chats and not
@@ -12,7 +12,7 @@ export class TypingIndicator extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.typingIndicator.send({
+   * const response = await client.typingIndicators.send({
    *   number: '+19998887777',
    * });
    * ```
@@ -46,7 +46,7 @@ export interface TypingIndicatorSendParams {
   number: string;
 }
 
-export declare namespace TypingIndicator {
+export declare namespace TypingIndicators {
   export {
     type TypingIndicatorSendResponse as TypingIndicatorSendResponse,
     type TypingIndicatorSendParams as TypingIndicatorSendParams,
