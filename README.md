@@ -27,6 +27,7 @@ import SendblueAPI from 'sendblue-api';
 
 const client = new SendblueAPI({
   apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted
+  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted
 });
 
 const messageResponse = await client.messages.send({
@@ -48,6 +49,7 @@ import SendblueAPI from 'sendblue-api';
 
 const client = new SendblueAPI({
   apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted
+  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted
 });
 
 const params: SendblueAPI.MessageSendParams = {
