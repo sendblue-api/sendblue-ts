@@ -35,6 +35,9 @@ export const tool: Tool = {
     },
     required: ['handle'],
   },
+  annotations: {
+    readOnlyHint: true,
+  },
 };
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {

@@ -44,6 +44,7 @@ export const tool: Tool = {
     },
     required: ['group_id', 'modify_type', 'number'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {

@@ -71,6 +71,7 @@ export const tool: Tool = {
     },
     required: ['content', 'from_number', 'number'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {
