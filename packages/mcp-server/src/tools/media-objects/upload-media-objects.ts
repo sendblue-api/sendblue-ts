@@ -35,6 +35,7 @@ export const tool: Tool = {
     },
     required: ['media_url'],
   },
+  annotations: {},
 };
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {
