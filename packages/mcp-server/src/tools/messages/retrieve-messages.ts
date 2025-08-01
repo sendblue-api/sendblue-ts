@@ -40,8 +40,8 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {
-  const { message_id, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.messages.retrieve(message_id)));
+  const { message_id, jq_filter, ...body } = args as any;
+  return asTextContentResult(await maybeFilter(jq_filter, await client.messages.retrieve(message_id)));
 };
 
 export default { metadata, tool, handler };

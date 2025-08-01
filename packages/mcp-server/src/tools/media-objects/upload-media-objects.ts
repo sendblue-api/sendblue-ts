@@ -39,8 +39,8 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {
-  const body = args as any;
-  return asTextContentResult(await maybeFilter(args, await client.mediaObjects.upload(body)));
+  const { jq_filter, ...body } = args as any;
+  return asTextContentResult(await maybeFilter(jq_filter, await client.mediaObjects.upload(body)));
 };
 
 export default { metadata, tool, handler };
