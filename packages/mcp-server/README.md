@@ -4,32 +4,17 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
-### Building
+### Direct invocation
 
-Because it's not published yet, clone the repo and build it:
-
-```sh
-git clone git@github.com:stainless-sdks/sendblue-api-typescript.git
-cd sendblue-api-typescript
-./scripts/bootstrap
-./scripts/build
-```
-
-### Running
+You can run the MCP Server directly via `npx`:
 
 ```sh
-# set env vars as needed
 export SENDBLUE_API_API_KEY="My API Key"
 export SENDBLUE_API_API_SECRET="My API Secret"
-node ./packages/mcp-server/dist/index.js
+npx -y sendblue-api-mcp@latest
 ```
 
-> [!NOTE]
-> Once this package is [published to npm](https://www.stainless.com/docs/guides/publish), this will become: `npx -y sendblue-api-mcp`
-
 ### Via MCP Client
-
-[Build the project](#building) as mentioned above.
 
 There is a partial list of existing clients at [modelcontextprotocol.io](https://modelcontextprotocol.io/clients). If you already
 have a client, consult their documentation to install the MCP server.
@@ -40,12 +25,8 @@ For clients with a configuration JSON, it might look something like this:
 {
   "mcpServers": {
     "sendblue_api": {
-      "command": "node",
-      "args": [
-        "/path/to/local/sendblue-api-typescript/packages/mcp-server",
-        "--client=claude",
-        "--tools=all"
-      ],
+      "command": "npx",
+      "args": ["-y", "sendblue-api-mcp", "--client=claude", "--tools=all"],
       "env": {
         "SENDBLUE_API_API_KEY": "My API Key",
         "SENDBLUE_API_API_SECRET": "My API Secret"
