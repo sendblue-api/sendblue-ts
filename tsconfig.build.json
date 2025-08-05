@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "sendblue-api/*": ["dist/src/*"],
-      "sendblue-api": ["dist/src/index.ts"]
+      "sendblue/*": ["dist/src/*"],
+      "sendblue": ["dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

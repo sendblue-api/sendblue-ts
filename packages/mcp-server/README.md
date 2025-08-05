@@ -39,7 +39,7 @@ For clients with a configuration JSON, it might look something like this:
 ```json
 {
   "mcpServers": {
-    "sendblue_api_api": {
+    "sendblue_api": {
       "command": "node",
       "args": [
         "/path/to/local/sendblue-api-typescript/packages/mcp-server",

@@ -7,8 +7,8 @@ const config: JestConfigWithTsJest = {
     '^.+\\.(t|j)sx?$': ['@swc/jest', { sourceMaps: 'inline' }],
   },
   moduleNameMapper: {
-    '^sendblue-api$': '<rootDir>/src/index.ts',
-    '^sendblue-api/(.*)$': '<rootDir>/src/$1',
+    '^sendblue$': '<rootDir>/src/index.ts',
+    '^sendblue/(.*)$': '<rootDir>/src/$1',
   },
   modulePathIgnorePatterns: [
     '<rootDir>/ecosystem-tests/',

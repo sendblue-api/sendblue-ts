@@ -55,12 +55,12 @@ $ cd sendblue-api-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link sendblue-api
+$ yarn link sendblue
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global sendblue-api
+$ pnpm link -—global sendblue
 ```
 
 ## Running tests

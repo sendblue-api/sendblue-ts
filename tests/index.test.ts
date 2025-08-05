@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from 'sendblue-api/core/api-promise';
+import { APIPromise } from 'sendblue/core/api-promise';
 
 import util from 'node:util';
-import SendblueAPI from 'sendblue-api';
-import { APIUserAbortError } from 'sendblue-api';
+import SendblueAPI from 'sendblue';
+import { APIUserAbortError } from 'sendblue';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {

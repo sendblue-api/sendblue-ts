@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from 'sendblue-api/internal/uploads';
-import { toFile } from 'sendblue-api/core/uploads';
+import { multipartFormRequestOptions, createForm } from 'sendblue/internal/uploads';
+import { toFile } from 'sendblue/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {

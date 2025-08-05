@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "sendblue-api/*": ["src/*"],
-      "sendblue-api": ["src/index.ts"]
+      "sendblue/*": ["src/*"],
+      "sendblue": ["src/index.ts"]
     },
     "noEmit": true,
 
