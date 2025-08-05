@@ -27,7 +27,7 @@
     "fix": "eslint --fix --ext ts,js ."
   },
   "dependencies": {
-    "sendblue-api": "file:../../dist/",
+    "sendblue": "file:../../dist/",
     "@modelcontextprotocol/sdk": "^1.11.5",
     "express": "^5.1.0",
     "jq-web": "https://github.com/stainless-api/jq-web/releases/download/v0.8.2/jq-web.tar.gz",

@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^sendblue-api(/.*)?',
+              regex: '^sendblue(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

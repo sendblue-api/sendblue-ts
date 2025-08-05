@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { type ClientOptions } from 'sendblue-api/client';
+import { type ClientOptions } from 'sendblue/client';
 
 import { IncomingMessage } from 'node:http';
 

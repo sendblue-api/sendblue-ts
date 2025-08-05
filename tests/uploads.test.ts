@@ -1,6 +1,6 @@
 import fs from 'fs';
-import type { ResponseLike } from 'sendblue-api/internal/to-file';
-import { toFile } from 'sendblue-api/core/uploads';
+import type { ResponseLike } from 'sendblue/internal/to-file';
+import { toFile } from 'sendblue/core/uploads';
 import { File } from 'node:buffer';
 
 class MyClass {
@@ -97,7 +97,7 @@ describe('missing File error message', () => {
   });
 
   test('is thrown', async () => {
-    const uploads = await import('sendblue-api/core/uploads');
+    const uploads = await import('sendblue/core/uploads');
     await expect(
       uploads.toFile(mockResponse({ url: 'https://example.com/my/audio.mp3' })),
     ).rejects.toMatchInlineSnapshot(

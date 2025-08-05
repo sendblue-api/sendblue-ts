@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { SendblueAPI } from 'sendblue-api';
+import { SendblueAPI } from 'sendblue';
 
 const { stringifyQuery } = SendblueAPI.prototype as any;
 

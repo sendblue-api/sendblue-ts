@@ -4,7 +4,7 @@ import { maybeFilter } from 'sendblue-api-mcp/filtering';
 import { Metadata, asTextContentResult } from 'sendblue-api-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import SendblueAPI from 'sendblue-api';
+import SendblueAPI from 'sendblue';
 
 export const metadata: Metadata = {
   resource: 'typing_indicators',
