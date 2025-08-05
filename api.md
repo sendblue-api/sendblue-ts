@@ -54,3 +54,38 @@ Types:
 Methods:
 
 - <code title="post /api/send-typing-indicator">client.typingIndicators.<a href="./src/resources/typing-indicators.ts">send</a>({ ...params }) -> TypingIndicatorSendResponse</code>
+
+# Contacts
+
+Types:
+
+- <code><a href="./src/resources/contacts/contacts.ts">Contact</a></code>
+- <code><a href="./src/resources/contacts/contacts.ts">ContactCreateResponse</a></code>
+- <code><a href="./src/resources/contacts/contacts.ts">ContactRetrieveResponse</a></code>
+- <code><a href="./src/resources/contacts/contacts.ts">ContactUpdateResponse</a></code>
+- <code><a href="./src/resources/contacts/contacts.ts">ContactListResponse</a></code>
+- <code><a href="./src/resources/contacts/contacts.ts">ContactDeleteResponse</a></code>
+- <code><a href="./src/resources/contacts/contacts.ts">ContactCountResponse</a></code>
+- <code><a href="./src/resources/contacts/contacts.ts">ContactVerifyResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/contacts">client.contacts.<a href="./src/resources/contacts/contacts.ts">create</a>({ ...params }) -> ContactCreateResponse</code>
+- <code title="get /api/v2/contacts/{phone_number}">client.contacts.<a href="./src/resources/contacts/contacts.ts">retrieve</a>(phoneNumber) -> ContactRetrieveResponse</code>
+- <code title="put /api/v2/contacts/{phone_number}">client.contacts.<a href="./src/resources/contacts/contacts.ts">update</a>(phoneNumber, { ...params }) -> ContactUpdateResponse</code>
+- <code title="get /api/v2/contacts">client.contacts.<a href="./src/resources/contacts/contacts.ts">list</a>({ ...params }) -> ContactListResponse</code>
+- <code title="delete /api/v2/contacts/{phone_number}">client.contacts.<a href="./src/resources/contacts/contacts.ts">delete</a>(phoneNumber) -> ContactDeleteResponse</code>
+- <code title="get /api/v2/contacts/count">client.contacts.<a href="./src/resources/contacts/contacts.ts">count</a>() -> ContactCountResponse</code>
+- <code title="post /api/v2/contacts/verify">client.contacts.<a href="./src/resources/contacts/contacts.ts">verify</a>({ ...params }) -> ContactVerifyResponse</code>
+
+## Bulk
+
+Types:
+
+- <code><a href="./src/resources/contacts/bulk.ts">BulkCreateResponse</a></code>
+- <code><a href="./src/resources/contacts/bulk.ts">BulkDeleteResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/contacts/bulk">client.contacts.bulk.<a href="./src/resources/contacts/bulk.ts">create</a>({ ...params }) -> BulkCreateResponse</code>
+- <code title="delete /api/v2/contacts">client.contacts.bulk.<a href="./src/resources/contacts/bulk.ts">delete</a>({ ...params }) -> BulkDeleteResponse</code>

@@ -191,3 +191,18 @@ The following tools are available in this MCP server.
 ### Resource `typing_indicators`:
 
 - `send_typing_indicators` (`write`): Send an indication that you are typing to a user. This shows up as the animated three dots on the recipient's device. Only available for existing chats and not supported in group chats.
+
+### Resource `contacts`:
+
+- `create_contacts` (`write`): Create a new contact or update existing if update_if_exists is true
+- `retrieve_contacts` (`read`): Retrieve a specific contact by phone number
+- `update_contacts` (`write`): Update an existing contact
+- `list_contacts` (`read`): Retrieve a list of contacts for the authenticated account
+- `delete_contacts` (`write`): Delete a specific contact
+- `count_contacts` (`read`): Get the total number of contacts
+- `verify_contacts` (`write`): Send a verification message to a contact
+
+### Resource `contacts.bulk`:
+
+- `create_contacts_bulk` (`write`): Create multiple contacts in bulk
+- `delete_contacts_bulk` (`write`): Delete multiple contacts by their IDs

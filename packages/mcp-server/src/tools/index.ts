@@ -13,6 +13,15 @@ import send_message_groups from './groups/send-message-groups';
 import upload_media_objects from './media-objects/upload-media-objects';
 import lookup_number_lookups from './lookups/lookup-number-lookups';
 import send_typing_indicators from './typing-indicators/send-typing-indicators';
+import create_contacts from './contacts/create-contacts';
+import retrieve_contacts from './contacts/retrieve-contacts';
+import update_contacts from './contacts/update-contacts';
+import list_contacts from './contacts/list-contacts';
+import delete_contacts from './contacts/delete-contacts';
+import count_contacts from './contacts/count-contacts';
+import verify_contacts from './contacts/verify-contacts';
+import create_contacts_bulk from './contacts/bulk/create-contacts-bulk';
+import delete_contacts_bulk from './contacts/bulk/delete-contacts-bulk';
 
 export const endpoints: Endpoint[] = [];
 
@@ -29,6 +38,15 @@ addEndpoint(send_message_groups);
 addEndpoint(upload_media_objects);
 addEndpoint(lookup_number_lookups);
 addEndpoint(send_typing_indicators);
+addEndpoint(create_contacts);
+addEndpoint(retrieve_contacts);
+addEndpoint(update_contacts);
+addEndpoint(list_contacts);
+addEndpoint(delete_contacts);
+addEndpoint(count_contacts);
+addEndpoint(verify_contacts);
+addEndpoint(create_contacts_bulk);
+addEndpoint(delete_contacts_bulk);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';

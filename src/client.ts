@@ -34,6 +34,21 @@ import {
   TypingIndicatorSendResponse,
   TypingIndicators,
 } from './resources/typing-indicators';
+import {
+  Contact,
+  ContactCountResponse,
+  ContactCreateParams,
+  ContactCreateResponse,
+  ContactDeleteResponse,
+  ContactListParams,
+  ContactListResponse,
+  ContactRetrieveResponse,
+  ContactUpdateParams,
+  ContactUpdateResponse,
+  ContactVerifyParams,
+  ContactVerifyResponse,
+  Contacts,
+} from './resources/contacts/contacts';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -760,12 +775,14 @@ export class SendblueAPI {
   mediaObjects: API.MediaObjects = new API.MediaObjects(this);
   lookups: API.Lookups = new API.Lookups(this);
   typingIndicators: API.TypingIndicators = new API.TypingIndicators(this);
+  contacts: API.Contacts = new API.Contacts(this);
 }
 SendblueAPI.Messages = Messages;
 SendblueAPI.Groups = Groups;
 SendblueAPI.MediaObjects = MediaObjects;
 SendblueAPI.Lookups = Lookups;
 SendblueAPI.TypingIndicators = TypingIndicators;
+SendblueAPI.Contacts = Contacts;
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
 
@@ -803,5 +820,21 @@ export declare namespace SendblueAPI {
     TypingIndicators as TypingIndicators,
     type TypingIndicatorSendResponse as TypingIndicatorSendResponse,
     type TypingIndicatorSendParams as TypingIndicatorSendParams,
+  };
+
+  export {
+    Contacts as Contacts,
+    type Contact as Contact,
+    type ContactCreateResponse as ContactCreateResponse,
+    type ContactRetrieveResponse as ContactRetrieveResponse,
+    type ContactUpdateResponse as ContactUpdateResponse,
+    type ContactListResponse as ContactListResponse,
+    type ContactDeleteResponse as ContactDeleteResponse,
+    type ContactCountResponse as ContactCountResponse,
+    type ContactVerifyResponse as ContactVerifyResponse,
+    type ContactCreateParams as ContactCreateParams,
+    type ContactUpdateParams as ContactUpdateParams,
+    type ContactListParams as ContactListParams,
+    type ContactVerifyParams as ContactVerifyParams,
   };
 }
