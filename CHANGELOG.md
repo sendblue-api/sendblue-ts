@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0.2 (2025-08-09)
+
+Full Changelog: [v2.0.1...v2.0.2](https://github.com/sendblue-api/sendblue-ts/compare/v2.0.1...v2.0.2)
+
+### Features
+
+* **mcp:** add unix socket option for remote MCP ([52854a9](https://github.com/sendblue-api/sendblue-ts/commit/52854a9e187233ce45affbfb5b857c7ab82df0a4))
+
+
+### Chores
+
+* **internal:** move publish config ([dc74ec7](https://github.com/sendblue-api/sendblue-ts/commit/dc74ec7cb7b2dd07f8455cbae6b5895f966dfb56))
+* **internal:** update comment in script ([aed11bb](https://github.com/sendblue-api/sendblue-ts/commit/aed11bb1836b68e26681d785b37d523143e09a65))
+* **mcp:** refactor streamable http transport ([08443aa](https://github.com/sendblue-api/sendblue-ts/commit/08443aa8f74ab76206381150253d91198dad1c66))
+* update @stainless-api/prism-cli to v5.15.0 ([7b5c095](https://github.com/sendblue-api/sendblue-ts/commit/7b5c0955a03508b74e44c9245481625400ddd58e))
+
 ## 2.0.1 (2025-08-05)
 
 Full Changelog: [v0.1.0-alpha.1...v2.0.1](https://github.com/sendblue-api/sendblue-ts/compare/v0.1.0-alpha.1...v2.0.1)
