@@ -9,7 +9,7 @@ const client = new SendblueAPI({
 });
 
 describe('resource lookups', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('lookupNumber: only required params', async () => {
     const responsePromise = client.lookups.lookupNumber({ number: '+19999999999' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource lookups', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('lookupNumber: required and optional params', async () => {
     const response = await client.lookups.lookupNumber({ number: '+19999999999' });
   });
