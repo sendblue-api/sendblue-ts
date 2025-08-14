@@ -1,5 +1,5 @@
 {
-  "name": "sendblue-api-mcp",
+  "name": "sendblue-mcp",
   "version": "2.0.1",
   "description": "The official MCP Server for the Sendblue API API",
   "author": "Sendblue API <support@sendblue.co>",
@@ -58,8 +58,8 @@
     "typescript": "5.8.3"
   },
   "imports": {
-    "sendblue-api-mcp": ".",
-    "sendblue-api-mcp/*": "./src/*"
+    "sendblue-mcp": ".",
+    "sendblue-mcp/*": "./src/*"
   },
   "exports": {
     ".": {
