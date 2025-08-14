@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'sendblue-api-mcp/filtering';
-import { Metadata, asTextContentResult } from 'sendblue-api-mcp/tools/types';
+import { maybeFilter } from 'sendblue-mcp/filtering';
+import { Metadata, asTextContentResult } from 'sendblue-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import SendblueAPI from 'sendblue';

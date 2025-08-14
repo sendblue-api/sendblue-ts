@@ -11,7 +11,7 @@ You can run the MCP Server directly via `npx`:
 ```sh
 export SENDBLUE_API_API_KEY="My API Key"
 export SENDBLUE_API_API_SECRET="My API Secret"
-npx -y sendblue-api-mcp@latest
+npx -y sendblue-mcp@latest
 ```
 
 ### Via MCP Client
@@ -26,7 +26,7 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "sendblue_api": {
       "command": "npx",
-      "args": ["-y", "sendblue-api-mcp", "--client=claude", "--tools=all"],
+      "args": ["-y", "sendblue-mcp", "--client=claude", "--tools=all"],
       "env": {
         "SENDBLUE_API_API_KEY": "My API Key",
         "SENDBLUE_API_API_SECRET": "My API Secret"
@@ -132,10 +132,10 @@ over time, you can manually enable or disable certain capabilities:
 
 ```js
 // Import the server, generated endpoints, or the init function
-import { server, endpoints, init } from "sendblue-api-mcp/server";
+import { server, endpoints, init } from "sendblue-mcp/server";
 
 // import a specific tool
-import retrieveMessages from "sendblue-api-mcp/tools/messages/retrieve-messages";
+import retrieveMessages from "sendblue-mcp/tools/messages/retrieve-messages";
 
 // initialize the server and all endpoints
 init({ server, endpoints });

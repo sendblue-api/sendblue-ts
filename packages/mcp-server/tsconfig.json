@@ -9,8 +9,8 @@
     "esModuleInterop": true,
     "baseUrl": "./",
     "paths": {
-      "sendblue-api-mcp/*": ["src/*"],
-      "sendblue-api-mcp": ["src/index.ts"]
+      "sendblue-mcp/*": ["src/*"],
+      "sendblue-mcp": ["src/index.ts"]
     },
     "noEmit": true,
 
