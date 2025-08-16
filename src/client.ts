@@ -777,12 +777,14 @@ export class SendblueAPI {
   typingIndicators: API.TypingIndicators = new API.TypingIndicators(this);
   contacts: API.Contacts = new API.Contacts(this);
 }
+
 SendblueAPI.Messages = Messages;
 SendblueAPI.Groups = Groups;
 SendblueAPI.MediaObjects = MediaObjects;
 SendblueAPI.Lookups = Lookups;
 SendblueAPI.TypingIndicators = TypingIndicators;
 SendblueAPI.Contacts = Contacts;
+
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
 
