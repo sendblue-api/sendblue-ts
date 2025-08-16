@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.0.2 (2025-08-16)
+
+Full Changelog: [v2.0.1...v2.0.2](https://github.com/sendblue-api/sendblue-ts/compare/v2.0.1...v2.0.2)
+
+### Features
+
+* **mcp:** add unix socket option for remote MCP ([52854a9](https://github.com/sendblue-api/sendblue-ts/commit/52854a9e187233ce45affbfb5b857c7ab82df0a4))
+
+
+### Chores
+
+* configure new SDK language ([019dce8](https://github.com/sendblue-api/sendblue-ts/commit/019dce887551a69aec845898b364e7e70e373e62))
+* **deps:** update dependency @types/node to v20.17.58 ([1da3189](https://github.com/sendblue-api/sendblue-ts/commit/1da3189a76422b53fef99cbbbf02966045a62c51))
+* **internal:** codegen related update ([b6207dc](https://github.com/sendblue-api/sendblue-ts/commit/b6207dc4e332597b22215f61b1e20e1c71735183))
+* **internal:** formatting change ([abb2aa5](https://github.com/sendblue-api/sendblue-ts/commit/abb2aa5ab745ea4952e486964fdcd4086147abfe))
+* **internal:** move publish config ([dc74ec7](https://github.com/sendblue-api/sendblue-ts/commit/dc74ec7cb7b2dd07f8455cbae6b5895f966dfb56))
+* **internal:** update comment in script ([aed11bb](https://github.com/sendblue-api/sendblue-ts/commit/aed11bb1836b68e26681d785b37d523143e09a65))
+* **mcp:** document remote server in README.md ([eebc118](https://github.com/sendblue-api/sendblue-ts/commit/eebc11870dc54ebe4920f3377544d908b2f51f3e))
+* **mcp:** minor cleanup of types and package.json ([51cadb0](https://github.com/sendblue-api/sendblue-ts/commit/51cadb07c26c3e8dde810467cd7dac1b80e9772b))
+* **mcp:** refactor streamable http transport ([08443aa](https://github.com/sendblue-api/sendblue-ts/commit/08443aa8f74ab76206381150253d91198dad1c66))
+* **mcp:** update README ([6ea91e7](https://github.com/sendblue-api/sendblue-ts/commit/6ea91e77fde3b74de33e0d7ac58f45a9762a0057))
+* update @stainless-api/prism-cli to v5.15.0 ([7b5c095](https://github.com/sendblue-api/sendblue-ts/commit/7b5c0955a03508b74e44c9245481625400ddd58e))
+
 ## 2.0.1 (2025-08-05)
 
 Full Changelog: [v0.1.0-alpha.1...v2.0.1](https://github.com/sendblue-api/sendblue-ts/compare/v0.1.0-alpha.1...v2.0.1)

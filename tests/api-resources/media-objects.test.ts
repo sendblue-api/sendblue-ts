@@ -9,7 +9,7 @@ const client = new SendblueAPI({
 });
 
 describe('resource mediaObjects', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('upload: only required params', async () => {
     const responsePromise = client.mediaObjects.upload({ media_url: 'https://example.com/image.jpg' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource mediaObjects', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('upload: required and optional params', async () => {
     const response = await client.mediaObjects.upload({ media_url: 'https://example.com/image.jpg' });
   });
