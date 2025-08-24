@@ -731,7 +731,7 @@ export class SendblueAPI {
         // Preserve legacy string encoding behavior for now
         headers.values.has('content-type')) ||
       // `Blob` is superset of `File`
-      body instanceof Blob ||
+      ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
       body instanceof FormData ||
       // `URLSearchParams` -> `application/x-www-form-urlencoded`
@@ -777,12 +777,14 @@ export class SendblueAPI {
   typingIndicators: API.TypingIndicators = new API.TypingIndicators(this);
   contacts: API.Contacts = new API.Contacts(this);
 }
+
 SendblueAPI.Messages = Messages;
 SendblueAPI.Groups = Groups;
 SendblueAPI.MediaObjects = MediaObjects;
 SendblueAPI.Lookups = Lookups;
 SendblueAPI.TypingIndicators = TypingIndicators;
 SendblueAPI.Contacts = Contacts;
+
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
 
