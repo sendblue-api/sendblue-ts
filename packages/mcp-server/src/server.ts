@@ -32,7 +32,7 @@ export const newMcpServer = () =>
   new McpServer(
     {
       name: 'sendblue_api',
-      version: '2.0.1',
+      version: '2.0.2',
     },
     { capabilities: { tools: {}, logging: {} } },
   );
