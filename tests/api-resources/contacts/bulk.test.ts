@@ -9,7 +9,7 @@ const client = new SendblueAPI({
 });
 
 describe('resource bulk', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.contacts.bulk.create({ contacts: [{ phone: 'phone' }] });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.contacts.bulk.create({
       contacts: [
@@ -36,7 +36,7 @@ describe('resource bulk', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.contacts.bulk.delete({ contact_ids: ['+1234567890', '+0987654321'] });
     const rawResponse = await responsePromise.asResponse();
@@ -48,7 +48,7 @@ describe('resource bulk', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.contacts.bulk.delete({ contact_ids: ['+1234567890', '+0987654321'] });
   });
