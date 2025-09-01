@@ -578,11 +578,6 @@ export interface MessageListParams {
   message_type?: 'message' | 'group';
 
   /**
-   * Filter by any phone number (from or to)
-   */
-  number?: string;
-
-  /**
    * Number of messages to skip
    */
   offset?: number;
@@ -596,11 +591,6 @@ export interface MessageListParams {
    * Sort order
    */
   order_direction?: 'asc' | 'desc';
-
-  /**
-   * Filter by Sendblue phone number
-   */
-  sendblue_number?: string;
 
   /**
    * Filter messages sent after this date (ISO 8601 format)
