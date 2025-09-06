@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'sendblue-api-mcp/filtering';
-import { Metadata, asTextContentResult } from 'sendblue-api-mcp/tools/types';
+import { maybeFilter } from 'sendblue-mcp/filtering';
+import { Metadata, asTextContentResult } from 'sendblue-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import SendblueAPI from 'sendblue';
@@ -58,10 +58,6 @@ export const tool: Tool = {
         description: 'Filter by message type',
         enum: ['message', 'group'],
       },
-      number: {
-        type: 'string',
-        description: 'Filter by any phone number (from or to)',
-      },
       offset: {
         type: 'integer',
         description: 'Number of messages to skip',
@@ -75,10 +71,6 @@ export const tool: Tool = {
         type: 'string',
         description: 'Sort order',
         enum: ['asc', 'desc'],
-      },
-      sendblue_number: {
-        type: 'string',
-        description: 'Filter by Sendblue phone number',
       },
       sent_at_gte: {
         type: 'string',

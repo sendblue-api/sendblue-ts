@@ -9,7 +9,7 @@ const client = new SendblueAPI({
 });
 
 describe('resource messages', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.messages.retrieve('msg_abc123def456');
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource messages', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.messages.list();
     const rawResponse = await responsePromise.asResponse();
@@ -33,7 +33,7 @@ describe('resource messages', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -47,11 +47,9 @@ describe('resource messages', () => {
           is_outbound: 'true',
           limit: 1,
           message_type: 'message',
-          number: '+19998887777',
           offset: 0,
           order_by: 'createdAt',
           order_direction: 'asc',
-          sendblue_number: '+19998887777',
           sent_at_gte: '2024-01-01T00:00:00Z',
           sent_at_lte: '2024-01-31T23:59:59Z',
           service: 'iMessage',
@@ -66,7 +64,7 @@ describe('resource messages', () => {
     ).rejects.toThrow(SendblueAPI.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('getStatus: only required params', async () => {
     const responsePromise = client.messages.getStatus({ handle: 'msg_abc123def456' });
     const rawResponse = await responsePromise.asResponse();
@@ -78,12 +76,12 @@ describe('resource messages', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('getStatus: required and optional params', async () => {
     const response = await client.messages.getStatus({ handle: 'msg_abc123def456' });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('send: only required params', async () => {
     const responsePromise = client.messages.send({
       content: 'Hello, World!',
@@ -99,7 +97,7 @@ describe('resource messages', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('send: required and optional params', async () => {
     const response = await client.messages.send({
       content: 'Hello, World!',

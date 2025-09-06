@@ -9,7 +9,7 @@ const client = new SendblueAPI({
 });
 
 describe('resource groups', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('modify: only required params', async () => {
     const responsePromise = client.groups.modify({
       group_id: 'group_123456',
@@ -25,7 +25,7 @@ describe('resource groups', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('modify: required and optional params', async () => {
     const response = await client.groups.modify({
       group_id: 'group_123456',
@@ -34,7 +34,7 @@ describe('resource groups', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('sendMessage: only required params', async () => {
     const responsePromise = client.groups.sendMessage({
       content: 'Hello, everyone!',
@@ -49,7 +49,7 @@ describe('resource groups', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('sendMessage: required and optional params', async () => {
     const response = await client.groups.sendMessage({
       content: 'Hello, everyone!',
