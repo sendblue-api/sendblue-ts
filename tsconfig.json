@@ -7,10 +7,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "baseUrl": "./",
     "paths": {
-      "sendblue/*": ["src/*"],
-      "sendblue": ["src/index.ts"]
+      "sendblue/*": ["./src/*"],
+      "sendblue": ["./src/index.ts"]
     },
     "noEmit": true,
 
