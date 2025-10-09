@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'upload_media_objects',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nUpload a media file to Sendblue's CDN for use in messages\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    mediaObjectId: {\n      type: 'string'\n    },\n    message: {\n      type: 'string'\n    },\n    status: {\n      type: 'string'\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nUpload a media file to Sendblue's CDN for use in messages\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/media_object_upload_response',\n  $defs: {\n    media_object_upload_response: {\n      type: 'object',\n      properties: {\n        mediaObjectId: {\n          type: 'string'\n        },\n        message: {\n          type: 'string'\n        },\n        status: {\n          type: 'string'\n        }\n      }\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'lookup_number_lookups',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDetermine if a phone number supports iMessage or SMS. Useful for checking if a number is an iPhone, if it is real, or which provider to use.\n\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    number: {\n      type: 'string',\n      description: 'The number you evaluated in E.164 format'\n    },\n    service: {\n      type: 'string',\n      description: 'The service the number supports',\n      enum: [        'iMessage',\n        'SMS'\n      ]\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDetermine if a phone number supports iMessage or SMS. Useful for checking if a number is an iPhone, if it is real, or which provider to use.\n\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/lookup_lookup_number_response',\n  $defs: {\n    lookup_lookup_number_response: {\n      type: 'object',\n      properties: {\n        number: {\n          type: 'string',\n          description: 'The number you evaluated in E.164 format'\n        },\n        service: {\n          type: 'string',\n          description: 'The service the number supports',\n          enum: [            'iMessage',\n            'SMS'\n          ]\n        }\n      }\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
