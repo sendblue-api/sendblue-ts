@@ -26,7 +26,7 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "sendblue_api": {
       "command": "npx",
-      "args": ["-y", "sendblue-mcp", "--client=claude", "--tools=all"],
+      "args": ["-y", "sendblue-mcp", "--client=claude", "--tools=dynamic"],
       "env": {
         "SENDBLUE_API_API_KEY": "My API Key",
         "SENDBLUE_API_API_SECRET": "My API Secret"
@@ -280,3 +280,10 @@ The following tools are available in this MCP server.
 
 - `create_contacts_bulk` (`write`): Create multiple contacts in bulk
 - `delete_contacts_bulk` (`write`): Delete multiple contacts by their IDs
+
+### Resource `webhooks`:
+
+- `create_webhooks` (`write`): Add new webhooks to your account. This endpoint appends webhooks to the existing list.
+- `update_webhooks` (`write`): Replace all webhooks for your account. This endpoint completely replaces the existing webhook configuration.
+- `list_webhooks` (`read`): Get all webhooks configured for your account.
+- `delete_webhooks` (`write`): Delete specific webhooks from your account.

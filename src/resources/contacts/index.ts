@@ -19,6 +19,5 @@ export {
   type ContactVerifyResponse,
   type ContactCreateParams,
   type ContactUpdateParams,
-  type ContactListParams,
   type ContactVerifyParams,
 } from './contacts';

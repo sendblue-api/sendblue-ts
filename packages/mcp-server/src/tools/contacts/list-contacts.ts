@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'sendblue-mcp/filtering';
-import { Metadata, asTextContentResult } from 'sendblue-mcp/tools/types';
+import { isJqError, maybeFilter } from 'sendblue-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'sendblue-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import SendblueAPI from 'sendblue';
@@ -22,31 +22,6 @@ export const tool: Tool = {
   inputSchema: {
     type: 'object',
     properties: {
-      cid: {
-        type: 'string',
-        description: 'Filter by contact ID',
-      },
-      limit: {
-        type: 'integer',
-        description: 'Maximum number of contacts to return',
-      },
-      offset: {
-        type: 'integer',
-        description: 'Number of contacts to skip',
-      },
-      order_by: {
-        type: 'string',
-        description: 'Field to sort by',
-      },
-      order_direction: {
-        type: 'string',
-        description: 'Sort direction',
-        enum: ['asc', 'desc'],
-      },
-      phone_number: {
-        type: 'string',
-        description: 'Filter by phone number',
-      },
       jq_filter: {
         type: 'string',
         title: 'jq Filter',
@@ -62,8 +37,15 @@ export const tool: Tool = {
 };
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {
-  const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.contacts.list(body)));
+  const { jq_filter } = args as any;
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.contacts.list()));
+  } catch (error) {
+    if (isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
