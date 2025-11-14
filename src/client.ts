@@ -35,12 +35,22 @@ import {
   TypingIndicators,
 } from './resources/typing-indicators';
 import {
+  WebhookConfiguration,
+  WebhookCreateParams,
+  WebhookCreateResponse,
+  WebhookDeleteParams,
+  WebhookDeleteResponse,
+  WebhookListResponse,
+  WebhookUpdateParams,
+  WebhookUpdateResponse,
+  Webhooks,
+} from './resources/webhooks';
+import {
   Contact,
   ContactCountResponse,
   ContactCreateParams,
   ContactCreateResponse,
   ContactDeleteResponse,
-  ContactListParams,
   ContactListResponse,
   ContactRetrieveResponse,
   ContactUpdateParams,
@@ -776,6 +786,7 @@ export class SendblueAPI {
   lookups: API.Lookups = new API.Lookups(this);
   typingIndicators: API.TypingIndicators = new API.TypingIndicators(this);
   contacts: API.Contacts = new API.Contacts(this);
+  webhooks: API.Webhooks = new API.Webhooks(this);
 }
 
 SendblueAPI.Messages = Messages;
@@ -784,6 +795,7 @@ SendblueAPI.MediaObjects = MediaObjects;
 SendblueAPI.Lookups = Lookups;
 SendblueAPI.TypingIndicators = TypingIndicators;
 SendblueAPI.Contacts = Contacts;
+SendblueAPI.Webhooks = Webhooks;
 
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -836,7 +848,18 @@ export declare namespace SendblueAPI {
     type ContactVerifyResponse as ContactVerifyResponse,
     type ContactCreateParams as ContactCreateParams,
     type ContactUpdateParams as ContactUpdateParams,
-    type ContactListParams as ContactListParams,
     type ContactVerifyParams as ContactVerifyParams,
+  };
+
+  export {
+    Webhooks as Webhooks,
+    type WebhookConfiguration as WebhookConfiguration,
+    type WebhookCreateResponse as WebhookCreateResponse,
+    type WebhookUpdateResponse as WebhookUpdateResponse,
+    type WebhookListResponse as WebhookListResponse,
+    type WebhookDeleteResponse as WebhookDeleteResponse,
+    type WebhookCreateParams as WebhookCreateParams,
+    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookDeleteParams as WebhookDeleteParams,
   };
 }

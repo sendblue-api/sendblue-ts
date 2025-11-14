@@ -7,24 +7,32 @@ import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import SendblueAPI from 'sendblue';
 
 export const metadata: Metadata = {
-  resource: 'media_objects',
+  resource: 'webhooks',
   operation: 'write',
   tags: [],
-  httpMethod: 'post',
-  httpPath: '/api/upload-media-object',
-  operationId: 'uploadMediaObject',
+  httpMethod: 'delete',
+  httpPath: '/api/v2/account/webhooks',
+  operationId: 'deleteWebhooks',
 };
 
 export const tool: Tool = {
-  name: 'upload_media_objects',
+  name: 'delete_webhooks',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nUpload a media file to Sendblue's CDN for use in messages\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/media_object_upload_response',\n  $defs: {\n    media_object_upload_response: {\n      type: 'object',\n      properties: {\n        mediaObjectId: {\n          type: 'string'\n        },\n        message: {\n          type: 'string'\n        },\n        status: {\n          type: 'string'\n        }\n      }\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDelete specific webhooks from your account.\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/webhook_delete_response',\n  $defs: {\n    webhook_delete_response: {\n      type: 'object',\n      properties: {\n        status: {\n          type: 'string',\n          enum: [            'OK',\n            'ERROR'\n          ]\n        },\n        message: {\n          type: 'string'\n        }\n      },\n      required: [        'status'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
-      media_url: {
+      webhooks: {
+        type: 'array',
+        description: 'Array of webhook URLs to delete',
+        items: {
+          type: 'string',
+        },
+      },
+      type: {
         type: 'string',
-        description: 'URL of the media file to upload',
+        description: "Webhook type (default to 'receive')",
+        enum: ['receive', 'call_log', 'line_blocked', 'line_assigned', 'outbound', 'contact_created'],
       },
       jq_filter: {
         type: 'string',
@@ -33,15 +41,17 @@ export const tool: Tool = {
           'A jq filter to apply to the response to include certain fields. Consult the output schema in the tool description to see the fields that are available.\n\nFor example: to include only the `name` field in every object of a results array, you can provide ".results[].name".\n\nFor more information, see the [jq documentation](https://jqlang.org/manual/).',
       },
     },
-    required: ['media_url'],
+    required: ['webhooks'],
   },
-  annotations: {},
+  annotations: {
+    idempotentHint: true,
+  },
 };
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
   try {
-    return asTextContentResult(await maybeFilter(jq_filter, await client.mediaObjects.upload(body)));
+    return asTextContentResult(await maybeFilter(jq_filter, await client.webhooks.delete(body)));
   } catch (error) {
     if (isJqError(error)) {
       return asErrorResult(error.message);

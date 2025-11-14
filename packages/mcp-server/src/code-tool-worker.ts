@@ -60,6 +60,10 @@ const fuse = new Fuse(
     'client.contacts.verify',
     'client.contacts.bulk.create',
     'client.contacts.bulk.delete',
+    'client.webhooks.create',
+    'client.webhooks.delete',
+    'client.webhooks.list',
+    'client.webhooks.update',
   ],
   { threshold: 1, shouldSort: true },
 );

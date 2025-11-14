@@ -62,11 +62,8 @@ export class Contacts extends APIResource {
    * const contacts = await client.contacts.list();
    * ```
    */
-  list(
-    query: ContactListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ContactListResponse> {
-    return this._client.get('/api/v2/contacts', { query, ...options });
+  list(options?: RequestOptions): APIPromise<ContactListResponse> {
+    return this._client.get('/api/v2/contacts', options);
   }
 
   /**
@@ -271,38 +268,6 @@ export interface ContactUpdateParams {
   tags?: Array<string>;
 }
 
-export interface ContactListParams {
-  /**
-   * Filter by contact ID
-   */
-  cid?: string;
-
-  /**
-   * Maximum number of contacts to return
-   */
-  limit?: number;
-
-  /**
-   * Number of contacts to skip
-   */
-  offset?: number;
-
-  /**
-   * Field to sort by
-   */
-  order_by?: string;
-
-  /**
-   * Sort direction
-   */
-  order_direction?: 'asc' | 'desc';
-
-  /**
-   * Filter by phone number
-   */
-  phone_number?: string;
-}
-
 export interface ContactVerifyParams {
   /**
    * Phone number to verify
@@ -324,7 +289,6 @@ export declare namespace Contacts {
     type ContactVerifyResponse as ContactVerifyResponse,
     type ContactCreateParams as ContactCreateParams,
     type ContactUpdateParams as ContactUpdateParams,
-    type ContactListParams as ContactListParams,
     type ContactVerifyParams as ContactVerifyParams,
   };
 
