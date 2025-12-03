@@ -11,7 +11,7 @@ You can run the MCP Server directly via `npx`:
 ```sh
 export SENDBLUE_API_API_KEY="My API Key"
 export SENDBLUE_API_API_SECRET="My API Secret"
-npx -y sendblue-api-mcp@latest
+npx -y sendblue-mcp@latest
 ```
 
 ### Via MCP Client
@@ -26,7 +26,7 @@ For clients with a configuration JSON, it might look something like this:
   "mcpServers": {
     "sendblue_api": {
       "command": "npx",
-      "args": ["-y", "sendblue-api-mcp", "--client=claude", "--tools=all"],
+      "args": ["-y", "sendblue-mcp", "--client=claude", "--tools=dynamic"],
       "env": {
         "SENDBLUE_API_API_KEY": "My API Key",
         "SENDBLUE_API_API_SECRET": "My API Secret"
@@ -36,12 +36,36 @@ For clients with a configuration JSON, it might look something like this:
 }
 ```
 
+### Cursor
+
+If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
+in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
+
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=sendblue-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsInNlbmRibHVlLW1jcCJdLCJlbnYiOnsiU0VOREJMVUVfQVBJX0FQSV9LRVkiOiJTZXQgeW91ciBTRU5EQkxVRV9BUElfQVBJX0tFWSBoZXJlLiIsIlNFTkRCTFVFX0FQSV9BUElfU0VDUkVUIjoiU2V0IHlvdXIgU0VOREJMVUVfQVBJX0FQSV9TRUNSRVQgaGVyZS4ifX0)
+
+### VS Code
+
+If you use MCP, you can install the MCP server by clicking the link below. You will need to set your environment variables
+in VS Code's `mcp.json`, which can be found via Command Palette > MCP: Open User Configuration.
+
+[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22sendblue-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22sendblue-mcp%22%5D%2C%22env%22%3A%7B%22SENDBLUE_API_API_KEY%22%3A%22Set%20your%20SENDBLUE_API_API_KEY%20here.%22%2C%22SENDBLUE_API_API_SECRET%22%3A%22Set%20your%20SENDBLUE_API_API_SECRET%20here.%22%7D%7D)
+
+### Claude Code
+
+If you use Claude Code, you can install the MCP server by running the command below in your terminal. You will need to set your
+environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
+
+```
+claude mcp add --transport stdio sendblue_api --env SENDBLUE_API_API_KEY="Your SENDBLUE_API_API_KEY here." SENDBLUE_API_API_SECRET="Your SENDBLUE_API_API_SECRET here." -- npx -y sendblue-mcp
+```
+
 ## Exposing endpoints to your MCP Client
 
-There are two ways to expose endpoints as tools in the MCP server:
+There are three ways to expose endpoints as tools in the MCP server:
 
 1. Exposing one tool per endpoint, and filtering as necessary
 2. Exposing a set of tools to dynamically discover and invoke endpoints from the API
+3. Exposing a docs search tool and a code execution tool, allowing the client to write code to be executed against the TypeScript client
 
 ### Filtering endpoints and tools
 
@@ -75,6 +99,18 @@ See more information with `--help`.
 All of these command-line options can be repeated, combined together, and have corresponding exclusion versions (e.g. `--no-tool`).
 
 Use `--list` to see the list of available tools, or see below.
+
+### Code execution
+
+If you specify `--tools=code` to the MCP server, it will expose just two tools:
+
+- `search_docs` - Searches the API documentation and returns a list of markdown results
+- `execute` - Runs code against the TypeScript client
+
+This allows the LLM to implement more complex logic by chaining together many API calls without loading
+intermediary results into its context window.
+
+The code execution itself happens in a Deno sandbox that has network access only to the base URL for the API.
 
 ### Specifying the MCP Client
 
@@ -128,14 +164,52 @@ over time, you can manually enable or disable certain capabilities:
 --resource=cards,accounts --operation=read --tag=kyc --no-tool=create_cards
 ```
 
+## Running remotely
+
+Launching the client with `--transport=http` launches the server as a remote server using Streamable HTTP transport. The `--port` setting can choose the port it will run on, and the `--socket` setting allows it to run on a Unix socket.
+
+Authorization can be provided via the following headers:
+| Header | Equivalent client option | Security scheme |
+| ------------------- | ------------------------ | --------------- |
+| `sb-api-key-id` | `apiKey` | ApiKeyAuth |
+| `sb-api-secret-key` | `apiSecret` | ApiSecretAuth |
+
+A configuration JSON for this server might look like this, assuming the server is hosted at `http://localhost:3000`:
+
+```json
+{
+  "mcpServers": {
+    "sendblue_api": {
+      "url": "http://localhost:3000",
+      "headers": {
+        "sb-api-key-id": "My API Key"
+      }
+    }
+  }
+}
+```
+
+The command-line arguments for filtering tools and specifying clients can also be used as query parameters in the URL.
+For example, to exclude specific tools while including others, use the URL:
+
+```
+http://localhost:3000?resource=cards&resource=accounts&no_tool=create_cards
+```
+
+Or, to configure for the Cursor client, with a custom max tool name length, use the URL:
+
+```
+http://localhost:3000?client=cursor&capability=tool-name-length%3D40
+```
+
 ## Importing the tools and server individually
 
 ```js
 // Import the server, generated endpoints, or the init function
-import { server, endpoints, init } from "sendblue-api-mcp/server";
+import { server, endpoints, init } from "sendblue-mcp/server";
 
 // import a specific tool
-import retrieveMessages from "sendblue-api-mcp/tools/messages/retrieve-messages";
+import retrieveMessages from "sendblue-mcp/tools/messages/retrieve-messages";
 
 // initialize the server and all endpoints
 init({ server, endpoints });
@@ -206,3 +280,10 @@ The following tools are available in this MCP server.
 
 - `create_contacts_bulk` (`write`): Create multiple contacts in bulk
 - `delete_contacts_bulk` (`write`): Delete multiple contacts by their IDs
+
+### Resource `webhooks`:
+
+- `create_webhooks` (`write`): Add new webhooks to your account. This endpoint appends webhooks to the existing list.
+- `update_webhooks` (`write`): Replace all webhooks for your account. This endpoint completely replaces the existing webhook configuration.
+- `list_webhooks` (`read`): Get all webhooks configured for your account.
+- `delete_webhooks` (`write`): Delete specific webhooks from your account.

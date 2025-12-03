@@ -9,7 +9,7 @@ const client = new SendblueAPI({
 });
 
 describe('resource contacts', () => {
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.contacts.create({ number: 'number' });
     const rawResponse = await responsePromise.asResponse();
@@ -21,7 +21,7 @@ describe('resource contacts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.contacts.create({
       number: 'number',
@@ -40,7 +40,7 @@ describe('resource contacts', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('retrieve', async () => {
     const responsePromise = client.contacts.retrieve('+1234567890');
     const rawResponse = await responsePromise.asResponse();
@@ -52,7 +52,7 @@ describe('resource contacts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.contacts.update('+1234567890', {});
     const rawResponse = await responsePromise.asResponse();
@@ -64,7 +64,7 @@ describe('resource contacts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.contacts.list();
     const rawResponse = await responsePromise.asResponse();
@@ -76,25 +76,7 @@ describe('resource contacts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.contacts.list(
-        {
-          cid: 'cid',
-          limit: 0,
-          offset: 0,
-          order_by: 'order_by',
-          order_direction: 'asc',
-          phone_number: 'phone_number',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(SendblueAPI.NotFoundError);
-  });
-
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.contacts.delete('+1234567890');
     const rawResponse = await responsePromise.asResponse();
@@ -106,7 +88,7 @@ describe('resource contacts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('count', async () => {
     const responsePromise = client.contacts.count();
     const rawResponse = await responsePromise.asResponse();
@@ -118,7 +100,7 @@ describe('resource contacts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('verify: only required params', async () => {
     const responsePromise = client.contacts.verify({ number: 'number' });
     const rawResponse = await responsePromise.asResponse();
@@ -130,7 +112,7 @@ describe('resource contacts', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
+  // Prism tests are disabled
   test.skip('verify: required and optional params', async () => {
     const response = await client.contacts.verify({ number: 'number' });
   });

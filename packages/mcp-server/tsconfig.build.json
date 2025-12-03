@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "sendblue-api-mcp/*": ["dist/src/*"],
-      "sendblue-api-mcp": ["dist/src/index.ts"]
+      "sendblue-mcp/*": ["./dist/src/*"],
+      "sendblue-mcp": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

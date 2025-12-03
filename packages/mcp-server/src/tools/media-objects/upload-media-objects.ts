@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'sendblue-api-mcp/filtering';
-import { Metadata, asTextContentResult } from 'sendblue-api-mcp/tools/types';
+import { isJqError, maybeFilter } from 'sendblue-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'sendblue-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import SendblueAPI from 'sendblue';
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'upload_media_objects',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nUpload a media file to Sendblue's CDN for use in messages\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    mediaObjectId: {\n      type: 'string'\n    },\n    message: {\n      type: 'string'\n    },\n    status: {\n      type: 'string'\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nUpload a media file to Sendblue's CDN for use in messages\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/media_object_upload_response',\n  $defs: {\n    media_object_upload_response: {\n      type: 'object',\n      properties: {\n        mediaObjectId: {\n          type: 'string'\n        },\n        message: {\n          type: 'string'\n        },\n        status: {\n          type: 'string'\n        }\n      }\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -40,7 +40,14 @@ export const tool: Tool = {
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {
   const { jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.mediaObjects.upload(body)));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.mediaObjects.upload(body)));
+  } catch (error) {
+    if (error instanceof SendblueAPI.APIError || isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };

@@ -1,7 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { maybeFilter } from 'sendblue-api-mcp/filtering';
-import { Metadata, asTextContentResult } from 'sendblue-api-mcp/tools/types';
+import { isJqError, maybeFilter } from 'sendblue-mcp/filtering';
+import { Metadata, asErrorResult, asTextContentResult } from 'sendblue-mcp/tools/types';
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import SendblueAPI from 'sendblue';
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export const tool: Tool = {
   name: 'delete_contacts',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDelete a specific contact\n\n# Response Schema\n```json\n{\n  type: 'object',\n  properties: {\n    status: {\n      type: 'string'\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDelete a specific contact\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/contact_delete_response',\n  $defs: {\n    contact_delete_response: {\n      type: 'object',\n      properties: {\n        status: {\n          type: 'string'\n        }\n      }\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -41,7 +41,14 @@ export const tool: Tool = {
 
 export const handler = async (client: SendblueAPI, args: Record<string, unknown> | undefined) => {
   const { phone_number, jq_filter, ...body } = args as any;
-  return asTextContentResult(await maybeFilter(jq_filter, await client.contacts.delete(phone_number)));
+  try {
+    return asTextContentResult(await maybeFilter(jq_filter, await client.contacts.delete(phone_number)));
+  } catch (error) {
+    if (error instanceof SendblueAPI.APIError || isJqError(error)) {
+      return asErrorResult(error.message);
+    }
+    throw error;
+  }
 };
 
 export default { metadata, tool, handler };
