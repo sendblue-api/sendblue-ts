@@ -145,11 +145,6 @@ export interface Contact {
    * Tags associated with the contact
    */
   tags?: Array<string>;
-
-  /**
-   * Whether the contact is verified
-   */
-  verified?: boolean;
 }
 
 export interface ContactCreateResponse {
