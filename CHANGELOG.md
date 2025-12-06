@@ -1,5 +1,28 @@
 # Changelog
 
+## 2.1.0 (2025-12-06)
+
+Full Changelog: [v2.0.2...v2.1.0](https://github.com/sendblue-api/sendblue-ts/compare/v2.0.2...v2.1.0)
+
+### Features
+
+* **api/v2/contact:** removed verified field in response example ([84e9eec](https://github.com/sendblue-api/sendblue-ts/commit/84e9eeccbeb4fbd17a8b0d996a9a23c9f37bbdcc))
+* **mcp:** add typescript check to code execution tool ([98896e9](https://github.com/sendblue-api/sendblue-ts/commit/98896e9892dd3569c3367abc4a98f7c249d35464))
+* **mcp:** handle code mode calls in the Stainless API ([9d72f3d](https://github.com/sendblue-api/sendblue-ts/commit/9d72f3d8a4754cd35271facefcaf54490df9dcff))
+
+
+### Bug Fixes
+
+* **mcp:** correct code tool API endpoint ([8546f73](https://github.com/sendblue-api/sendblue-ts/commit/8546f73c5d8620193684f1d8091a2ae59c384951))
+* **mcp:** return correct lines on typescript errors ([d007cbd](https://github.com/sendblue-api/sendblue-ts/commit/d007cbd401f459106188126d1f801dbb364c3697))
+
+
+### Chores
+
+* **internal:** codegen related update ([ad57e05](https://github.com/sendblue-api/sendblue-ts/commit/ad57e057d311de42abc91b26759c91001fc8deb0))
+* **internal:** codegen related update ([7665eac](https://github.com/sendblue-api/sendblue-ts/commit/7665eacb311050999d17a500150f3361acdfe1fc))
+* use latest @modelcontextprotocol/sdk ([75e400a](https://github.com/sendblue-api/sendblue-ts/commit/75e400a940b77d4b1fe8c6a32304e6ae6ac06392))
+
 ## 2.0.2 (2025-12-03)
 
 Full Changelog: [v2.0.1...v2.0.2](https://github.com/sendblue-api/sendblue-ts/compare/v2.0.1...v2.0.2)
