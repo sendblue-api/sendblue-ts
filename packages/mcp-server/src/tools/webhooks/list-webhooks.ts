@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   operation: 'read',
   tags: [],
   httpMethod: 'get',
-  httpPath: '/api/v2/account/webhooks',
+  httpPath: '/api/account/webhooks',
   operationId: 'getWebhooks',
 };
 

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   operation: 'write',
   tags: [],
   httpMethod: 'put',
-  httpPath: '/api/v2/account/webhooks',
+  httpPath: '/api/account/webhooks',
   operationId: 'replaceWebhooks',
 };
 

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   operation: 'write',
   tags: [],
   httpMethod: 'delete',
-  httpPath: '/api/v2/account/webhooks',
+  httpPath: '/api/account/webhooks',
   operationId: 'deleteWebhooks',
 };
 

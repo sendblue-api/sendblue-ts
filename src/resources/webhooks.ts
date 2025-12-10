@@ -25,7 +25,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<WebhookCreateResponse> {
-    return this._client.post('/api/v2/account/webhooks', { body, ...options });
+    return this._client.post('/api/account/webhooks', { body, ...options });
   }
 
   /**
@@ -53,7 +53,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   update(body: WebhookUpdateParams, options?: RequestOptions): APIPromise<WebhookUpdateResponse> {
-    return this._client.put('/api/v2/account/webhooks', { body, ...options });
+    return this._client.put('/api/account/webhooks', { body, ...options });
   }
 
   /**
@@ -65,7 +65,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   list(options?: RequestOptions): APIPromise<WebhookListResponse> {
-    return this._client.get('/api/v2/account/webhooks', options);
+    return this._client.get('/api/account/webhooks', options);
   }
 
   /**
@@ -79,7 +79,7 @@ export class Webhooks extends APIResource {
    * ```
    */
   delete(body: WebhookDeleteParams, options?: RequestOptions): APIPromise<WebhookDeleteResponse> {
-    return this._client.delete('/api/v2/account/webhooks', { body, ...options });
+    return this._client.delete('/api/account/webhooks', { body, ...options });
   }
 }
 

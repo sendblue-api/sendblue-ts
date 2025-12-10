@@ -102,7 +102,7 @@ Types:
 
 Methods:
 
-- <code title="post /api/v2/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">create</a>({ ...params }) -> WebhookCreateResponse</code>
-- <code title="put /api/v2/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>({ ...params }) -> WebhookUpdateResponse</code>
-- <code title="get /api/v2/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
-- <code title="delete /api/v2/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>({ ...params }) -> WebhookDeleteResponse</code>
+- <code title="post /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">create</a>({ ...params }) -> WebhookCreateResponse</code>
+- <code title="put /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>({ ...params }) -> WebhookUpdateResponse</code>
+- <code title="get /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
+- <code title="delete /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>({ ...params }) -> WebhookDeleteResponse</code>
