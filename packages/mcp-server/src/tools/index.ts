@@ -22,10 +22,6 @@ import count_contacts from './contacts/count-contacts';
 import verify_contacts from './contacts/verify-contacts';
 import create_contacts_bulk from './contacts/bulk/create-contacts-bulk';
 import delete_contacts_bulk from './contacts/bulk/delete-contacts-bulk';
-import create_webhooks from './webhooks/create-webhooks';
-import update_webhooks from './webhooks/update-webhooks';
-import list_webhooks from './webhooks/list-webhooks';
-import delete_webhooks from './webhooks/delete-webhooks';
 
 export const endpoints: Endpoint[] = [];
 
@@ -51,10 +47,6 @@ addEndpoint(count_contacts);
 addEndpoint(verify_contacts);
 addEndpoint(create_contacts_bulk);
 addEndpoint(delete_contacts_bulk);
-addEndpoint(create_webhooks);
-addEndpoint(update_webhooks);
-addEndpoint(list_webhooks);
-addEndpoint(delete_webhooks);
 
 export type Filter = {
   type: 'resource' | 'operation' | 'tag' | 'tool';

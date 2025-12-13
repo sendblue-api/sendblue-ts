@@ -27,9 +27,9 @@ describe('resource bulk', () => {
       contacts: [
         {
           phone: 'phone',
-          company: 'company',
-          firstName: 'firstName',
-          lastName: 'lastName',
+          company_name: 'company_name',
+          first_name: 'first_name',
+          last_name: 'last_name',
           tags: ['string'],
         },
       ],

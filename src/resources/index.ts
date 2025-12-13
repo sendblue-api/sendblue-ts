@@ -12,6 +12,7 @@ export {
   type ContactVerifyResponse,
   type ContactCreateParams,
   type ContactUpdateParams,
+  type ContactListParams,
   type ContactVerifyParams,
 } from './contacts/contacts';
 export {
@@ -37,14 +38,4 @@ export {
   type TypingIndicatorSendResponse,
   type TypingIndicatorSendParams,
 } from './typing-indicators';
-export {
-  Webhooks,
-  type WebhookConfiguration,
-  type WebhookCreateResponse,
-  type WebhookUpdateResponse,
-  type WebhookListResponse,
-  type WebhookDeleteResponse,
-  type WebhookCreateParams,
-  type WebhookUpdateParams,
-  type WebhookDeleteParams,
-} from './webhooks';
+export { Webhooks } from './webhooks';
