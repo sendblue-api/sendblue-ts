@@ -62,8 +62,11 @@ export class Contacts extends APIResource {
    * const contacts = await client.contacts.list();
    * ```
    */
-  list(options?: RequestOptions): APIPromise<ContactListResponse> {
-    return this._client.get('/api/v2/contacts', options);
+  list(
+    query: ContactListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ContactListResponse> {
+    return this._client.get('/api/v2/contacts', { query, ...options });
   }
 
   /**
@@ -109,12 +112,12 @@ export interface Contact {
   /**
    * Email of assigned user
    */
-  assignedToEmail?: string;
+  assigned_to_email?: string;
 
   /**
    * Company name
    */
-  companyName?: string;
+  company_name?: string;
 
   /**
    * When the contact was created
@@ -124,12 +127,12 @@ export interface Contact {
   /**
    * First name
    */
-  firstName?: string;
+  first_name?: string;
 
   /**
    * Last name
    */
-  lastName?: string;
+  last_name?: string;
 
   /**
    * Phone number in E.164 format
@@ -139,12 +142,17 @@ export interface Contact {
   /**
    * Associated Sendblue phone number
    */
-  sendblueNumber?: string;
+  sendblue_number?: string;
 
   /**
    * Tags associated with the contact
    */
   tags?: Array<string>;
+
+  /**
+   * Whether the contact is verified
+   */
+  verified?: boolean;
 }
 
 export interface ContactCreateResponse {
@@ -184,57 +192,57 @@ export interface ContactVerifyResponse {
 
 export interface ContactCreateParams {
   /**
-   * Contact's phone number in E.164 format
+   * Contact's phone number in E.164 format (preferred)
    */
   number: string;
 
   /**
-   * Email of assigned user
+   * Email of assigned user (preferred)
    */
   assigned_to_email?: string;
 
   /**
-   * Email of assigned user (alternative)
+   * @deprecated Email of assigned user (deprecated, use assigned_to_email)
    */
   assignedToEmail?: string;
 
   /**
-   * Contact's first name
+   * Contact's first name (preferred)
    */
   first_name?: string;
 
   /**
-   * Contact's first name (alternative)
+   * @deprecated Contact's first name (deprecated, use first_name)
    */
   firstName?: string;
 
   /**
-   * Contact's last name
+   * Contact's last name (preferred)
    */
   last_name?: string;
 
   /**
-   * Contact's last name (alternative)
+   * @deprecated Contact's last name (deprecated, use last_name)
    */
   lastName?: string;
 
   /**
-   * Contact's phone number (alternative)
+   * @deprecated Contact's phone number (deprecated, use number)
    */
   phone_number?: string;
 
   /**
-   * Contact's phone number (alternative)
+   * @deprecated Contact's phone number (deprecated, use number)
    */
   phoneNumber?: string;
 
   /**
-   * Associated Sendblue phone number
+   * Associated Sendblue phone number to send with (preferred)
    */
   sendblue_number?: string;
 
   /**
-   * Associated Sendblue phone number (alternative)
+   * @deprecated Associated Sendblue phone number (deprecated, use sendblue_number)
    */
   sendblueNumber?: string;
 
@@ -250,17 +258,89 @@ export interface ContactCreateParams {
 }
 
 export interface ContactUpdateParams {
+  /**
+   * Email of assigned user (preferred)
+   */
+  assigned_to_email?: string;
+
+  /**
+   * @deprecated Deprecated, use assigned_to_email
+   */
   assignedToEmail?: string;
 
+  /**
+   * Company name (preferred)
+   */
+  company_name?: string;
+
+  /**
+   * @deprecated Deprecated, use company_name
+   */
   companyName?: string;
 
+  /**
+   * Contact's first name (preferred)
+   */
+  first_name?: string;
+
+  /**
+   * @deprecated Deprecated, use first_name
+   */
   firstName?: string;
 
+  /**
+   * Contact's last name (preferred)
+   */
+  last_name?: string;
+
+  /**
+   * @deprecated Deprecated, use last_name
+   */
   lastName?: string;
 
+  /**
+   * Associated Sendblue phone number (preferred)
+   */
+  sendblue_number?: string;
+
+  /**
+   * @deprecated Deprecated, use sendblue_number
+   */
   sendblueNumber?: string;
 
   tags?: Array<string>;
+}
+
+export interface ContactListParams {
+  /**
+   * Filter by contact ID
+   */
+  cid?: string;
+
+  /**
+   * Maximum number of contacts to return
+   */
+  limit?: number;
+
+  /**
+   * Number of contacts to skip
+   */
+  offset?: number;
+
+  /**
+   * Field to sort by
+   */
+  order_by?: string;
+
+  /**
+   * Sort direction
+   */
+  order_direction?: 'asc' | 'desc';
+
+  /**
+   * Filter by phone number
+   */
+  phone_number?: string;
 }
 
 export interface ContactVerifyParams {
@@ -284,6 +364,7 @@ export declare namespace Contacts {
     type ContactVerifyResponse as ContactVerifyResponse,
     type ContactCreateParams as ContactCreateParams,
     type ContactUpdateParams as ContactUpdateParams,
+    type ContactListParams as ContactListParams,
     type ContactVerifyParams as ContactVerifyParams,
   };
 
