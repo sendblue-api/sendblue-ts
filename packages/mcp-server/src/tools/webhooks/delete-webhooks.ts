@@ -11,14 +11,14 @@ export const metadata: Metadata = {
   operation: 'write',
   tags: [],
   httpMethod: 'delete',
-  httpPath: '/api/v2/account/webhooks',
+  httpPath: '/api/account/webhooks',
   operationId: 'deleteWebhooks',
 };
 
 export const tool: Tool = {
   name: 'delete_webhooks',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDelete specific webhooks from your account.\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/webhook_delete_response',\n  $defs: {\n    webhook_delete_response: {\n      type: 'object',\n      properties: {\n        status: {\n          type: 'string',\n          enum: [            'OK',\n            'ERROR'\n          ]\n        },\n        message: {\n          type: 'string'\n        }\n      },\n      required: [        'status'\n      ]\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nDelete specific webhooks from the account\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/webhook_delete_response',\n  $defs: {\n    webhook_delete_response: {\n      type: 'object',\n      properties: {\n        message: {\n          type: 'string'\n        },\n        status: {\n          type: 'string'\n        }\n      }\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
@@ -31,7 +31,7 @@ export const tool: Tool = {
       },
       type: {
         type: 'string',
-        description: "Webhook type (default to 'receive')",
+        description: 'Type of webhook to delete from',
         enum: ['receive', 'call_log', 'line_blocked', 'line_assigned', 'outbound', 'contact_created'],
       },
       jq_filter: {

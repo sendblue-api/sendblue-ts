@@ -73,7 +73,7 @@ Methods:
 - <code title="post /api/v2/contacts">client.contacts.<a href="./src/resources/contacts/contacts.ts">create</a>({ ...params }) -> ContactCreateResponse</code>
 - <code title="get /api/v2/contacts/{phone_number}">client.contacts.<a href="./src/resources/contacts/contacts.ts">retrieve</a>(phoneNumber) -> ContactRetrieveResponse</code>
 - <code title="put /api/v2/contacts/{phone_number}">client.contacts.<a href="./src/resources/contacts/contacts.ts">update</a>(phoneNumber, { ...params }) -> ContactUpdateResponse</code>
-- <code title="get /api/v2/contacts">client.contacts.<a href="./src/resources/contacts/contacts.ts">list</a>() -> ContactListResponse</code>
+- <code title="get /api/v2/contacts">client.contacts.<a href="./src/resources/contacts/contacts.ts">list</a>({ ...params }) -> ContactListResponse</code>
 - <code title="delete /api/v2/contacts/{phone_number}">client.contacts.<a href="./src/resources/contacts/contacts.ts">delete</a>(phoneNumber) -> ContactDeleteResponse</code>
 - <code title="get /api/v2/contacts/count">client.contacts.<a href="./src/resources/contacts/contacts.ts">count</a>() -> ContactCountResponse</code>
 - <code title="post /api/v2/contacts/verify">client.contacts.<a href="./src/resources/contacts/contacts.ts">verify</a>({ ...params }) -> ContactVerifyResponse</code>
@@ -102,7 +102,7 @@ Types:
 
 Methods:
 
-- <code title="post /api/v2/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">create</a>({ ...params }) -> WebhookCreateResponse</code>
-- <code title="put /api/v2/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>({ ...params }) -> WebhookUpdateResponse</code>
-- <code title="get /api/v2/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
-- <code title="delete /api/v2/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>({ ...params }) -> WebhookDeleteResponse</code>
+- <code title="post /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">create</a>({ ...params }) -> WebhookCreateResponse</code>
+- <code title="put /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>({ ...params }) -> WebhookUpdateResponse</code>
+- <code title="get /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
+- <code title="delete /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>({ ...params }) -> WebhookDeleteResponse</code>

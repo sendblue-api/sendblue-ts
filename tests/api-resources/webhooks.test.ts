@@ -11,9 +11,7 @@ const client = new SendblueAPI({
 describe('resource webhooks', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.webhooks.create({
-      webhooks: ['https://example.com/new-webhook', { url: 'https://example.com/webhook-with-secret' }],
-    });
+    const responsePromise = client.webhooks.create({ webhooks: ['https://example.com'] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,11 +24,8 @@ describe('resource webhooks', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.webhooks.create({
-      webhooks: [
-        'https://example.com/new-webhook',
-        { url: 'https://example.com/webhook-with-secret', secret: 'my-webhook-secret' },
-      ],
-      globalSecret: 'optional-global-secret',
+      webhooks: ['https://example.com'],
+      globalSecret: 'globalSecret',
       type: 'receive',
     });
   });
@@ -51,17 +46,13 @@ describe('resource webhooks', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.webhooks.update({
       webhooks: {
-        call_log: ['https://example.com/call-webhook'],
-        contact_created: ['https://example.com/contact-webhook'],
-        globalSecret: 'my-global-secret',
-        line_assigned: ['https://example.com/webhook'],
-        line_blocked: ['https://example.com/webhook'],
-        outbound: ['https://example.com/webhook'],
-        receive: [
-          'https://example.com/webhook1',
-          { url: 'https://example.com/webhook2', secret: 'webhook-secret' },
-        ],
-        secret: 'secret',
+        call_log: ['https://example.com'],
+        contact_created: ['https://example.com'],
+        globalSecret: 'whsec_global123',
+        line_assigned: ['https://example.com'],
+        line_blocked: ['https://example.com'],
+        outbound: ['https://example.com'],
+        receive: ['https://example.com'],
       },
     });
   });

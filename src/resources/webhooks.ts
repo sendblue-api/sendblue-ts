@@ -1,261 +1,255 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../core/resource';
+import * as WebhooksAPI from './webhooks';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
 export class Webhooks extends APIResource {
   /**
-   * Add new webhooks to your account. This endpoint appends webhooks to the existing
-   * list.
-   *
-   * @example
-   * ```ts
-   * const webhook = await client.webhooks.create({
-   *   webhooks: [
-   *     'https://example.com/new-webhook',
-   *     {
-   *       url: 'https://example.com/webhook-with-secret',
-   *       secret: 'my-webhook-secret',
-   *     },
-   *   ],
-   *   globalSecret: 'optional-global-secret',
-   *   type: 'receive',
-   * });
-   * ```
+   * Add new webhooks to the account. Webhooks are appended to existing ones.
    */
   create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<WebhookCreateResponse> {
-    return this._client.post('/api/v2/account/webhooks', { body, ...options });
+    return this._client.post('/api/account/webhooks', { body, ...options });
   }
 
   /**
-   * Replace all webhooks for your account. This endpoint completely replaces the
-   * existing webhook configuration.
-   *
-   * @example
-   * ```ts
-   * const webhook = await client.webhooks.update({
-   *   webhooks: {
-   *     receive: [
-   *       'https://example.com/webhook1',
-   *       {
-   *         url: 'https://example.com/webhook2',
-   *         secret: 'webhook-secret',
-   *       },
-   *     ],
-   *     call_log: ['https://example.com/call-webhook'],
-   *     contact_created: [
-   *       'https://example.com/contact-webhook',
-   *     ],
-   *     globalSecret: 'my-global-secret',
-   *   },
-   * });
-   * ```
+   * Replace all webhooks for the account. This overwrites existing webhooks.
    */
   update(body: WebhookUpdateParams, options?: RequestOptions): APIPromise<WebhookUpdateResponse> {
-    return this._client.put('/api/v2/account/webhooks', { body, ...options });
+    return this._client.put('/api/account/webhooks', { body, ...options });
   }
 
   /**
-   * Get all webhooks configured for your account.
-   *
-   * @example
-   * ```ts
-   * const webhooks = await client.webhooks.list();
-   * ```
+   * Get all webhooks configured for the authenticated account
    */
   list(options?: RequestOptions): APIPromise<WebhookListResponse> {
-    return this._client.get('/api/v2/account/webhooks', options);
+    return this._client.get('/api/account/webhooks', options);
   }
 
   /**
-   * Delete specific webhooks from your account.
-   *
-   * @example
-   * ```ts
-   * const webhook = await client.webhooks.delete({
-   *   webhooks: ['https://example.com'],
-   * });
-   * ```
+   * Delete specific webhooks from the account
    */
   delete(body: WebhookDeleteParams, options?: RequestOptions): APIPromise<WebhookDeleteResponse> {
-    return this._client.delete('/api/v2/account/webhooks', { body, ...options });
+    return this._client.delete('/api/account/webhooks', { body, ...options });
   }
 }
 
 export interface WebhookConfiguration {
   /**
-   * Webhooks for call logs
+   * Webhook endpoint URL for receiving callbacks
    */
-  call_log?: Array<string | WebhookConfiguration.WebhookObject>;
+  url: string;
 
   /**
-   * Webhooks for contact creation (URL strings only)
-   */
-  contact_created?: Array<string>;
-
-  /**
-   * Global secret applied to all webhooks
-   */
-  globalSecret?: string;
-
-  /**
-   * Webhooks for line assignment
-   */
-  line_assigned?: Array<string | WebhookConfiguration.WebhookObject>;
-
-  /**
-   * Webhooks for blocked lines
-   */
-  line_blocked?: Array<string | WebhookConfiguration.WebhookObject>;
-
-  /**
-   * Webhooks for outbound messages
-   */
-  outbound?: Array<string | WebhookConfiguration.WebhookObject>;
-
-  /**
-   * Webhooks for inbound messages
-   */
-  receive?: Array<string | WebhookConfiguration.WebhookObject>;
-
-  /**
-   * Legacy secret field
+   * Secret for webhook signature verification
    */
   secret?: string;
 }
 
-export namespace WebhookConfiguration {
-  export interface WebhookObject {
-    /**
-     * Webhook URL (HTTPS only)
-     */
-    url: string;
-
-    /**
-     * Secret for webhook verification
-     */
-    secret?: string;
-  }
-
-  export interface WebhookObject {
-    /**
-     * Webhook URL (HTTPS only)
-     */
-    url: string;
-
-    /**
-     * Secret for webhook verification
-     */
-    secret?: string;
-  }
-
-  export interface WebhookObject {
-    /**
-     * Webhook URL (HTTPS only)
-     */
-    url: string;
-
-    /**
-     * Secret for webhook verification
-     */
-    secret?: string;
-  }
-
-  export interface WebhookObject {
-    /**
-     * Webhook URL (HTTPS only)
-     */
-    url: string;
-
-    /**
-     * Secret for webhook verification
-     */
-    secret?: string;
-  }
-
-  export interface WebhookObject {
-    /**
-     * Webhook URL (HTTPS only)
-     */
-    url: string;
-
-    /**
-     * Secret for webhook verification
-     */
-    secret?: string;
-  }
-}
-
 export interface WebhookCreateResponse {
-  status: 'OK' | 'ERROR';
-
   message?: string;
 
-  /**
-   * Updated webhook configration (partial)
-   */
-  webhooks?: WebhookConfiguration;
+  status?: string;
+
+  webhooks?: WebhookCreateResponse.Webhooks;
+}
+
+export namespace WebhookCreateResponse {
+  export interface Webhooks {
+    /**
+     * Webhooks for call log events
+     */
+    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for contact created events
+     */
+    contact_created?: Array<string>;
+
+    /**
+     * Global secret applied to all webhooks
+     */
+    globalSecret?: string;
+
+    /**
+     * Webhooks for line assigned events
+     */
+    line_assigned?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for line blocked events
+     */
+    line_blocked?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for outbound message events
+     */
+    outbound?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for inbound message events
+     */
+    receive?: Array<string | WebhooksAPI.WebhookConfiguration>;
+  }
 }
 
 export interface WebhookUpdateResponse {
-  status: 'OK' | 'ERROR';
-
   message?: string;
 
-  /**
-   * Updated webhook configration (partial)
-   */
-  webhooks?: WebhookConfiguration;
+  status?: string;
+
+  webhooks?: WebhookUpdateResponse.Webhooks;
+}
+
+export namespace WebhookUpdateResponse {
+  export interface Webhooks {
+    /**
+     * Webhooks for call log events
+     */
+    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for contact created events
+     */
+    contact_created?: Array<string>;
+
+    /**
+     * Global secret applied to all webhooks
+     */
+    globalSecret?: string;
+
+    /**
+     * Webhooks for line assigned events
+     */
+    line_assigned?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for line blocked events
+     */
+    line_blocked?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for outbound message events
+     */
+    outbound?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for inbound message events
+     */
+    receive?: Array<string | WebhooksAPI.WebhookConfiguration>;
+  }
 }
 
 export interface WebhookListResponse {
-  status: 'OK' | 'ERROR';
+  status?: string;
 
-  message?: string;
+  webhooks?: WebhookListResponse.Webhooks;
+}
 
-  webhooks?: WebhookConfiguration;
+export namespace WebhookListResponse {
+  export interface Webhooks {
+    /**
+     * Webhooks for call log events
+     */
+    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for contact created events
+     */
+    contact_created?: Array<string>;
+
+    /**
+     * Global secret applied to all webhooks
+     */
+    globalSecret?: string;
+
+    /**
+     * Webhooks for line assigned events
+     */
+    line_assigned?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for line blocked events
+     */
+    line_blocked?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for outbound message events
+     */
+    outbound?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for inbound message events
+     */
+    receive?: Array<string | WebhooksAPI.WebhookConfiguration>;
+  }
 }
 
 export interface WebhookDeleteResponse {
-  status: 'OK' | 'ERROR';
-
   message?: string;
+
+  status?: string;
 }
 
 export interface WebhookCreateParams {
   /**
-   * Array of webhook URLs or webhook objects to add
+   * Array of webhook URLs or webhook objects
    */
-  webhooks: Array<string | WebhookCreateParams.WebhookObject>;
+  webhooks: Array<string | WebhookConfiguration>;
 
   /**
-   * Optional global secret to apply to all webhooks
+   * Global secret for webhook signature verification
    */
   globalSecret?: string;
 
   /**
-   * Webhook type (default to 'receive')
+   * Type of webhook to add
    */
   type?: 'receive' | 'call_log' | 'line_blocked' | 'line_assigned' | 'outbound' | 'contact_created';
 }
 
-export namespace WebhookCreateParams {
-  export interface WebhookObject {
-    /**
-     * Webhook URL (HTTPS only)
-     */
-    url: string;
-
-    /**
-     * Secret for webhook verification
-     */
-    secret?: string;
-  }
+export interface WebhookUpdateParams {
+  webhooks: WebhookUpdateParams.Webhooks;
 }
 
-export interface WebhookUpdateParams {
-  webhooks: WebhookConfiguration;
+export namespace WebhookUpdateParams {
+  export interface Webhooks {
+    /**
+     * Webhooks for call log events
+     */
+    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for contact created events
+     */
+    contact_created?: Array<string>;
+
+    /**
+     * Global secret applied to all webhooks
+     */
+    globalSecret?: string;
+
+    /**
+     * Webhooks for line assigned events
+     */
+    line_assigned?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for line blocked events
+     */
+    line_blocked?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for outbound message events
+     */
+    outbound?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for inbound message events
+     */
+    receive?: Array<string | WebhooksAPI.WebhookConfiguration>;
+  }
 }
 
 export interface WebhookDeleteParams {
@@ -265,7 +259,7 @@ export interface WebhookDeleteParams {
   webhooks: Array<string>;
 
   /**
-   * Webhook type (default to 'receive')
+   * Type of webhook to delete from
    */
   type?: 'receive' | 'call_log' | 'line_blocked' | 'line_assigned' | 'outbound' | 'contact_created';
 }

@@ -7,12 +7,12 @@ import { RequestOptions } from '../internal/request-options';
 export class TypingIndicators extends APIResource {
   /**
    * Send an indication that you are typing to a user. This shows up as the animated
-   * three dots on the recipient's device. Only available for existing chats and not
-   * supported in group chats.
+   * three dots on the recipient's device. Not supported in group chats.
    *
    * @example
    * ```ts
    * const response = await client.typingIndicators.send({
+   *   from_number: '+16292925296',
    *   number: '+19998887777',
    * });
    * ```
@@ -40,6 +40,12 @@ export interface TypingIndicatorSendResponse {
 }
 
 export interface TypingIndicatorSendParams {
+  /**
+   * The Sendblue phone number you want to send the typing indicator from (E.164
+   * format). This should be the number you use to send messages.
+   */
+  from_number: string;
+
   /**
    * The number you want to send a typing indicator to (E.164 format)
    */

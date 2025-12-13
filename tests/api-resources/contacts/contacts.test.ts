@@ -77,6 +77,24 @@ describe('resource contacts', () => {
   });
 
   // Prism tests are disabled
+  test.skip('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.contacts.list(
+        {
+          cid: 'cid',
+          limit: 0,
+          offset: 0,
+          order_by: 'order_by',
+          order_direction: 'asc',
+          phone_number: 'phone_number',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(SendblueAPI.NotFoundError);
+  });
+
+  // Prism tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.contacts.delete('+1234567890');
     const rawResponse = await responsePromise.asResponse();

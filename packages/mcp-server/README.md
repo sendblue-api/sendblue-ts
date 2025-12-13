@@ -264,7 +264,7 @@ The following tools are available in this MCP server.
 
 ### Resource `typing_indicators`:
 
-- `send_typing_indicators` (`write`): Send an indication that you are typing to a user. This shows up as the animated three dots on the recipient's device. Only available for existing chats and not supported in group chats.
+- `send_typing_indicators` (`write`): Send an indication that you are typing to a user. This shows up as the animated three dots on the recipient's device. Not supported in group chats.
 
 ### Resource `contacts`:
 
@@ -283,7 +283,7 @@ The following tools are available in this MCP server.
 
 ### Resource `webhooks`:
 
-- `create_webhooks` (`write`): Add new webhooks to your account. This endpoint appends webhooks to the existing list.
-- `update_webhooks` (`write`): Replace all webhooks for your account. This endpoint completely replaces the existing webhook configuration.
-- `list_webhooks` (`read`): Get all webhooks configured for your account.
-- `delete_webhooks` (`write`): Delete specific webhooks from your account.
+- `create_webhooks` (`write`): Add new webhooks to the account. Webhooks are appended to existing ones.
+- `update_webhooks` (`write`): Replace all webhooks for the account. This overwrites existing webhooks.
+- `list_webhooks` (`read`): Get all webhooks configured for the authenticated account
+- `delete_webhooks` (`write`): Delete specific webhooks from the account

@@ -11,51 +11,38 @@ export const metadata: Metadata = {
   operation: 'write',
   tags: [],
   httpMethod: 'post',
-  httpPath: '/api/v2/account/webhooks',
+  httpPath: '/api/account/webhooks',
   operationId: 'addWebhooks',
 };
 
 export const tool: Tool = {
   name: 'create_webhooks',
   description:
-    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nAdd new webhooks to your account. This endpoint appends webhooks to the existing list.\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/webhook_create_response',\n  $defs: {\n    webhook_create_response: {\n      type: 'object',\n      properties: {\n        status: {\n          type: 'string',\n          enum: [            'OK',\n            'ERROR'\n          ]\n        },\n        message: {\n          type: 'string'\n        },\n        webhooks: {\n          $ref: '#/$defs/webhook_configuration'\n        }\n      },\n      required: [        'status'\n      ]\n    },\n    webhook_configuration: {\n      type: 'object',\n      properties: {\n        call_log: {\n          type: 'array',\n          description: 'Webhooks for call logs',\n          items: {\n            anyOf: [              {\n                type: 'string',\n                description: 'Simple webhook URL (HTTPS only)'\n              },\n              {\n                type: 'object',\n                properties: {\n                  url: {\n                    type: 'string',\n                    description: 'Webhook URL (HTTPS only)'\n                  },\n                  secret: {\n                    type: 'string',\n                    description: 'Secret for webhook verification'\n                  }\n                },\n                required: [                  'url'\n                ]\n              }\n            ],\n            description: 'Simple webhook URL (HTTPS only)'\n          }\n        },\n        contact_created: {\n          type: 'array',\n          description: 'Webhooks for contact creation (URL strings only)',\n          items: {\n            type: 'string'\n          }\n        },\n        globalSecret: {\n          type: 'string',\n          description: 'Global secret applied to all webhooks'\n        },\n        line_assigned: {\n          type: 'array',\n          description: 'Webhooks for line assignment',\n          items: {\n            anyOf: [              {\n                type: 'string',\n                description: 'Simple webhook URL (HTTPS only)'\n              },\n              {\n                type: 'object',\n                properties: {\n                  url: {\n                    type: 'string',\n                    description: 'Webhook URL (HTTPS only)'\n                  },\n                  secret: {\n                    type: 'string',\n                    description: 'Secret for webhook verification'\n                  }\n                },\n                required: [                  'url'\n                ]\n              }\n            ],\n            description: 'Simple webhook URL (HTTPS only)'\n          }\n        },\n        line_blocked: {\n          type: 'array',\n          description: 'Webhooks for blocked lines',\n          items: {\n            anyOf: [              {\n                type: 'string',\n                description: 'Simple webhook URL (HTTPS only)'\n              },\n              {\n                type: 'object',\n                properties: {\n                  url: {\n                    type: 'string',\n                    description: 'Webhook URL (HTTPS only)'\n                  },\n                  secret: {\n                    type: 'string',\n                    description: 'Secret for webhook verification'\n                  }\n                },\n                required: [                  'url'\n                ]\n              }\n            ],\n            description: 'Simple webhook URL (HTTPS only)'\n          }\n        },\n        outbound: {\n          type: 'array',\n          description: 'Webhooks for outbound messages',\n          items: {\n            anyOf: [              {\n                type: 'string',\n                description: 'Simple webhook URL (HTTPS only)'\n              },\n              {\n                type: 'object',\n                properties: {\n                  url: {\n                    type: 'string',\n                    description: 'Webhook URL (HTTPS only)'\n                  },\n                  secret: {\n                    type: 'string',\n                    description: 'Secret for webhook verification'\n                  }\n                },\n                required: [                  'url'\n                ]\n              }\n            ],\n            description: 'Simple webhook URL (HTTPS only)'\n          }\n        },\n        receive: {\n          type: 'array',\n          description: 'Webhooks for inbound messages',\n          items: {\n            anyOf: [              {\n                type: 'string',\n                description: 'Simple webhook URL (HTTPS only)'\n              },\n              {\n                type: 'object',\n                properties: {\n                  url: {\n                    type: 'string',\n                    description: 'Webhook URL (HTTPS only)'\n                  },\n                  secret: {\n                    type: 'string',\n                    description: 'Secret for webhook verification'\n                  }\n                },\n                required: [                  'url'\n                ]\n              }\n            ],\n            description: 'Simple webhook URL (HTTPS only)'\n          }\n        },\n        secret: {\n          type: 'string',\n          description: 'Legacy secret field'\n        }\n      }\n    }\n  }\n}\n```",
+    "When using this tool, always use the `jq_filter` parameter to reduce the response size and improve performance.\n\nOnly omit if you're sure you don't need the data.\n\nAdd new webhooks to the account. Webhooks are appended to existing ones.\n\n# Response Schema\n```json\n{\n  $ref: '#/$defs/webhook_create_response',\n  $defs: {\n    webhook_create_response: {\n      type: 'object',\n      properties: {\n        message: {\n          type: 'string'\n        },\n        status: {\n          type: 'string'\n        },\n        webhooks: {\n          type: 'object',\n          properties: {\n            call_log: {\n              type: 'array',\n              description: 'Webhooks for call log events',\n              items: {\n                anyOf: [                  {\n                    type: 'string'\n                  },\n                  {\n                    $ref: '#/$defs/webhook_configuration'\n                  }\n                ]\n              }\n            },\n            contact_created: {\n              type: 'array',\n              description: 'Webhooks for contact created events',\n              items: {\n                type: 'string'\n              }\n            },\n            globalSecret: {\n              type: 'string',\n              description: 'Global secret applied to all webhooks'\n            },\n            line_assigned: {\n              type: 'array',\n              description: 'Webhooks for line assigned events',\n              items: {\n                anyOf: [                  {\n                    type: 'string'\n                  },\n                  {\n                    $ref: '#/$defs/webhook_configuration'\n                  }\n                ]\n              }\n            },\n            line_blocked: {\n              type: 'array',\n              description: 'Webhooks for line blocked events',\n              items: {\n                anyOf: [                  {\n                    type: 'string'\n                  },\n                  {\n                    $ref: '#/$defs/webhook_configuration'\n                  }\n                ]\n              }\n            },\n            outbound: {\n              type: 'array',\n              description: 'Webhooks for outbound message events',\n              items: {\n                anyOf: [                  {\n                    type: 'string'\n                  },\n                  {\n                    $ref: '#/$defs/webhook_configuration'\n                  }\n                ]\n              }\n            },\n            receive: {\n              type: 'array',\n              description: 'Webhooks for inbound message events',\n              items: {\n                anyOf: [                  {\n                    type: 'string'\n                  },\n                  {\n                    $ref: '#/$defs/webhook_configuration'\n                  }\n                ]\n              }\n            }\n          }\n        }\n      }\n    },\n    webhook_configuration: {\n      type: 'object',\n      properties: {\n        url: {\n          type: 'string',\n          description: 'Webhook endpoint URL for receiving callbacks'\n        },\n        secret: {\n          type: 'string',\n          description: 'Secret for webhook signature verification'\n        }\n      },\n      required: [        'url'\n      ]\n    }\n  }\n}\n```",
   inputSchema: {
     type: 'object',
     properties: {
       webhooks: {
         type: 'array',
-        description: 'Array of webhook URLs or webhook objects to add',
+        description: 'Array of webhook URLs or webhook objects',
         items: {
           anyOf: [
             {
               type: 'string',
-              description: 'Simple webhook URL (HTTPS only)',
             },
             {
-              type: 'object',
-              properties: {
-                url: {
-                  type: 'string',
-                  description: 'Webhook URL (HTTPS only)',
-                },
-                secret: {
-                  type: 'string',
-                  description: 'Secret for webhook verification',
-                },
-              },
-              required: ['url'],
+              $ref: '#/$defs/webhook_configuration',
             },
           ],
-          description: 'Simple webhook URL (HTTPS only)',
         },
       },
       globalSecret: {
         type: 'string',
-        description: 'Optional global secret to apply to all webhooks',
+        description: 'Global secret for webhook signature verification',
       },
       type: {
         type: 'string',
-        description: "Webhook type (default to 'receive')",
+        description: 'Type of webhook to add',
         enum: ['receive', 'call_log', 'line_blocked', 'line_assigned', 'outbound', 'contact_created'],
       },
       jq_filter: {
@@ -66,6 +53,22 @@ export const tool: Tool = {
       },
     },
     required: ['webhooks'],
+    $defs: {
+      webhook_configuration: {
+        type: 'object',
+        properties: {
+          url: {
+            type: 'string',
+            description: 'Webhook endpoint URL for receiving callbacks',
+          },
+          secret: {
+            type: 'string',
+            description: 'Secret for webhook signature verification',
+          },
+        },
+        required: ['url'],
+      },
+    },
   },
   annotations: {},
 };

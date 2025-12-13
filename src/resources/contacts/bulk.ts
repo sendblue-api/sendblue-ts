@@ -56,13 +56,25 @@ export interface BulkCreateParams {
 
 export namespace BulkCreateParams {
   export interface Contact {
+    /**
+     * Phone number in E.164 format
+     */
     phone: string;
 
-    company?: string;
+    /**
+     * Company name
+     */
+    company_name?: string;
 
-    firstName?: string;
+    /**
+     * Contact's first name
+     */
+    first_name?: string;
 
-    lastName?: string;
+    /**
+     * Contact's last name
+     */
+    last_name?: string;
 
     tags?: Array<string>;
   }
