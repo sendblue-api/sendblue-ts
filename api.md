@@ -91,3 +91,7 @@ Methods:
 - <code title="delete /api/v2/contacts">client.contacts.bulk.<a href="./src/resources/contacts/bulk.ts">delete</a>({ ...params }) -> BulkDeleteResponse</code>
 
 # Webhooks
+
+Types:
+
+- <code><a href="./src/resources/webhooks.ts">WebhookConfiguration</a></code>

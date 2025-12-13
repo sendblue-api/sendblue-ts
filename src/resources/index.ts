@@ -38,4 +38,4 @@ export {
   type TypingIndicatorSendResponse,
   type TypingIndicatorSendParams,
 } from './typing-indicators';
-export { Webhooks } from './webhooks';
+export { Webhooks, type WebhookConfiguration } from './webhooks';
