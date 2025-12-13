@@ -95,3 +95,14 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/webhooks.ts">WebhookConfiguration</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookCreateResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookUpdateResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookListResponse</a></code>
+- <code><a href="./src/resources/webhooks.ts">WebhookDeleteResponse</a></code>
+
+Methods:
+
+- <code title="post /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">create</a>({ ...params }) -> WebhookCreateResponse</code>
+- <code title="put /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>({ ...params }) -> WebhookUpdateResponse</code>
+- <code title="get /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
+- <code title="delete /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>({ ...params }) -> WebhookDeleteResponse</code>

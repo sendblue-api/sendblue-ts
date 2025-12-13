@@ -34,7 +34,17 @@ import {
   TypingIndicatorSendResponse,
   TypingIndicators,
 } from './resources/typing-indicators';
-import { WebhookConfiguration, Webhooks } from './resources/webhooks';
+import {
+  WebhookConfiguration,
+  WebhookCreateParams,
+  WebhookCreateResponse,
+  WebhookDeleteParams,
+  WebhookDeleteResponse,
+  WebhookListResponse,
+  WebhookUpdateParams,
+  WebhookUpdateResponse,
+  Webhooks,
+} from './resources/webhooks';
 import {
   Contact,
   ContactCountResponse,
@@ -843,5 +853,15 @@ export declare namespace SendblueAPI {
     type ContactVerifyParams as ContactVerifyParams,
   };
 
-  export { Webhooks as Webhooks, type WebhookConfiguration as WebhookConfiguration };
+  export {
+    Webhooks as Webhooks,
+    type WebhookConfiguration as WebhookConfiguration,
+    type WebhookCreateResponse as WebhookCreateResponse,
+    type WebhookUpdateResponse as WebhookUpdateResponse,
+    type WebhookListResponse as WebhookListResponse,
+    type WebhookDeleteResponse as WebhookDeleteResponse,
+    type WebhookCreateParams as WebhookCreateParams,
+    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookDeleteParams as WebhookDeleteParams,
+  };
 }
