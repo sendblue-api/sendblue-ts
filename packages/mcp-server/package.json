@@ -1,6 +1,6 @@
 {
   "name": "sendblue-mcp",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "The official MCP Server for the Sendblue API API",
   "author": "Sendblue API <support@sendblue.co>",
   "types": "dist/index.d.ts",
