@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.2.0 (2025-12-13)
+
+Full Changelog: [v2.1.0...v2.2.0](https://github.com/sendblue-api/sendblue-ts/compare/v2.1.0...v2.2.0)
+
+### Features
+
+* **api:** manual updates ([184a587](https://github.com/sendblue-api/sendblue-ts/commit/184a5874cb34792f5addce731afc51209e609c08))
+* **api:** manual updates ([59277e3](https://github.com/sendblue-api/sendblue-ts/commit/59277e375332443f56b8a335d57a4e1166b5c1f9))
+* **api:** manual updates ([eeddf82](https://github.com/sendblue-api/sendblue-ts/commit/eeddf82b85057235736114c079a9f937229e04ec))
+* **api:** manual updates ([e9f1453](https://github.com/sendblue-api/sendblue-ts/commit/e9f145336e1348a9806e31bacd21ef6e2a13ed50))
+
+
+### Bug Fixes
+
+* **mcp:** add client instantiation options to code tool ([24583c9](https://github.com/sendblue-api/sendblue-ts/commit/24583c93d542b2d881634686b9abac13143435d6))
+
+
+### Chores
+
+* **mcp:** update lockfile ([d7cb954](https://github.com/sendblue-api/sendblue-ts/commit/d7cb9548a2fa569f69de7339ea589a59f60a2c92))
+
 ## 2.1.0 (2025-12-06)
 
 Full Changelog: [v2.0.2...v2.1.0](https://github.com/sendblue-api/sendblue-ts/compare/v2.0.2...v2.1.0)
