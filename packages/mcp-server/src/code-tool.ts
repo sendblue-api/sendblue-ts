@@ -38,6 +38,7 @@ export async function codeTool() {
         client_envs: JSON.stringify({
           SENDBLUE_API_API_KEY: readEnv('SENDBLUE_API_API_KEY'),
           SENDBLUE_API_API_SECRET: readEnv('SENDBLUE_API_API_SECRET'),
+          SENDBLUE_API_BASE_URL: readEnv('SENDBLUE_API_BASE_URL'),
         }),
       },
       body: JSON.stringify({
