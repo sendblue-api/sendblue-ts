@@ -1,6 +1,6 @@
 {
   "name": "sendblue",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "The official TypeScript library for the Sendblue API API",
   "author": "Sendblue API <support@sendblue.co>",
   "types": "dist/index.d.ts",
