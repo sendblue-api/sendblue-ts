@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.0.0 (2025-12-28)
+
+Full Changelog: [v2.2.0...v3.0.0](https://github.com/sendblue-api/sendblue-ts/compare/v2.2.0...v3.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **mcp:** remove deprecated tool schemes
+* **mcp:** **Migration:** To migrate, simply modify the command used to invoke the MCP server. Currently, the only supported tool scheme is code mode. Now, starting the server with just `node /path/to/mcp/server` or `npx package-name` will invoke code tools: changing your command to one of these is likely all you will need to do.
+
+### Bug Fixes
+
+* **mcp:** pass base url to code tool ([84878ae](https://github.com/sendblue-api/sendblue-ts/commit/84878aea79874d1bca870777cdd8b1ccad6da877))
+
+
+### Chores
+
+* **internal:** configure MCP Server hosting ([291480b](https://github.com/sendblue-api/sendblue-ts/commit/291480b6359c0441707cad3f5968c4250d6127de))
+* **mcp:** remove deprecated tool schemes ([87b7056](https://github.com/sendblue-api/sendblue-ts/commit/87b705610f69ef6db4d92ac2eb3509398711fe2a))
+
 ## 2.2.0 (2025-12-13)
 
 Full Changelog: [v2.1.0...v2.2.0](https://github.com/sendblue-api/sendblue-ts/compare/v2.1.0...v2.2.0)
