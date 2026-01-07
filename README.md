@@ -77,7 +77,11 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const messageResponse = await client.messages
-  .send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' })
+  .send({
+    content: 'REPLACE_ME',
+    from_number: 'REPLACE_ME',
+    number: 'REPLACE_ME',
+  })
   .catch(async (err) => {
     if (err instanceof SendblueAPI.APIError) {
       console.log(err.status); // 400
@@ -118,7 +122,11 @@ const client = new SendblueAPI({
 });
 
 // Or, configure per-request:
-await client.messages.send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' }, {
+await client.messages.send({
+  content: 'REPLACE_ME',
+  from_number: 'REPLACE_ME',
+  number: 'REPLACE_ME',
+}, {
   maxRetries: 5,
 });
 ```
@@ -135,7 +143,11 @@ const client = new SendblueAPI({
 });
 
 // Override per-request:
-await client.messages.send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' }, {
+await client.messages.send({
+  content: 'REPLACE_ME',
+  from_number: 'REPLACE_ME',
+  number: 'REPLACE_ME',
+}, {
   timeout: 5 * 1000,
 });
 ```
@@ -159,13 +171,21 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 const client = new SendblueAPI();
 
 const response = await client.messages
-  .send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' })
+  .send({
+    content: 'REPLACE_ME',
+    from_number: 'REPLACE_ME',
+    number: 'REPLACE_ME',
+  })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: messageResponse, response: raw } = await client.messages
-  .send({ content: 'REPLACE_ME', from_number: 'REPLACE_ME', number: 'REPLACE_ME' })
+  .send({
+    content: 'REPLACE_ME',
+    from_number: 'REPLACE_ME',
+    number: 'REPLACE_ME',
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(messageResponse.account_email);
