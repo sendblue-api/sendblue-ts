@@ -134,7 +134,11 @@ describe('instantiate client', () => {
       };
 
       process.env['SENDBLUE_API_LOG'] = 'debug';
-      const client = new SendblueAPI({ logger: logger, apiKey: 'My API Key', apiSecret: 'My API Secret' });
+      const client = new SendblueAPI({
+        logger: logger,
+        apiKey: 'My API Key',
+        apiSecret: 'My API Secret',
+      });
       expect(client.logLevel).toBe('debug');
 
       await forceAPIResponseForClient(client);
@@ -151,7 +155,11 @@ describe('instantiate client', () => {
       };
 
       process.env['SENDBLUE_API_LOG'] = 'not a log level';
-      const client = new SendblueAPI({ logger: logger, apiKey: 'My API Key', apiSecret: 'My API Secret' });
+      const client = new SendblueAPI({
+        logger: logger,
+        apiKey: 'My API Key',
+        apiSecret: 'My API Secret',
+      });
       expect(client.logLevel).toBe('warn');
       expect(warnMock).toHaveBeenCalledWith(
         'process.env[\'SENDBLUE_API_LOG\'] was set to "not a log level", expected one of ["off","error","warn","info","debug"]',
@@ -383,7 +391,11 @@ describe('instantiate client', () => {
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new SendblueAPI({ maxRetries: 4, apiKey: 'My API Key', apiSecret: 'My API Secret' });
+    const client = new SendblueAPI({
+      maxRetries: 4,
+      apiKey: 'My API Key',
+      apiSecret: 'My API Secret',
+    });
     expect(client.maxRetries).toEqual(4);
 
     // default
@@ -761,7 +773,11 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new SendblueAPI({ apiKey: 'My API Key', apiSecret: 'My API Secret', fetch: testFetch });
+    const client = new SendblueAPI({
+      apiKey: 'My API Key',
+      apiSecret: 'My API Secret',
+      fetch: testFetch,
+    });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -791,7 +807,11 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new SendblueAPI({ apiKey: 'My API Key', apiSecret: 'My API Secret', fetch: testFetch });
+    const client = new SendblueAPI({
+      apiKey: 'My API Key',
+      apiSecret: 'My API Secret',
+      fetch: testFetch,
+    });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);

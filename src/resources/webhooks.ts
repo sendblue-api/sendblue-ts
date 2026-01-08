@@ -58,16 +58,6 @@ export interface WebhookCreateResponse {
 export namespace WebhookCreateResponse {
   export interface Webhooks {
     /**
-     * Webhooks for call log events
-     */
-    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
-
-    /**
-     * Webhooks for contact created events
-     */
-    contact_created?: Array<string>;
-
-    /**
      * Global secret applied to all webhooks
      */
     globalSecret?: string;
@@ -105,16 +95,6 @@ export interface WebhookUpdateResponse {
 export namespace WebhookUpdateResponse {
   export interface Webhooks {
     /**
-     * Webhooks for call log events
-     */
-    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
-
-    /**
-     * Webhooks for contact created events
-     */
-    contact_created?: Array<string>;
-
-    /**
      * Global secret applied to all webhooks
      */
     globalSecret?: string;
@@ -149,16 +129,6 @@ export interface WebhookListResponse {
 
 export namespace WebhookListResponse {
   export interface Webhooks {
-    /**
-     * Webhooks for call log events
-     */
-    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
-
-    /**
-     * Webhooks for contact created events
-     */
-    contact_created?: Array<string>;
-
     /**
      * Global secret applied to all webhooks
      */
@@ -206,7 +176,7 @@ export interface WebhookCreateParams {
   /**
    * Type of webhook to add
    */
-  type?: 'receive' | 'call_log' | 'line_blocked' | 'line_assigned' | 'outbound' | 'contact_created';
+  type?: 'receive' | 'line_blocked' | 'line_assigned' | 'outbound';
 }
 
 export interface WebhookUpdateParams {
@@ -215,16 +185,6 @@ export interface WebhookUpdateParams {
 
 export namespace WebhookUpdateParams {
   export interface Webhooks {
-    /**
-     * Webhooks for call log events
-     */
-    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
-
-    /**
-     * Webhooks for contact created events
-     */
-    contact_created?: Array<string>;
-
     /**
      * Global secret applied to all webhooks
      */
@@ -261,7 +221,7 @@ export interface WebhookDeleteParams {
   /**
    * Type of webhook to delete from
    */
-  type?: 'receive' | 'call_log' | 'line_blocked' | 'line_assigned' | 'outbound' | 'contact_created';
+  type?: 'receive' | 'line_blocked' | 'line_assigned' | 'outbound';
 }
 
 export declare namespace Webhooks {

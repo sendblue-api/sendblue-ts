@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Metadata, ToolCallResult, asTextContentResult } from './tools/types';
+import { McpTool, Metadata, ToolCallResult, asErrorResult, asTextContentResult } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { readEnv } from './server';
-import { WorkerSuccess } from './code-tool-types';
+import { readEnv, readEnvOrError } from './server';
+import { WorkerInput, WorkerOutput } from './code-tool-types';
 /**
  * A tool that runs code against a copy of the SDK.
  *
@@ -13,7 +13,7 @@ import { WorkerSuccess } from './code-tool-types';
  *
  * @param endpoints - The endpoints to include in the list.
  */
-export async function codeTool() {
+export function codeTool(): McpTool {
   const metadata: Metadata = { resource: 'all', operation: 'write', tags: [] };
   const tool: Tool = {
     name: 'execute',
@@ -36,15 +36,16 @@ export async function codeTool() {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
         client_envs: JSON.stringify({
-          SENDBLUE_API_API_KEY: readEnv('SENDBLUE_API_API_KEY'),
-          SENDBLUE_API_API_SECRET: readEnv('SENDBLUE_API_API_SECRET'),
+          SENDBLUE_API_API_KEY: readEnvOrError('SENDBLUE_API_API_KEY'),
+          SENDBLUE_API_API_SECRET: readEnvOrError('SENDBLUE_API_API_SECRET'),
+          SENDBLUE_API_BASE_URL: readEnv('SENDBLUE_API_BASE_URL'),
         }),
       },
       body: JSON.stringify({
         project_name: 'sendblue-api',
-        client_opts: {},
         code,
-      }),
+        client_opts: {},
+      } satisfies WorkerInput),
     });
 
     if (!res.ok) {
@@ -55,7 +56,17 @@ export async function codeTool() {
       );
     }
 
-    return asTextContentResult((await res.json()) as WorkerSuccess);
+    const { is_error, result, log_lines, err_lines } = (await res.json()) as WorkerOutput;
+    const hasLogs = log_lines.length > 0 || err_lines.length > 0;
+    const output = {
+      result,
+      ...(log_lines.length > 0 && { log_lines }),
+      ...(err_lines.length > 0 && { err_lines }),
+    };
+    if (is_error) {
+      return asErrorResult(typeof result === 'string' && !hasLogs ? result : JSON.stringify(output, null, 2));
+    }
+    return asTextContentResult(output);
   };
 
   return { metadata, tool, handler };
