@@ -2,7 +2,7 @@
 
 import { McpTool, Metadata, ToolCallResult, asErrorResult, asTextContentResult } from './types';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { readEnv } from './server';
+import { readEnv, readEnvOrError } from './server';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
 /**
  * A tool that runs code against a copy of the SDK.
@@ -36,8 +36,8 @@ export function codeTool(): McpTool {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
         client_envs: JSON.stringify({
-          SENDBLUE_API_API_KEY: readEnv('SENDBLUE_API_API_KEY'),
-          SENDBLUE_API_API_SECRET: readEnv('SENDBLUE_API_API_SECRET'),
+          SENDBLUE_API_API_KEY: readEnvOrError('SENDBLUE_API_API_KEY'),
+          SENDBLUE_API_API_SECRET: readEnvOrError('SENDBLUE_API_API_SECRET'),
           SENDBLUE_API_BASE_URL: readEnv('SENDBLUE_API_BASE_URL'),
         }),
       },
