@@ -1,5 +1,40 @@
 # Changelog
 
+## 3.0.0 (2026-01-08)
+
+Full Changelog: [v2.2.0...v3.0.0](https://github.com/sendblue-api/sendblue-ts/compare/v2.2.0...v3.0.0)
+
+### ⚠ BREAKING CHANGES
+
+* **mcp:** remove deprecated tool schemes
+* **mcp:** **Migration:** To migrate, simply modify the command used to invoke the MCP server. Currently, the only supported tool scheme is code mode. Now, starting the server with just `node /path/to/mcp/server` or `npx package-name` will invoke code tools: changing your command to one of these is likely all you will need to do.
+
+### Features
+
+* **api:** manual updates ([87a97a2](https://github.com/sendblue-api/sendblue-ts/commit/87a97a23741c894047a45fb401792d2a979cbe25))
+
+
+### Bug Fixes
+
+* **mcp:** correct code tool api output types ([84064d9](https://github.com/sendblue-api/sendblue-ts/commit/84064d9c79f6e968818e9459d16c5b435c58bcd4))
+* **mcp:** fix env parsing ([fad5cd0](https://github.com/sendblue-api/sendblue-ts/commit/fad5cd0c4f1291aef357c6d48f44e2c1a028c200))
+* **mcp:** fix options parsing ([a06d3ac](https://github.com/sendblue-api/sendblue-ts/commit/a06d3ac05810ea852722759aaf7455d851f65563))
+* **mcp:** pass base url to code tool ([84878ae](https://github.com/sendblue-api/sendblue-ts/commit/84878aea79874d1bca870777cdd8b1ccad6da877))
+
+
+### Chores
+
+* break long lines in snippets into multiline ([7c60251](https://github.com/sendblue-api/sendblue-ts/commit/7c6025103c2863fa2dccec5c0fc564c78f1c2096))
+* **internal:** codegen related update ([b08c346](https://github.com/sendblue-api/sendblue-ts/commit/b08c346a1bd5eb5a55d213755ddd5fe3388dea59))
+* **internal:** configure MCP Server hosting ([291480b](https://github.com/sendblue-api/sendblue-ts/commit/291480b6359c0441707cad3f5968c4250d6127de))
+* **internal:** fix dockerfile ([a548ecf](https://github.com/sendblue-api/sendblue-ts/commit/a548ecf7b9f3358b195cbc58d4b3c4a2b788758e))
+* **mcp:** remove deprecated tool schemes ([87b7056](https://github.com/sendblue-api/sendblue-ts/commit/87b705610f69ef6db4d92ac2eb3509398711fe2a))
+
+
+### Documentation
+
+* prominently feature MCP server setup in root SDK readmes ([4d8d46d](https://github.com/sendblue-api/sendblue-ts/commit/4d8d46d5fff0b624ed6abcaa156a8693bf55c3fa))
+
 ## 2.2.0 (2025-12-13)
 
 Full Changelog: [v2.1.0...v2.2.0](https://github.com/sendblue-api/sendblue-ts/compare/v2.1.0...v2.2.0)
