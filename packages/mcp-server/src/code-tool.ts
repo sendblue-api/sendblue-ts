@@ -4,6 +4,7 @@ import { McpTool, Metadata, ToolCallResult, asErrorResult, asTextContentResult }
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { readEnv, readEnvOrError } from './server';
 import { WorkerInput, WorkerOutput } from './code-tool-types';
+import { SendblueAPI } from 'sendblue';
 
 const prompt = `Runs JavaScript code to interact with the Sendblue API API.
 
@@ -58,7 +59,7 @@ export function codeTool(): McpTool {
       required: ['code'],
     },
   };
-  const handler = async (_: unknown, args: any): Promise<ToolCallResult> => {
+  const handler = async (client: SendblueAPI, args: any): Promise<ToolCallResult> => {
     const code = args.code as string;
     const intent = args.intent as string | undefined;
 
@@ -74,9 +75,9 @@ export function codeTool(): McpTool {
         ...(stainlessAPIKey && { Authorization: stainlessAPIKey }),
         'Content-Type': 'application/json',
         client_envs: JSON.stringify({
-          SENDBLUE_API_API_KEY: readEnvOrError('SENDBLUE_API_API_KEY'),
-          SENDBLUE_API_API_SECRET: readEnvOrError('SENDBLUE_API_API_SECRET'),
-          SENDBLUE_API_BASE_URL: readEnv('SENDBLUE_API_BASE_URL'),
+          SENDBLUE_API_API_KEY: readEnvOrError('SENDBLUE_API_API_KEY') ?? client.apiKey ?? undefined,
+          SENDBLUE_API_API_SECRET: readEnvOrError('SENDBLUE_API_API_SECRET') ?? client.apiSecret ?? undefined,
+          SENDBLUE_API_BASE_URL: readEnv('SENDBLUE_API_BASE_URL') ?? client.baseURL ?? undefined,
         }),
       },
       body: JSON.stringify({
