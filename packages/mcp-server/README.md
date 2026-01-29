@@ -41,14 +41,14 @@ For clients with a configuration JSON, it might look something like this:
 If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
 in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
 
-[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=sendblue-mcp&config=eyJuYW1lIjoic2VuZGJsdWUtbWNwIiwidHJhbnNwb3J0Ijoic3NlIiwidXJsIjoiaHR0cHM6Ly9zZW5kYmx1ZS1hcGkuc3RsbWNwLmNvbS9zc2UiLCJlbnYiOnsiU0VOREJMVUVfQVBJX0FQSV9LRVkiOiJTZXQgeW91ciBTRU5EQkxVRV9BUElfQVBJX0tFWSBoZXJlLiIsIlNFTkRCTFVFX0FQSV9BUElfU0VDUkVUIjoiU2V0IHlvdXIgU0VOREJMVUVfQVBJX0FQSV9TRUNSRVQgaGVyZS4ifX0)
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=sendblue-mcp&config=eyJuYW1lIjoic2VuZGJsdWUtbWNwIiwidHJhbnNwb3J0IjoiaHR0cCIsInVybCI6Imh0dHBzOi8vc2VuZGJsdWUtYXBpLnN0bG1jcC5jb20iLCJoZWFkZXJzIjp7InNiLWFwaS1rZXktaWQiOiJNeSBBUEkgS2V5Iiwic2ItYXBpLXNlY3JldC1rZXkiOiJNeSBBUEkgU2VjcmV0In19)
 
 ### VS Code
 
 If you use MCP, you can install the MCP server by clicking the link below. You will need to set your environment variables
 in VS Code's `mcp.json`, which can be found via Command Palette > MCP: Open User Configuration.
 
-[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22sendblue-mcp%22%2C%22type%22%3A%22sse%22%2C%22url%22%3A%22https%3A%2F%2Fsendblue-api.stlmcp.com%2Fsse%22%2C%22env%22%3A%7B%22SENDBLUE_API_API_KEY%22%3A%22Set%20your%20SENDBLUE_API_API_KEY%20here.%22%2C%22SENDBLUE_API_API_SECRET%22%3A%22Set%20your%20SENDBLUE_API_API_SECRET%20here.%22%7D%7D)
+[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22sendblue-mcp%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fsendblue-api.stlmcp.com%22%2C%22headers%22%3A%7B%22sb-api-key-id%22%3A%22My%20API%20Key%22%2C%22sb-api-secret-key%22%3A%22My%20API%20Secret%22%7D%7D)
 
 ### Claude Code
 
@@ -56,7 +56,7 @@ If you use Claude Code, you can install the MCP server by running the command be
 environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
 
 ```
-claude mcp add sendblue_mcp_api --env SENDBLUE_API_API_KEY="Your SENDBLUE_API_API_KEY here." SENDBLUE_API_API_SECRET="Your SENDBLUE_API_API_SECRET here." --transport sse https://sendblue-api.stlmcp.com/sse
+claude mcp add sendblue_mcp_api --header "sb-api-key-id: My API Key" --header "sb-api-secret-key: My API Secret" --transport http https://sendblue-api.stlmcp.com
 ```
 
 ## Code Mode
