@@ -58,6 +58,16 @@ export interface WebhookCreateResponse {
 export namespace WebhookCreateResponse {
   export interface Webhooks {
     /**
+     * Webhooks for call log events
+     */
+    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for contact created events (URL strings only)
+     */
+    contact_created?: Array<string>;
+
+    /**
      * Global secret applied to all webhooks
      */
     globalSecret?: string;
@@ -73,7 +83,7 @@ export namespace WebhookCreateResponse {
     line_blocked?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for outbound message events
+     * Webhooks for outbound message status updates
      */
     outbound?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
@@ -81,6 +91,11 @@ export namespace WebhookCreateResponse {
      * Webhooks for inbound message events
      */
     receive?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for typing indicator events
+     */
+    typing_indicator?: Array<string | WebhooksAPI.WebhookConfiguration>;
   }
 }
 
@@ -95,6 +110,16 @@ export interface WebhookUpdateResponse {
 export namespace WebhookUpdateResponse {
   export interface Webhooks {
     /**
+     * Webhooks for call log events
+     */
+    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for contact created events (URL strings only)
+     */
+    contact_created?: Array<string>;
+
+    /**
      * Global secret applied to all webhooks
      */
     globalSecret?: string;
@@ -110,7 +135,7 @@ export namespace WebhookUpdateResponse {
     line_blocked?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for outbound message events
+     * Webhooks for outbound message status updates
      */
     outbound?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
@@ -118,6 +143,11 @@ export namespace WebhookUpdateResponse {
      * Webhooks for inbound message events
      */
     receive?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for typing indicator events
+     */
+    typing_indicator?: Array<string | WebhooksAPI.WebhookConfiguration>;
   }
 }
 
@@ -130,6 +160,16 @@ export interface WebhookListResponse {
 export namespace WebhookListResponse {
   export interface Webhooks {
     /**
+     * Webhooks for call log events
+     */
+    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for contact created events (URL strings only)
+     */
+    contact_created?: Array<string>;
+
+    /**
      * Global secret applied to all webhooks
      */
     globalSecret?: string;
@@ -145,7 +185,7 @@ export namespace WebhookListResponse {
     line_blocked?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for outbound message events
+     * Webhooks for outbound message status updates
      */
     outbound?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
@@ -153,6 +193,11 @@ export namespace WebhookListResponse {
      * Webhooks for inbound message events
      */
     receive?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for typing indicator events
+     */
+    typing_indicator?: Array<string | WebhooksAPI.WebhookConfiguration>;
   }
 }
 
@@ -176,7 +221,14 @@ export interface WebhookCreateParams {
   /**
    * Type of webhook to add
    */
-  type?: 'receive' | 'line_blocked' | 'line_assigned' | 'outbound';
+  type?:
+    | 'receive'
+    | 'line_blocked'
+    | 'line_assigned'
+    | 'outbound'
+    | 'typing_indicator'
+    | 'call_log'
+    | 'contact_created';
 }
 
 export interface WebhookUpdateParams {
@@ -185,6 +237,16 @@ export interface WebhookUpdateParams {
 
 export namespace WebhookUpdateParams {
   export interface Webhooks {
+    /**
+     * Webhooks for call log events
+     */
+    call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for contact created events (URL strings only)
+     */
+    contact_created?: Array<string>;
+
     /**
      * Global secret applied to all webhooks
      */
@@ -201,7 +263,7 @@ export namespace WebhookUpdateParams {
     line_blocked?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for outbound message events
+     * Webhooks for outbound message status updates
      */
     outbound?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
@@ -209,6 +271,11 @@ export namespace WebhookUpdateParams {
      * Webhooks for inbound message events
      */
     receive?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
+     * Webhooks for typing indicator events
+     */
+    typing_indicator?: Array<string | WebhooksAPI.WebhookConfiguration>;
   }
 }
 
@@ -221,7 +288,14 @@ export interface WebhookDeleteParams {
   /**
    * Type of webhook to delete from
    */
-  type?: 'receive' | 'line_blocked' | 'line_assigned' | 'outbound';
+  type?:
+    | 'receive'
+    | 'line_blocked'
+    | 'line_assigned'
+    | 'outbound'
+    | 'typing_indicator'
+    | 'call_log'
+    | 'contact_created';
 }
 
 export declare namespace Webhooks {

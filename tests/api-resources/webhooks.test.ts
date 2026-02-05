@@ -46,11 +46,14 @@ describe('resource webhooks', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.webhooks.update({
       webhooks: {
+        call_log: ['https://example.com'],
+        contact_created: ['https://example.com'],
         globalSecret: 'whsec_global123',
         line_assigned: ['https://example.com'],
         line_blocked: ['https://example.com'],
         outbound: ['https://example.com'],
         receive: ['https://example.com'],
+        typing_indicator: ['https://example.com'],
       },
     });
   });
