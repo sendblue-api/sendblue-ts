@@ -125,6 +125,11 @@ export interface Contact {
   created_at?: string;
 
   /**
+   * Custom key-value pairs stored on the contact. Keys are human-readable labels.
+   */
+  custom_variables?: { [key: string]: string };
+
+  /**
    * First name
    */
   first_name?: string;
@@ -207,6 +212,12 @@ export interface ContactCreateParams {
   assignedToEmail?: string;
 
   /**
+   * Custom key-value pairs. Keys are human-readable labels; new labels are
+   * auto-created.
+   */
+  custom_variables?: { [key: string]: string };
+
+  /**
    * Contact's first name (preferred)
    */
   first_name?: string;
@@ -277,6 +288,11 @@ export interface ContactUpdateParams {
    * @deprecated Deprecated, use company_name
    */
   companyName?: string;
+
+  /**
+   * Custom key-value pairs. Merged with existing variables (not replaced).
+   */
+  custom_variables?: { [key: string]: string };
 
   /**
    * Contact's first name (preferred)
