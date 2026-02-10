@@ -67,6 +67,12 @@ export namespace BulkCreateParams {
     company_name?: string;
 
     /**
+     * Custom key-value pairs. Keys are human-readable labels; new labels are
+     * auto-created.
+     */
+    custom_variables?: { [key: string]: string };
+
+    /**
      * Contact's first name
      */
     first_name?: string;

@@ -27,6 +27,7 @@ describe('resource contacts', () => {
       number: 'number',
       assigned_to_email: 'assigned_to_email',
       assignedToEmail: 'assignedToEmail',
+      custom_variables: { 'Lead Source': 'Website' },
       first_name: 'first_name',
       firstName: 'firstName',
       last_name: 'last_name',

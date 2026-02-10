@@ -24,6 +24,22 @@ export class Messages extends APIResource {
    * Retrieve a list of messages for the authenticated account with comprehensive
    * filtering capabilities. Rate limited to 100 requests per 10 seconds per account.
    *
+   * ## Common Use Cases
+   *
+   * **Polling for inbound messages (no webhooks):**
+   *
+   * ```
+   * GET /api/v2/messages?is_outbound=false&sendblue_number=+16292925296&order_by=createdAt&order_direction=desc&limit=50
+   * ```
+   *
+   * Track processed message IDs to avoid duplicates.
+   *
+   * **Get conversation with a specific contact:**
+   *
+   * ```
+   * GET /api/v2/messages?number=+15551234567&order_by=createdAt&order_direction=desc
+   * ```
+   *
    * @example
    * ```ts
    * const messages = await client.messages.list();
@@ -129,7 +145,7 @@ export interface MessageContent {
     | 'loud'
     | 'slam';
 
-  status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'READ' | 'ERROR' | 'RECEIVED';
+  status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR' | 'RECEIVED';
 
   /**
    * Recipient phone number
@@ -211,7 +227,7 @@ export interface MessageResponse {
     | 'loud'
     | 'slam';
 
-  status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'READ' | 'ERROR';
+  status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR';
 }
 
 export interface MessageRetrieveResponse {
@@ -337,7 +353,10 @@ export namespace MessageRetrieveResponse {
      */
     sendblue_number?: string | null;
 
-    service?: 'iMessage' | 'SMS';
+    /**
+     * The messaging service used
+     */
+    service?: 'iMessage' | 'SMS' | 'RCS';
 
     status?:
       | 'REGISTERED'
@@ -488,7 +507,10 @@ export namespace MessageListResponse {
      */
     sendblue_number?: string | null;
 
-    service?: 'iMessage' | 'SMS';
+    /**
+     * The messaging service used
+     */
+    service?: 'iMessage' | 'SMS' | 'RCS';
 
     status?:
       | 'REGISTERED'
@@ -563,7 +585,14 @@ export interface MessageListParams {
   group_id?: string;
 
   /**
-   * Filter by message direction
+   * Filter by message direction. Use `false` to get inbound messages (messages sent
+   * TO your Sendblue number).
+   *
+   * **To get inbound messages for polling:** Use `is_outbound=false` combined with
+   * `sendblue_number` or `to_number` set to your Sendblue phone number.
+   *
+   * Note: Do NOT use `message_type=inbound` - that parameter only accepts `message`
+   * or `group` values.
    */
   is_outbound?: 'true' | 'false';
 
@@ -573,7 +602,10 @@ export interface MessageListParams {
   limit?: number;
 
   /**
-   * Filter by message type
+   * Filter by message type (1:1 vs group chat). Only accepts `message` or `group`.
+   *
+   * **Common mistake:** This is NOT for filtering inbound vs outbound messages. Use
+   * `is_outbound` parameter instead.
    */
   message_type?: 'message' | 'group';
 
@@ -615,7 +647,7 @@ export interface MessageListParams {
   /**
    * Filter by service type
    */
-  service?: 'iMessage' | 'SMS';
+  service?: 'iMessage' | 'SMS' | 'RCS';
 
   /**
    * Filter by message status
