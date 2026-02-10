@@ -1,5 +1,48 @@
 # Changelog
 
+## 3.1.0 (2026-02-10)
+
+Full Changelog: [v3.0.0...v3.1.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.0.0...v3.1.0)
+
+### Features
+
+* **api:** manual updates ([bbfd8e6](https://github.com/sendblue-api/sendblue-ts/commit/bbfd8e663d2a2da218127ae391f028d42710e228))
+* **mcp:** add initial server instructions ([60caebf](https://github.com/sendblue-api/sendblue-ts/commit/60caebf686850d8fcbe1abb390cb86ce210783dc))
+
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([a024460](https://github.com/sendblue-api/sendblue-ts/commit/a0244605d744d1480eefb01eafd7c7a2d45740e7))
+* **client:** avoid removing abort listener too early ([d448c50](https://github.com/sendblue-api/sendblue-ts/commit/d448c50fecae0a1f9291eec1584afb9ef9a6ddf9))
+* **docs:** fix mcp installation instructions for remote servers ([b3ac217](https://github.com/sendblue-api/sendblue-ts/commit/b3ac217fb6bddb38ff9685c7d38749a56fa2a2bc))
+* **mcp:** allow falling back for required env variables ([d03ff47](https://github.com/sendblue-api/sendblue-ts/commit/d03ff47b6f9621ff0afd8060b0e744f13a83f2cd))
+* **mcp:** update code tool prompt ([711163b](https://github.com/sendblue-api/sendblue-ts/commit/711163b47679bdf489c40f4e7333af71024b9771))
+
+
+### Chores
+
+* bump OpenAPI spec version to 1.1.0 ([2b6f263](https://github.com/sendblue-api/sendblue-ts/commit/2b6f26366649ffbb98c6e158a8ac44eb3b1742ef))
+* **ci:** upgrade `actions/github-script` ([9bc5271](https://github.com/sendblue-api/sendblue-ts/commit/9bc52717197daade7c09f300ede5f49881f2e43f))
+* **client:** do not parse responses with empty content-length ([f486b2a](https://github.com/sendblue-api/sendblue-ts/commit/f486b2a74eb6bbab1cfb9382cf3b6e4d5f87558f))
+* **client:** restructure abort controller binding ([4a36480](https://github.com/sendblue-api/sendblue-ts/commit/4a364808e710c11bf4336468b949f9055e4df534))
+* **internal:** add health check to MCP server when running in HTTP mode ([9cdee5c](https://github.com/sendblue-api/sendblue-ts/commit/9cdee5c9485c76225e2e3220dc2c8ef5df800b94))
+* **internal:** allow basic filtering of methods allowed for MCP code mode ([95788ac](https://github.com/sendblue-api/sendblue-ts/commit/95788ac649d5b95cfde00eaca3229a620eb66a40))
+* **internal:** always generate MCP server dockerfiles and upgrade associated dependencies ([d2a0484](https://github.com/sendblue-api/sendblue-ts/commit/d2a048428f15a55807ec2b9d6829bc44bc803022))
+* **internal:** codegen related update ([26fabe7](https://github.com/sendblue-api/sendblue-ts/commit/26fabe771e094ea9218d87f161ea52b5e44a6d4f))
+* **internal:** codegen related update ([f28ae45](https://github.com/sendblue-api/sendblue-ts/commit/f28ae4559128f5e4ed4a58d73175730e5c3bd0de))
+* **internal:** codegen related update ([3a29296](https://github.com/sendblue-api/sendblue-ts/commit/3a2929613c058fa6331f50681864c8225202dba3))
+* **internal:** codegen related update ([747b9c7](https://github.com/sendblue-api/sendblue-ts/commit/747b9c792696fb50c544f18d99469ddc94b5a8fc))
+* **internal:** codegen related update ([5ba7ea0](https://github.com/sendblue-api/sendblue-ts/commit/5ba7ea02209345837c1178ec3aa3275b265dc7fd))
+* **internal:** refactor flag parsing for MCP servers and add debug flag ([e212d08](https://github.com/sendblue-api/sendblue-ts/commit/e212d08807d41a605b0db29b515f3f3fa4999834))
+* **internal:** support oauth authorization code flow for MCP servers ([f0d5fa3](https://github.com/sendblue-api/sendblue-ts/commit/f0d5fa3618f07e2f03bf27b31357bf4e9055b588))
+* **internal:** update `actions/checkout` version ([1f87e00](https://github.com/sendblue-api/sendblue-ts/commit/1f87e00260e5c4188597620337001a8df7b76595))
+* **internal:** update lock file ([7150196](https://github.com/sendblue-api/sendblue-ts/commit/7150196485cffa3057471768e0a7d38f83c070d1))
+* **internal:** upgrade babel, qs, js-yaml ([52684c8](https://github.com/sendblue-api/sendblue-ts/commit/52684c84040d881cda2cb4916d25bd20ef06871c))
+* **mcp:** add intent param to execute tool ([9c65910](https://github.com/sendblue-api/sendblue-ts/commit/9c65910da6c72205964777ef33fe75afefc518e2))
+* **mcp:** pass intent param to execute handler ([944d6ba](https://github.com/sendblue-api/sendblue-ts/commit/944d6babb9da65378201d65e076f14d36a718243))
+* **mcp:** up tsconfig lib version to es2022 ([8305c74](https://github.com/sendblue-api/sendblue-ts/commit/8305c74097abbb359b1aa53d730b80509c24d6ae))
+* **mcp:** upgrade dependencies ([606b34a](https://github.com/sendblue-api/sendblue-ts/commit/606b34a52c62c4c893b2b5beab570f2760dbc26f))
+
 ## 3.0.0 (2026-01-08)
 
 Full Changelog: [v2.2.0...v3.0.0](https://github.com/sendblue-api/sendblue-ts/compare/v2.2.0...v3.0.0)
