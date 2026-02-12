@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.1 (2026-02-12)
+
+Full Changelog: [v3.1.0...v3.1.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.1.0...v3.1.1)
+
+### Chores
+
+* **internal:** avoid type checking errors with ts-reset ([eb062d8](https://github.com/sendblue-api/sendblue-ts/commit/eb062d8439b9ae4511060ce3c54ab73cd4a44f11))
+
 ## 3.1.0 (2026-02-10)
 
 Full Changelog: [v3.0.0...v3.1.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.0.0...v3.1.0)
