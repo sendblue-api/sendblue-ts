@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.1.2 (2026-02-14)
+
+Full Changelog: [v3.1.1...v3.1.2](https://github.com/sendblue-api/sendblue-ts/compare/v3.1.1...v3.1.2)
+
+### Chores
+
+* **internal:** improve layout of generated MCP server files ([01a4563](https://github.com/sendblue-api/sendblue-ts/commit/01a45632c1ee8e9eec2a3995a1b7891059d1b101))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([869a8aa](https://github.com/sendblue-api/sendblue-ts/commit/869a8aa557dfae546e648a5d92e86432703c2cff))
+
 ## 3.1.1 (2026-02-12)
 
 Full Changelog: [v3.1.0...v3.1.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.1.0...v3.1.1)
