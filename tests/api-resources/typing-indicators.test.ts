@@ -9,7 +9,7 @@ const client = new SendblueAPI({
 });
 
 describe('resource typingIndicators', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('send: only required params', async () => {
     const responsePromise = client.typingIndicators.send({
       from_number: '+16292925296',
@@ -24,7 +24,7 @@ describe('resource typingIndicators', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('send: required and optional params', async () => {
     const response = await client.typingIndicators.send({
       from_number: '+16292925296',
