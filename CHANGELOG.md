@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.1.2 (2026-02-20)
+
+Full Changelog: [v3.1.1...v3.1.2](https://github.com/sendblue-api/sendblue-ts/compare/v3.1.1...v3.1.2)
+
+### Bug Fixes
+
+* **mcp:** initialize SDK lazily to avoid failing the connection on init errors ([0b99f69](https://github.com/sendblue-api/sendblue-ts/commit/0b99f6924a49cdc17d09e5cdac932130f5b22a13))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([0636408](https://github.com/sendblue-api/sendblue-ts/commit/06364085dd59f4b43b2f0f95b8bab83435fa9ffb))
+* **internal:** allow setting x-stainless-api-key header on mcp server requests ([cdbf955](https://github.com/sendblue-api/sendblue-ts/commit/cdbf955893b151aa89778d292b3e041a476e0306))
+* **internal:** cache fetch instruction calls in MCP server ([3c55910](https://github.com/sendblue-api/sendblue-ts/commit/3c5591018ee53d8e51d94100f6cafa0c02572046))
+* **internal:** improve layout of generated MCP server files ([01a4563](https://github.com/sendblue-api/sendblue-ts/commit/01a45632c1ee8e9eec2a3995a1b7891059d1b101))
+* **internal:** remove mock server code ([f322a40](https://github.com/sendblue-api/sendblue-ts/commit/f322a40ea28a1b9251b0e296ef7ab92a6c8d7888))
+* **mcp:** correctly update version in sync with sdk ([45a3ed5](https://github.com/sendblue-api/sendblue-ts/commit/45a3ed52cc155a8be91982997764f5dda2987052))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([869a8aa](https://github.com/sendblue-api/sendblue-ts/commit/869a8aa557dfae546e648a5d92e86432703c2cff))
+* update mock server docs ([32ba29c](https://github.com/sendblue-api/sendblue-ts/commit/32ba29c2431daee857b1a3eddc695e372cab3436))
+
 ## 3.1.1 (2026-02-12)
 
 Full Changelog: [v3.1.0...v3.1.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.1.0...v3.1.1)
