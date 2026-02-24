@@ -60,7 +60,7 @@ $ yarn link sendblue
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global sendblue
+$ pnpm link --global sendblue
 ```
 
 ## Running tests
