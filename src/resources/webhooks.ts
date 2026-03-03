@@ -5,6 +5,9 @@ import * as WebhooksAPI from './webhooks';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Operations for managing webhook subscriptions
+ */
 export class Webhooks extends APIResource {
   /**
    * Add new webhooks to the account. Webhooks are appended to existing ones.

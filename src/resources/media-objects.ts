@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Operations for uploading and managing media files
+ */
 export class MediaObjects extends APIResource {
   /**
    * Upload a media file to Sendblue's CDN for use in messages

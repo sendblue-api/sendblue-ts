@@ -5,6 +5,9 @@ import * as MessagesAPI from './messages';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Operations for group messaging (beta)
+ */
 export class Groups extends APIResource {
   /**
    * Add or manage participants in a group chat (beta feature)

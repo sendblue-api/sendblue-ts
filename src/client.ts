@@ -784,12 +784,33 @@ export class SendblueAPI {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Operations for sending and managing messages
+   */
   messages: API.Messages = new API.Messages(this);
+  /**
+   * Operations for group messaging (beta)
+   */
   groups: API.Groups = new API.Groups(this);
+  /**
+   * Operations for uploading and managing media files
+   */
   mediaObjects: API.MediaObjects = new API.MediaObjects(this);
+  /**
+   * Operations for looking up service availability for phone numbers
+   */
   lookups: API.Lookups = new API.Lookups(this);
+  /**
+   * Operations for sending and managing messages
+   */
   typingIndicators: API.TypingIndicators = new API.TypingIndicators(this);
+  /**
+   * Operations for managing contacts
+   */
   contacts: API.Contacts = new API.Contacts(this);
+  /**
+   * Operations for managing webhook subscriptions
+   */
   webhooks: API.Webhooks = new API.Webhooks(this);
 }
 

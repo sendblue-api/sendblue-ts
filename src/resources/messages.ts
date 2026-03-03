@@ -5,6 +5,9 @@ import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Operations for sending and managing messages
+ */
 export class Messages extends APIResource {
   /**
    * Retrieve details of a specific message by its ID
