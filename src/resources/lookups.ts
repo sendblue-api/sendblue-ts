@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Operations for looking up service availability for phone numbers
+ */
 export class Lookups extends APIResource {
   /**
    * Determine if a phone number supports iMessage or SMS. Useful for checking if a
