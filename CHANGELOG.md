@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.2.1 (2026-03-06)
+
+Full Changelog: [v3.2.0...v3.2.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.2.0...v3.2.1)
+
+### Chores
+
+* update SDK settings ([7e64e27](https://github.com/sendblue-api/sendblue-ts/commit/7e64e275a067d5a2bfbead4d0fea2941cea1483b))
+* update SDK settings ([46e52fe](https://github.com/sendblue-api/sendblue-ts/commit/46e52fece83a28b88e2fb0795556341d1cc44519))
+
 ## 3.2.0 (2026-03-06)
 
 Full Changelog: [v3.1.1...v3.2.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.1.1...v3.2.0)
