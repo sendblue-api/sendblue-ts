@@ -1,5 +1,41 @@
 # Changelog
 
+## 3.2.0 (2026-03-06)
+
+Full Changelog: [v3.1.1...v3.2.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.1.1...v3.2.0)
+
+### Features
+
+* **mcp:** add an option to disable code tool ([551e7b9](https://github.com/sendblue-api/sendblue-ts/commit/551e7b92e348e279dbfe6ed27ce6b3c331e87e0c))
+
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([fb21687](https://github.com/sendblue-api/sendblue-ts/commit/fb21687d9c02e1a0b2ffc1256b17d8f03b85b0a6))
+* **mcp:** initialize SDK lazily to avoid failing the connection on init errors ([0b99f69](https://github.com/sendblue-api/sendblue-ts/commit/0b99f6924a49cdc17d09e5cdac932130f5b22a13))
+* **mcp:** update prompt ([a18b1e8](https://github.com/sendblue-api/sendblue-ts/commit/a18b1e835a847cacc635fa581f84382de99f679e))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([0636408](https://github.com/sendblue-api/sendblue-ts/commit/06364085dd59f4b43b2f0f95b8bab83435fa9ffb))
+* **internal:** allow setting x-stainless-api-key header on mcp server requests ([cdbf955](https://github.com/sendblue-api/sendblue-ts/commit/cdbf955893b151aa89778d292b3e041a476e0306))
+* **internal:** cache fetch instruction calls in MCP server ([3c55910](https://github.com/sendblue-api/sendblue-ts/commit/3c5591018ee53d8e51d94100f6cafa0c02572046))
+* **internal:** codegen related update ([e49dca6](https://github.com/sendblue-api/sendblue-ts/commit/e49dca68e4ac0ba9622646e228558b7f7d9c62d2))
+* **internal:** codegen related update ([53f130a](https://github.com/sendblue-api/sendblue-ts/commit/53f130aaa02d1cfc0e8f2fe7bd727f5fa782ee36))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([5ffec38](https://github.com/sendblue-api/sendblue-ts/commit/5ffec385386fb1f3608085e6661da0a9385b144c))
+* **internal:** fix MCP Dockerfiles so they can be built without buildkit ([a6902b8](https://github.com/sendblue-api/sendblue-ts/commit/a6902b8ebc927578dacfa28672e8481e032bbb6b))
+* **internal:** improve layout of generated MCP server files ([01a4563](https://github.com/sendblue-api/sendblue-ts/commit/01a45632c1ee8e9eec2a3995a1b7891059d1b101))
+* **internal:** make MCP code execution location configurable via a flag ([b07fa5c](https://github.com/sendblue-api/sendblue-ts/commit/b07fa5c87e15e521b91692350d50849b1769e078))
+* **internal:** move stringifyQuery implementation to internal function ([1b6af28](https://github.com/sendblue-api/sendblue-ts/commit/1b6af28ba8ae7d7c0ba33181297cc9ec6733b2ad))
+* **internal:** remove mock server code ([f322a40](https://github.com/sendblue-api/sendblue-ts/commit/f322a40ea28a1b9251b0e296ef7ab92a6c8d7888))
+* **internal:** upgrade @modelcontextprotocol/sdk and hono ([2d2c35f](https://github.com/sendblue-api/sendblue-ts/commit/2d2c35f86662b5389f3ab5e8863e60d13cda655c))
+* **internal:** use x-stainless-mcp-client-envs header for MCP remote code tool calls ([23ec859](https://github.com/sendblue-api/sendblue-ts/commit/23ec859fdcaf0b3b629a44485cbfd2221fc5f0d4))
+* **mcp-server:** return access instructions for 404 without API key ([9731f30](https://github.com/sendblue-api/sendblue-ts/commit/9731f3092be43d3e14b1eeaf7fa4ee17f3b07fba))
+* **mcp:** correctly update version in sync with sdk ([45a3ed5](https://github.com/sendblue-api/sendblue-ts/commit/45a3ed52cc155a8be91982997764f5dda2987052))
+* **mcp:** forward STAINLESS_API_KEY to docs search endpoint ([869a8aa](https://github.com/sendblue-api/sendblue-ts/commit/869a8aa557dfae546e648a5d92e86432703c2cff))
+* update mock server docs ([32ba29c](https://github.com/sendblue-api/sendblue-ts/commit/32ba29c2431daee857b1a3eddc695e372cab3436))
+
 ## 3.1.1 (2026-02-12)
 
 Full Changelog: [v3.1.0...v3.1.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.1.0...v3.1.1)
