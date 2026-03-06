@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.3.0 (2026-03-06)
+
+Full Changelog: [v3.2.1...v3.3.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.2.1...v3.3.0)
+
+### Features
+
+* **api:** manual updates ([b107aa8](https://github.com/sendblue-api/sendblue-ts/commit/b107aa873b66f947a186531267085a64055dcdc9))
+
 ## 3.2.1 (2026-03-06)
 
 Full Changelog: [v3.2.0...v3.2.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.2.0...v3.2.1)
