@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Operations for sending and managing messages
+ */
 export class TypingIndicators extends APIResource {
   /**
    * Send an indication that you are typing to a user. This shows up as the animated

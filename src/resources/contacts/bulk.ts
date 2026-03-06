@@ -5,6 +5,9 @@ import * as ContactsAPI from './contacts';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 
+/**
+ * Operations for managing contacts
+ */
 export class Bulk extends APIResource {
   /**
    * Create multiple contacts in bulk
