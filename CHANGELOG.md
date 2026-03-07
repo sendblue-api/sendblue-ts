@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.3.1 (2026-03-07)
+
+Full Changelog: [v3.3.0...v3.3.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.3.0...v3.3.1)
+
+### Bug Fixes
+
+* **client:** preserve URL params already embedded in path ([e440830](https://github.com/sendblue-api/sendblue-ts/commit/e440830d06a1d603365e728446a1fb7d7de3e308))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([b21569f](https://github.com/sendblue-api/sendblue-ts/commit/b21569f67fc9cbb55fe18c9ae0e649a4e897d8a8))
+* **mcp-server:** improve instructions ([4285302](https://github.com/sendblue-api/sendblue-ts/commit/428530210525565a839a7dfb84686f543abdac8b))
+
 ## 3.3.0 (2026-03-06)
 
 Full Changelog: [v3.2.1...v3.3.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.2.1...v3.3.0)
