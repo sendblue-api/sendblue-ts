@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.4.0 (2026-03-17)
+
+Full Changelog: [v3.3.1...v3.4.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.3.1...v3.4.0)
+
+### Features
+
+* Update openapi.yaml ([2b4c4f3](https://github.com/sendblue-api/sendblue-ts/commit/2b4c4f350c80b43c2f32ead460adf9900a4c5465))
+
+
+### Chores
+
+* **internal:** bump @modelcontextprotocol/sdk, @hono/node-server, and minimatch ([cb5caf2](https://github.com/sendblue-api/sendblue-ts/commit/cb5caf2f39eecec8e32c600f52c95fee1df23952))
+* **internal:** make generated MCP servers compatible with Cloudflare worker environments ([01f1046](https://github.com/sendblue-api/sendblue-ts/commit/01f104626ecaf0d910dd3eec1d62609d2354c1af))
+* **internal:** support x-stainless-mcp-client-envs header in MCP servers ([f056ce9](https://github.com/sendblue-api/sendblue-ts/commit/f056ce9db27442aa0b6c2e9346a3478bf4b46099))
+* **internal:** support x-stainless-mcp-client-permissions headers in MCP servers ([6d55172](https://github.com/sendblue-api/sendblue-ts/commit/6d5517280c56d2c266094b0708a974106c48f348))
+* **internal:** tweak CI branches ([1a8c76f](https://github.com/sendblue-api/sendblue-ts/commit/1a8c76f1686e5bde13c03c00d85c8106e0a23c02))
+* **internal:** update dependencies to address dependabot vulnerabilities ([b9da9b5](https://github.com/sendblue-api/sendblue-ts/commit/b9da9b529d5359b0756314a829ec5fc51b955d64))
+
 ## 3.3.1 (2026-03-07)
 
 Full Changelog: [v3.3.0...v3.3.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.3.0...v3.3.1)
