@@ -106,3 +106,13 @@ Methods:
 - <code title="put /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">update</a>({ ...params }) -> WebhookUpdateResponse</code>
 - <code title="get /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">list</a>() -> WebhookListResponse</code>
 - <code title="delete /api/account/webhooks">client.webhooks.<a href="./src/resources/webhooks.ts">delete</a>({ ...params }) -> WebhookDeleteResponse</code>
+
+# SendCarousel
+
+Types:
+
+- <code><a href="./src/resources/send-carousel.ts">SendCarouselSendResponse</a></code>
+
+Methods:
+
+- <code title="post /api/send-carousel">client.sendCarousel.<a href="./src/resources/send-carousel.ts">send</a>({ ...params }) -> SendCarouselSendResponse</code>
