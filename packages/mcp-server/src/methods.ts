@@ -142,6 +142,12 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'delete',
     httpPath: '/api/account/webhooks',
   },
+  {
+    clientCallName: 'client.sendCarousel.send',
+    fullyQualifiedName: 'sendCarousel.send',
+    httpMethod: 'post',
+    httpPath: '/api/send-carousel',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {

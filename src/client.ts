@@ -30,6 +30,7 @@ import {
   MessageSendParams,
   Messages,
 } from './resources/messages';
+import { SendCarousel, SendCarouselSendParams, SendCarouselSendResponse } from './resources/send-carousel';
 import {
   TypingIndicatorSendParams,
   TypingIndicatorSendResponse,
@@ -813,6 +814,10 @@ export class SendblueAPI {
    * Operations for managing webhook subscriptions
    */
   webhooks: API.Webhooks = new API.Webhooks(this);
+  /**
+   * Operations for sending and managing messages
+   */
+  sendCarousel: API.SendCarousel = new API.SendCarousel(this);
 }
 
 SendblueAPI.Messages = Messages;
@@ -822,6 +827,7 @@ SendblueAPI.Lookups = Lookups;
 SendblueAPI.TypingIndicators = TypingIndicators;
 SendblueAPI.Contacts = Contacts;
 SendblueAPI.Webhooks = Webhooks;
+SendblueAPI.SendCarousel = SendCarousel;
 
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -888,5 +894,11 @@ export declare namespace SendblueAPI {
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
     type WebhookDeleteParams as WebhookDeleteParams,
+  };
+
+  export {
+    SendCarousel as SendCarousel,
+    type SendCarouselSendResponse as SendCarouselSendResponse,
+    type SendCarouselSendParams as SendCarouselSendParams,
   };
 }

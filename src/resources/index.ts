@@ -33,6 +33,7 @@ export {
   type MessageGetStatusParams,
   type MessageSendParams,
 } from './messages';
+export { SendCarousel, type SendCarouselSendResponse, type SendCarouselSendParams } from './send-carousel';
 export {
   TypingIndicators,
   type TypingIndicatorSendResponse,
