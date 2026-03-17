@@ -126,6 +126,7 @@ const fuse = new Fuse(
     'client.webhooks.delete',
     'client.webhooks.list',
     'client.webhooks.update',
+    'client.sendCarousel.send',
   ],
   { threshold: 1, shouldSort: true },
 );
