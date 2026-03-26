@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.6.0 (2026-03-26)
+
+Full Changelog: [v3.5.0...v3.6.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.5.0...v3.6.0)
+
+### Features
+
+* Enhance contact update functionality to support SMS opt-out feature ([1f5100b](https://github.com/sendblue-api/sendblue-ts/commit/1f5100babb2d7cf39e2b734a07476cf184583d93))
+
 ## 3.5.0 (2026-03-26)
 
 Full Changelog: [v3.4.0...v3.5.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.4.0...v3.5.0)
