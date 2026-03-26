@@ -42,7 +42,8 @@ export class Contacts extends APIResource {
   }
 
   /**
-   * Update an existing contact
+   * Update an existing contact. You may set SMS opt-out with `opt_out` (boolean); it
+   * updates the same recipient record used for inbound keyword opt-outs.
    *
    * @example
    * ```ts
@@ -158,6 +159,11 @@ export interface Contact {
    * Last name
    */
   last_name?: string;
+
+  /**
+   * Whether the contact has opted out of SMS (from recipient opt-out state)
+   */
+  opt_out?: boolean;
 
   /**
    * Phone number in E.164 format
@@ -347,6 +353,17 @@ export interface ContactUpdateParams {
    * @deprecated Deprecated, use last_name
    */
   lastName?: string;
+
+  /**
+   * Whether the contact has opted out of SMS (updates the same recipient record used
+   * for inbound keyword opt-outs)
+   */
+  opt_out?: boolean;
+
+  /**
+   * @deprecated Deprecated, use opt_out
+   */
+  optOut?: boolean;
 
   /**
    * Associated Sendblue phone number (preferred)
