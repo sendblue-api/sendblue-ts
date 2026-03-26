@@ -101,6 +101,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/contacts/count',
   },
   {
+    clientCallName: 'client.contacts.optOut',
+    fullyQualifiedName: 'contacts.optOut',
+    httpMethod: 'post',
+    httpPath: '/api/v2/contacts/opt-out',
+  },
+  {
     clientCallName: 'client.contacts.verify',
     fullyQualifiedName: 'contacts.verify',
     httpMethod: 'post',

@@ -97,6 +97,23 @@ export class Contacts extends APIResource {
   }
 
   /**
+   * Opt a contact out (or back in) from receiving messages. When a recipient is
+   * opted out, outbound messages to that number will be blocked.
+   *
+   * Pass `opted_out: false` to opt a contact back in.
+   *
+   * @example
+   * ```ts
+   * const response = await client.contacts.optOut({
+   *   number: '+14155551234',
+   * });
+   * ```
+   */
+  optOut(body: ContactOptOutParams, options?: RequestOptions): APIPromise<ContactOptOutResponse> {
+    return this._client.post('/api/v2/contacts/opt-out', { body, ...options });
+  }
+
+  /**
    * Send a verification message to a contact
    *
    * @example
@@ -192,6 +209,20 @@ export interface ContactCountResponse {
    * Total number of contacts
    */
   count?: number;
+}
+
+export interface ContactOptOutResponse {
+  /**
+   * The normalized phone number
+   */
+  number?: string;
+
+  /**
+   * The current opt-out status
+   */
+  opted_out?: boolean;
+
+  status?: string;
 }
 
 export interface ContactVerifyResponse {
@@ -362,6 +393,18 @@ export interface ContactListParams {
   phone_number?: string;
 }
 
+export interface ContactOptOutParams {
+  /**
+   * Phone number in E.164 format
+   */
+  number: string;
+
+  /**
+   * Set to false to opt the contact back in (defaults to true)
+   */
+  opted_out?: boolean;
+}
+
 export interface ContactVerifyParams {
   /**
    * Phone number to verify
@@ -380,10 +423,12 @@ export declare namespace Contacts {
     type ContactListResponse as ContactListResponse,
     type ContactDeleteResponse as ContactDeleteResponse,
     type ContactCountResponse as ContactCountResponse,
+    type ContactOptOutResponse as ContactOptOutResponse,
     type ContactVerifyResponse as ContactVerifyResponse,
     type ContactCreateParams as ContactCreateParams,
     type ContactUpdateParams as ContactUpdateParams,
     type ContactListParams as ContactListParams,
+    type ContactOptOutParams as ContactOptOutParams,
     type ContactVerifyParams as ContactVerifyParams,
   };
 
