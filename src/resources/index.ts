@@ -9,10 +9,12 @@ export {
   type ContactListResponse,
   type ContactDeleteResponse,
   type ContactCountResponse,
+  type ContactOptOutResponse,
   type ContactVerifyResponse,
   type ContactCreateParams,
   type ContactUpdateParams,
   type ContactListParams,
+  type ContactOptOutParams,
   type ContactVerifyParams,
 } from './contacts/contacts';
 export {

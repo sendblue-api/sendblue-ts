@@ -120,6 +120,23 @@ describe('resource contacts', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('optOut: only required params', async () => {
+    const responsePromise = client.contacts.optOut({ number: '+14155551234' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('optOut: required and optional params', async () => {
+    const response = await client.contacts.optOut({ number: '+14155551234', opted_out: true });
+  });
+
+  // Mock server tests are disabled
   test.skip('verify: only required params', async () => {
     const responsePromise = client.contacts.verify({ number: 'number' });
     const rawResponse = await responsePromise.asResponse();
