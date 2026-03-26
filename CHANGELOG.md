@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.5.0 (2026-03-26)
+
+Full Changelog: [v3.4.0...v3.5.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.4.0...v3.5.0)
+
+### Features
+
+* add contacts opt-out endpoint ([e4c0466](https://github.com/sendblue-api/sendblue-ts/commit/e4c04660c6be5d91e02c9ccc21289d83d2e1855d))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([3354e60](https://github.com/sendblue-api/sendblue-ts/commit/3354e60ab0f3666736715f1940af61ca626f69ed))
+* **internal:** fix MCP server TS errors that occur with required client options ([d5f35c6](https://github.com/sendblue-api/sendblue-ts/commit/d5f35c6bec64d0f0b1340eaa8a16403c211870d2))
+* **internal:** update gitignore ([e4060b6](https://github.com/sendblue-api/sendblue-ts/commit/e4060b677f6076ce88d1413e7d0a05727e9ca6d5))
+
 ## 3.4.0 (2026-03-17)
 
 Full Changelog: [v3.3.1...v3.4.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.3.1...v3.4.0)
