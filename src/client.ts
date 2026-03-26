@@ -55,6 +55,8 @@ import {
   ContactDeleteResponse,
   ContactListParams,
   ContactListResponse,
+  ContactOptOutParams,
+  ContactOptOutResponse,
   ContactRetrieveResponse,
   ContactUpdateParams,
   ContactUpdateResponse,
@@ -877,10 +879,12 @@ export declare namespace SendblueAPI {
     type ContactListResponse as ContactListResponse,
     type ContactDeleteResponse as ContactDeleteResponse,
     type ContactCountResponse as ContactCountResponse,
+    type ContactOptOutResponse as ContactOptOutResponse,
     type ContactVerifyResponse as ContactVerifyResponse,
     type ContactCreateParams as ContactCreateParams,
     type ContactUpdateParams as ContactUpdateParams,
     type ContactListParams as ContactListParams,
+    type ContactOptOutParams as ContactOptOutParams,
     type ContactVerifyParams as ContactVerifyParams,
   };
 

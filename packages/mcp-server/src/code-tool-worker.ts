@@ -117,6 +117,7 @@ const fuse = new Fuse(
     'client.contacts.create',
     'client.contacts.delete',
     'client.contacts.list',
+    'client.contacts.optOut',
     'client.contacts.retrieve',
     'client.contacts.update',
     'client.contacts.verify',

@@ -66,6 +66,7 @@ Types:
 - <code><a href="./src/resources/contacts/contacts.ts">ContactListResponse</a></code>
 - <code><a href="./src/resources/contacts/contacts.ts">ContactDeleteResponse</a></code>
 - <code><a href="./src/resources/contacts/contacts.ts">ContactCountResponse</a></code>
+- <code><a href="./src/resources/contacts/contacts.ts">ContactOptOutResponse</a></code>
 - <code><a href="./src/resources/contacts/contacts.ts">ContactVerifyResponse</a></code>
 
 Methods:
@@ -76,6 +77,7 @@ Methods:
 - <code title="get /api/v2/contacts">client.contacts.<a href="./src/resources/contacts/contacts.ts">list</a>({ ...params }) -> ContactListResponse</code>
 - <code title="delete /api/v2/contacts/{phone_number}">client.contacts.<a href="./src/resources/contacts/contacts.ts">delete</a>(phoneNumber) -> ContactDeleteResponse</code>
 - <code title="get /api/v2/contacts/count">client.contacts.<a href="./src/resources/contacts/contacts.ts">count</a>() -> ContactCountResponse</code>
+- <code title="post /api/v2/contacts/opt-out">client.contacts.<a href="./src/resources/contacts/contacts.ts">optOut</a>({ ...params }) -> ContactOptOutResponse</code>
 - <code title="post /api/v2/contacts/verify">client.contacts.<a href="./src/resources/contacts/contacts.ts">verify</a>({ ...params }) -> ContactVerifyResponse</code>
 
 ## Bulk
