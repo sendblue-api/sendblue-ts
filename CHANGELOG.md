@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.6.1 (2026-03-28)
+
+Full Changelog: [v3.6.0...v3.6.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.6.0...v3.6.1)
+
+### Chores
+
+* **ci:** escape input path in publish-npm workflow ([06556c8](https://github.com/sendblue-api/sendblue-ts/commit/06556c8c82c5f27fb71b9fd73ac7a94ab766e575))
+* **internal:** codegen related update ([4985d66](https://github.com/sendblue-api/sendblue-ts/commit/4985d669bc60b267bd110a48bfe7b55d5db3cc46))
+* **internal:** support custom-instructions-path flag in MCP servers ([ca60ff8](https://github.com/sendblue-api/sendblue-ts/commit/ca60ff8d8b4a7d65ed3d61bd3c98f10d557d88d6))
+* **internal:** support local docs search in MCP servers ([8aea560](https://github.com/sendblue-api/sendblue-ts/commit/8aea560fc35fe9ce1b7fc53584aec41986b6ac49))
+
 ## 3.6.0 (2026-03-26)
 
 Full Changelog: [v3.5.0...v3.6.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.5.0...v3.6.0)
