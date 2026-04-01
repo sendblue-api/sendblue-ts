@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.6.1 (2026-04-01)
+
+Full Changelog: [v3.6.0...v3.6.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.6.0...v3.6.1)
+
+### Bug Fixes
+
+* **internal:** gitignore generated `oidc` dir ([b77a9d1](https://github.com/sendblue-api/sendblue-ts/commit/b77a9d1dc06ff5396cf39d90d5881e5acb0658f1))
+
+
+### Chores
+
+* **ci:** escape input path in publish-npm workflow ([06556c8](https://github.com/sendblue-api/sendblue-ts/commit/06556c8c82c5f27fb71b9fd73ac7a94ab766e575))
+* **internal:** codegen related update ([4985d66](https://github.com/sendblue-api/sendblue-ts/commit/4985d669bc60b267bd110a48bfe7b55d5db3cc46))
+* **internal:** improve local docs search for MCP servers ([edca950](https://github.com/sendblue-api/sendblue-ts/commit/edca950a1c079e73cebb2f5b5aedefca358a2fd0))
+* **internal:** improve local docs search for MCP servers ([291a54c](https://github.com/sendblue-api/sendblue-ts/commit/291a54cc80c24a23f20c4165f2952609701c2f6c))
+* **internal:** support custom-instructions-path flag in MCP servers ([ca60ff8](https://github.com/sendblue-api/sendblue-ts/commit/ca60ff8d8b4a7d65ed3d61bd3c98f10d557d88d6))
+* **internal:** support local docs search in MCP servers ([8aea560](https://github.com/sendblue-api/sendblue-ts/commit/8aea560fc35fe9ce1b7fc53584aec41986b6ac49))
+* **mcp-server:** add support for session id, forward client info ([8697203](https://github.com/sendblue-api/sendblue-ts/commit/869720301103e9ede361a1494651acce57dcec53))
+
 ## 3.6.0 (2026-03-26)
 
 Full Changelog: [v3.5.0...v3.6.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.5.0...v3.6.0)
