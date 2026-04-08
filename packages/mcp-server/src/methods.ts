@@ -154,6 +154,30 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'post',
     httpPath: '/api/send-carousel',
   },
+  {
+    clientCallName: 'client.v2.totp.getCode',
+    fullyQualifiedName: 'v2.totp.getCode',
+    httpMethod: 'get',
+    httpPath: '/api/v2/totp/code/{secret_id}',
+  },
+  {
+    clientCallName: 'client.v2.totp.secrets.create',
+    fullyQualifiedName: 'v2.totp.secrets.create',
+    httpMethod: 'post',
+    httpPath: '/api/v2/totp/secrets',
+  },
+  {
+    clientCallName: 'client.v2.totp.secrets.list',
+    fullyQualifiedName: 'v2.totp.secrets.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/totp/secrets',
+  },
+  {
+    clientCallName: 'client.v2.totp.secrets.delete',
+    fullyQualifiedName: 'v2.totp.secrets.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/v2/totp/secrets/{secret_id}',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {

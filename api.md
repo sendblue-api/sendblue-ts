@@ -118,3 +118,29 @@ Types:
 Methods:
 
 - <code title="post /api/send-carousel">client.sendCarousel.<a href="./src/resources/send-carousel.ts">send</a>({ ...params }) -> SendCarouselSendResponse</code>
+
+# V2
+
+## Totp
+
+Types:
+
+- <code><a href="./src/resources/v2/totp/totp.ts">TotpGetCodeResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/totp/code/{secret_id}">client.v2.totp.<a href="./src/resources/v2/totp/totp.ts">getCode</a>(secretID) -> TotpGetCodeResponse</code>
+
+### Secrets
+
+Types:
+
+- <code><a href="./src/resources/v2/totp/secrets.ts">SecretCreateResponse</a></code>
+- <code><a href="./src/resources/v2/totp/secrets.ts">SecretListResponse</a></code>
+- <code><a href="./src/resources/v2/totp/secrets.ts">SecretDeleteResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/totp/secrets">client.v2.totp.secrets.<a href="./src/resources/v2/totp/secrets.ts">create</a>({ ...params }) -> SecretCreateResponse</code>
+- <code title="get /api/v2/totp/secrets">client.v2.totp.secrets.<a href="./src/resources/v2/totp/secrets.ts">list</a>() -> SecretListResponse</code>
+- <code title="delete /api/v2/totp/secrets/{secret_id}">client.v2.totp.secrets.<a href="./src/resources/v2/totp/secrets.ts">delete</a>(secretID) -> SecretDeleteResponse</code>
