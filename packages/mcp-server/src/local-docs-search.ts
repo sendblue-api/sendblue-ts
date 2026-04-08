@@ -853,6 +853,134 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
     },
   },
+  {
+    name: 'get_code',
+    endpoint: '/api/v2/totp/code/{secret_id}',
+    httpMethod: 'get',
+    summary: 'Get current TOTP code',
+    description:
+      'Generate the current 6- or 8-digit TOTP code for a stored secret, along with how many seconds remain until it rotates.',
+    stainlessPath: '(resource) v2.totp > (method) get_code',
+    qualified: 'client.v2.totp.getCode',
+    params: ['secret_id: string;'],
+    response: '{ code?: string; expires_in?: number; status?: string; }',
+    markdown:
+      "## get_code\n\n`client.v2.totp.getCode(secret_id: string): { code?: string; expires_in?: number; status?: string; }`\n\n**get** `/api/v2/totp/code/{secret_id}`\n\nGenerate the current 6- or 8-digit TOTP code for a stored secret, along with how many seconds remain until it rotates.\n\n### Parameters\n\n- `secret_id: string`\n\n### Returns\n\n- `{ code?: string; expires_in?: number; status?: string; }`\n\n  - `code?: string`\n  - `expires_in?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.v2.totp.getCode('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(response);\n```",
+    perLanguage: {
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/totp/code/$SECRET_ID \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+      python: {
+        method: 'v2.totp.get_code',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.v2.totp.get_code(\n    "550e8400-e29b-41d4-a716-446655440000",\n)\nprint(response.code)',
+      },
+      typescript: {
+        method: 'client.v2.totp.getCode',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.v2.totp.getCode('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(response.code);",
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/api/v2/totp/secrets',
+    httpMethod: 'post',
+    summary: 'Register a TOTP secret',
+    description:
+      'Store an encrypted TOTP secret for your account. Agents can use this instead of a phone-based authenticator app.\n\nProvide either:\n- A `uri` (the `otpauth://` URI from a QR code scan), which auto-populates all fields\n- A base32 `secret` with optional `label`, `issuer`, `algorithm`, `digits`, and `period`\n',
+    stainlessPath: '(resource) v2.totp.secrets > (method) create',
+    qualified: 'client.v2.totp.secrets.create',
+    params: [
+      "algorithm?: 'SHA1' | 'SHA256' | 'SHA512';",
+      'digits?: 6 | 8;',
+      'issuer?: string;',
+      'label?: string;',
+      'period?: number;',
+      'secret?: string;',
+      'uri?: string;',
+    ],
+    response:
+      "{ status?: string; totp_secret?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }; }",
+    markdown:
+      "## create\n\n`client.v2.totp.secrets.create(algorithm?: 'SHA1' | 'SHA256' | 'SHA512', digits?: 6 | 8, issuer?: string, label?: string, period?: number, secret?: string, uri?: string): { status?: string; totp_secret?: object; }`\n\n**post** `/api/v2/totp/secrets`\n\nStore an encrypted TOTP secret for your account. Agents can use this instead of a phone-based authenticator app.\n\nProvide either:\n- A `uri` (the `otpauth://` URI from a QR code scan), which auto-populates all fields\n- A base32 `secret` with optional `label`, `issuer`, `algorithm`, `digits`, and `period`\n\n\n### Parameters\n\n- `algorithm?: 'SHA1' | 'SHA256' | 'SHA512'`\n  Hash algorithm\n\n- `digits?: 6 | 8`\n  Code length\n\n- `issuer?: string`\n  Service name (e.g. \"GitHub\", \"Google\")\n\n- `label?: string`\n  Human-readable label for this secret (e.g. \"GitHub - agent@example.com\"). Required unless `uri` is provided.\n\n- `period?: number`\n  Rotation period in seconds\n\n- `secret?: string`\n  Base32-encoded TOTP secret. Omit to auto-generate one.\n\n- `uri?: string`\n  Full `otpauth://totp/...` URI from a QR code. Overrides all other fields if provided.\n\n### Returns\n\n- `{ status?: string; totp_secret?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }; }`\n\n  - `status?: string`\n  - `totp_secret?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst secret = await client.v2.totp.secrets.create();\n\nconsole.log(secret);\n```",
+    perLanguage: {
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/totp/secrets \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "issuer": "GitHub",\n          "label": "GitHub - agent@example.com",\n          "secret": "JBSWY3DPEHPK3PXP",\n          "uri": "otpauth://totp/GitHub:agent%40example.com?secret=JBSWY3DPEHPK3PXP&issuer=GitHub"\n        }\'',
+      },
+      python: {
+        method: 'v2.totp.secrets.create',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nsecret = client.v2.totp.secrets.create()\nprint(secret.status)',
+      },
+      typescript: {
+        method: 'client.v2.totp.secrets.create',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst secret = await client.v2.totp.secrets.create();\n\nconsole.log(secret.status);",
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/v2/totp/secrets',
+    httpMethod: 'get',
+    summary: 'List TOTP secrets',
+    description:
+      'List all stored TOTP secrets for the account. The encrypted secret values are never returned.',
+    stainlessPath: '(resource) v2.totp.secrets > (method) list',
+    qualified: 'client.v2.totp.secrets.list',
+    response:
+      "{ status?: string; totp_secrets?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }[]; }",
+    markdown:
+      "## list\n\n`client.v2.totp.secrets.list(): { status?: string; totp_secrets?: object[]; }`\n\n**get** `/api/v2/totp/secrets`\n\nList all stored TOTP secrets for the account. The encrypted secret values are never returned.\n\n### Returns\n\n- `{ status?: string; totp_secrets?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }[]; }`\n\n  - `status?: string`\n  - `totp_secrets?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }[]`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst secrets = await client.v2.totp.secrets.list();\n\nconsole.log(secrets);\n```",
+    perLanguage: {
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/totp/secrets \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+      python: {
+        method: 'v2.totp.secrets.list',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nsecrets = client.v2.totp.secrets.list()\nprint(secrets.status)',
+      },
+      typescript: {
+        method: 'client.v2.totp.secrets.list',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst secrets = await client.v2.totp.secrets.list();\n\nconsole.log(secrets.status);",
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/api/v2/totp/secrets/{secret_id}',
+    httpMethod: 'delete',
+    summary: 'Delete a TOTP secret',
+    description: 'Permanently delete a stored TOTP secret.',
+    stainlessPath: '(resource) v2.totp.secrets > (method) delete',
+    qualified: 'client.v2.totp.secrets.delete',
+    params: ['secret_id: string;'],
+    response: '{ status?: string; }',
+    markdown:
+      "## delete\n\n`client.v2.totp.secrets.delete(secret_id: string): { status?: string; }`\n\n**delete** `/api/v2/totp/secrets/{secret_id}`\n\nPermanently delete a stored TOTP secret.\n\n### Parameters\n\n- `secret_id: string`\n\n### Returns\n\n- `{ status?: string; }`\n\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst secret = await client.v2.totp.secrets.delete('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(secret);\n```",
+    perLanguage: {
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/totp/secrets/$SECRET_ID \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+      python: {
+        method: 'v2.totp.secrets.delete',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nsecret = client.v2.totp.secrets.delete(\n    "550e8400-e29b-41d4-a716-446655440000",\n)\nprint(secret.status)',
+      },
+      typescript: {
+        method: 'client.v2.totp.secrets.delete',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst secret = await client.v2.totp.secrets.delete('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(secret.status);",
+      },
+    },
+  },
 ];
 
 const EMBEDDED_READMES: { language: string; content: string }[] = [

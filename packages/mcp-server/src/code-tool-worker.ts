@@ -132,6 +132,10 @@ const fuse = new Fuse(
     'client.webhooks.list',
     'client.webhooks.update',
     'client.sendCarousel.send',
+    'client.v2.totp.getCode',
+    'client.v2.totp.secrets.create',
+    'client.v2.totp.secrets.delete',
+    'client.v2.totp.secrets.list',
   ],
   { threshold: 1, shouldSort: true },
 );
