@@ -1,5 +1,22 @@
 # Changelog
 
+## 3.7.0 (2026-04-08)
+
+Full Changelog: [v3.6.1...v3.7.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.6.1...v3.7.0)
+
+### Features
+
+* TOTP authenticator API for agent identity toolkit ([da0c72a](https://github.com/sendblue-api/sendblue-ts/commit/da0c72a911f6cafae3e10896ee2b01930ba749e1))
+
+
+### Chores
+
+* **internal:** fix MCP docker image builds in yarn projects ([8b3b258](https://github.com/sendblue-api/sendblue-ts/commit/8b3b258046bf2eed369b6cd1ae8a984228199541))
+* **internal:** fix MCP server import ordering ([5cf88b7](https://github.com/sendblue-api/sendblue-ts/commit/5cf88b7dc60340b3a3db7757fd0af2212bf48b7d))
+* **internal:** support type annotations when running MCP in local execution mode ([2ce1e17](https://github.com/sendblue-api/sendblue-ts/commit/2ce1e171552f8251ba25b235ed705b1ed2a99472))
+* **internal:** use link instead of file in MCP server package.json files ([52e4836](https://github.com/sendblue-api/sendblue-ts/commit/52e4836d4ec6c53e4066c6b3a53a2a72ddd87132))
+* **mcp-server:** log client info ([716e65b](https://github.com/sendblue-api/sendblue-ts/commit/716e65be1051902897a170810da6926294b2d946))
+
 ## 3.6.1 (2026-04-01)
 
 Full Changelog: [v3.6.0...v3.6.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.6.0...v3.6.1)
