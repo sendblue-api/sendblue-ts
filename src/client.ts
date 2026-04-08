@@ -64,6 +64,7 @@ import {
   ContactVerifyResponse,
   Contacts,
 } from './resources/contacts/contacts';
+import { V2 } from './resources/v2/v2';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -820,6 +821,7 @@ export class SendblueAPI {
    * Operations for sending and managing messages
    */
   sendCarousel: API.SendCarousel = new API.SendCarousel(this);
+  v2: API.V2 = new API.V2(this);
 }
 
 SendblueAPI.Messages = Messages;
@@ -830,6 +832,7 @@ SendblueAPI.TypingIndicators = TypingIndicators;
 SendblueAPI.Contacts = Contacts;
 SendblueAPI.Webhooks = Webhooks;
 SendblueAPI.SendCarousel = SendCarousel;
+SendblueAPI.V2 = V2;
 
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -905,4 +908,6 @@ export declare namespace SendblueAPI {
     type SendCarouselSendResponse as SendCarouselSendResponse,
     type SendCarouselSendParams as SendCarouselSendParams,
   };
+
+  export { V2 as V2 };
 }
