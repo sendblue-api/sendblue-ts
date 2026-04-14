@@ -144,3 +144,19 @@ Methods:
 - <code title="post /api/v2/totp/secrets">client.v2.totp.secrets.<a href="./src/resources/v2/totp/secrets.ts">create</a>({ ...params }) -> SecretCreateResponse</code>
 - <code title="get /api/v2/totp/secrets">client.v2.totp.secrets.<a href="./src/resources/v2/totp/secrets.ts">list</a>() -> SecretListResponse</code>
 - <code title="delete /api/v2/totp/secrets/{secret_id}">client.v2.totp.secrets.<a href="./src/resources/v2/totp/secrets.ts">delete</a>(secretID) -> SecretDeleteResponse</code>
+
+# Lines
+
+## CallForwarding
+
+Types:
+
+- <code><a href="./src/resources/lines/call-forwarding.ts">CallForwardingRetrieveResponse</a></code>
+- <code><a href="./src/resources/lines/call-forwarding.ts">CallForwardingUpdateResponse</a></code>
+- <code><a href="./src/resources/lines/call-forwarding.ts">CallForwardingDeleteResponse</a></code>
+
+Methods:
+
+- <code title="get /api/lines/{sendblue_number}/call-forwarding">client.lines.callForwarding.<a href="./src/resources/lines/call-forwarding.ts">retrieve</a>(sendblueNumber) -> CallForwardingRetrieveResponse</code>
+- <code title="put /api/lines/{sendblue_number}/call-forwarding">client.lines.callForwarding.<a href="./src/resources/lines/call-forwarding.ts">update</a>(sendblueNumber, { ...params }) -> CallForwardingUpdateResponse</code>
+- <code title="delete /api/lines/{sendblue_number}/call-forwarding">client.lines.callForwarding.<a href="./src/resources/lines/call-forwarding.ts">delete</a>(sendblueNumber) -> CallForwardingDeleteResponse</code>
