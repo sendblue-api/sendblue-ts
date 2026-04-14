@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.8.0 (2026-04-14)
+
+Full Changelog: [v3.7.0...v3.8.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.7.0...v3.8.0)
+
+### Features
+
+* add per-line call forwarding API ([d961dc5](https://github.com/sendblue-api/sendblue-ts/commit/d961dc59191bc7d5ce6ab2c0015ca89fb247c5c9))
+
+
+### Chores
+
+* **internal:** codegen related update ([25152cf](https://github.com/sendblue-api/sendblue-ts/commit/25152cfe1b0615187431331afbaf6ccef2414d55))
+* **internal:** codegen related update ([4556e0f](https://github.com/sendblue-api/sendblue-ts/commit/4556e0ffbecaeaf4b03abd1b8558f5f686bab79f))
+* **internal:** show error causes in MCP servers when running in local mode ([4da594e](https://github.com/sendblue-api/sendblue-ts/commit/4da594e3ad51b0a012fd77c69687383114bc72e6))
+* **mcp-server:** increase local docs search result count from 5 to 10 ([b902d73](https://github.com/sendblue-api/sendblue-ts/commit/b902d730651530340f0f47c8cc852916636397a0))
+
 ## 3.7.0 (2026-04-08)
 
 Full Changelog: [v3.6.1...v3.7.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.6.1...v3.7.0)
