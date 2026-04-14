@@ -136,6 +136,9 @@ const fuse = new Fuse(
     'client.v2.totp.secrets.create',
     'client.v2.totp.secrets.delete',
     'client.v2.totp.secrets.list',
+    'client.lines.callForwarding.delete',
+    'client.lines.callForwarding.retrieve',
+    'client.lines.callForwarding.update',
   ],
   { threshold: 1, shouldSort: true },
 );

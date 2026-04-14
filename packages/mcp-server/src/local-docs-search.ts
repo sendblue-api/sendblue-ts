@@ -981,6 +981,96 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
     },
   },
+  {
+    name: 'retrieve',
+    endpoint: '/api/lines/{sendblue_number}/call-forwarding',
+    httpMethod: 'get',
+    summary: 'Get call forwarding for a line',
+    description:
+      'Returns the current call forwarding number for a dedicated phone line.\n\nPer-line forwarding takes priority over the company default forwarding number\nbut is overridden by seat-level forwarding when a seat has a forwarding number set.\n\n**Priority order:** seat forwarding → per-line forwarding → company default forwarding\n',
+    stainlessPath: '(resource) lines.call_forwarding > (method) retrieve',
+    qualified: 'client.lines.callForwarding.retrieve',
+    params: ['sendblue_number: string;'],
+    response: '{ forwarding_number: string; sendblue_number: string; }',
+    markdown:
+      "## retrieve\n\n`client.lines.callForwarding.retrieve(sendblue_number: string): { forwarding_number: string; sendblue_number: string; }`\n\n**get** `/api/lines/{sendblue_number}/call-forwarding`\n\nReturns the current call forwarding number for a dedicated phone line.\n\nPer-line forwarding takes priority over the company default forwarding number\nbut is overridden by seat-level forwarding when a seat has a forwarding number set.\n\n**Priority order:** seat forwarding → per-line forwarding → company default forwarding\n\n\n### Parameters\n\n- `sendblue_number: string`\n\n### Returns\n\n- `{ forwarding_number: string; sendblue_number: string; }`\n\n  - `forwarding_number: string`\n  - `sendblue_number: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst callForwarding = await client.lines.callForwarding.retrieve('+12125550101');\n\nconsole.log(callForwarding);\n```",
+    perLanguage: {
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/lines/$SENDBLUE_NUMBER/call-forwarding \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+      python: {
+        method: 'lines.call_forwarding.retrieve',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncall_forwarding = client.lines.call_forwarding.retrieve(\n    "+12125550101",\n)\nprint(call_forwarding.forwarding_number)',
+      },
+      typescript: {
+        method: 'client.lines.callForwarding.retrieve',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst callForwarding = await client.lines.callForwarding.retrieve('+12125550101');\n\nconsole.log(callForwarding.forwarding_number);",
+      },
+    },
+  },
+  {
+    name: 'update',
+    endpoint: '/api/lines/{sendblue_number}/call-forwarding',
+    httpMethod: 'put',
+    summary: 'Set call forwarding for a line',
+    description:
+      'Sets a call forwarding number for a specific dedicated phone line.\nInbound calls to this line will be forwarded to the specified number.\n\nThe `forwarding_number` is normalized to E.164 format before storage.\nUS numbers can be supplied in local format (e.g. `2125550199`).\n',
+    stainlessPath: '(resource) lines.call_forwarding > (method) update',
+    qualified: 'client.lines.callForwarding.update',
+    params: ['sendblue_number: string;', 'forwarding_number: string;'],
+    response: '{ forwarding_number: string; sendblue_number: string; }',
+    markdown:
+      "## update\n\n`client.lines.callForwarding.update(sendblue_number: string, forwarding_number: string): { forwarding_number: string; sendblue_number: string; }`\n\n**put** `/api/lines/{sendblue_number}/call-forwarding`\n\nSets a call forwarding number for a specific dedicated phone line.\nInbound calls to this line will be forwarded to the specified number.\n\nThe `forwarding_number` is normalized to E.164 format before storage.\nUS numbers can be supplied in local format (e.g. `2125550199`).\n\n\n### Parameters\n\n- `sendblue_number: string`\n\n- `forwarding_number: string`\n  Phone number to forward calls to (E.164 or US local format)\n\n### Returns\n\n- `{ forwarding_number: string; sendblue_number: string; }`\n\n  - `forwarding_number: string`\n  - `sendblue_number: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst callForwarding = await client.lines.callForwarding.update('+12125550101', { forwarding_number: '+16692138010' });\n\nconsole.log(callForwarding);\n```",
+    perLanguage: {
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/lines/$SENDBLUE_NUMBER/call-forwarding \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "forwarding_number": "+16692138010"\n        }\'',
+      },
+      python: {
+        method: 'lines.call_forwarding.update',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncall_forwarding = client.lines.call_forwarding.update(\n    sendblue_number="+12125550101",\n    forwarding_number="+16692138010",\n)\nprint(call_forwarding.forwarding_number)',
+      },
+      typescript: {
+        method: 'client.lines.callForwarding.update',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst callForwarding = await client.lines.callForwarding.update('+12125550101', {\n  forwarding_number: '+16692138010',\n});\n\nconsole.log(callForwarding.forwarding_number);",
+      },
+    },
+  },
+  {
+    name: 'delete',
+    endpoint: '/api/lines/{sendblue_number}/call-forwarding',
+    httpMethod: 'delete',
+    summary: 'Clear call forwarding for a line',
+    description:
+      'Removes the per-line call forwarding number. After clearing, inbound calls\nwill fall back to the company default forwarding number (if configured).\n\nThis operation is idempotent — calling it on a line with no forwarding set\nreturns 200 with `forwarding_number: null`.\n',
+    stainlessPath: '(resource) lines.call_forwarding > (method) delete',
+    qualified: 'client.lines.callForwarding.delete',
+    params: ['sendblue_number: string;'],
+    response: '{ forwarding_number: string; sendblue_number: string; }',
+    markdown:
+      "## delete\n\n`client.lines.callForwarding.delete(sendblue_number: string): { forwarding_number: string; sendblue_number: string; }`\n\n**delete** `/api/lines/{sendblue_number}/call-forwarding`\n\nRemoves the per-line call forwarding number. After clearing, inbound calls\nwill fall back to the company default forwarding number (if configured).\n\nThis operation is idempotent — calling it on a line with no forwarding set\nreturns 200 with `forwarding_number: null`.\n\n\n### Parameters\n\n- `sendblue_number: string`\n\n### Returns\n\n- `{ forwarding_number: string; sendblue_number: string; }`\n\n  - `forwarding_number: string`\n  - `sendblue_number: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst callForwarding = await client.lines.callForwarding.delete('+12125550101');\n\nconsole.log(callForwarding);\n```",
+    perLanguage: {
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/lines/$SENDBLUE_NUMBER/call-forwarding \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+      python: {
+        method: 'lines.call_forwarding.delete',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncall_forwarding = client.lines.call_forwarding.delete(\n    "+12125550101",\n)\nprint(call_forwarding.forwarding_number)',
+      },
+      typescript: {
+        method: 'client.lines.callForwarding.delete',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst callForwarding = await client.lines.callForwarding.delete('+12125550101');\n\nconsole.log(callForwarding.forwarding_number);",
+      },
+    },
+  },
 ];
 
 const EMBEDDED_READMES: { language: string; content: string }[] = [

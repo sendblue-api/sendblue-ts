@@ -64,6 +64,7 @@ import {
   ContactVerifyResponse,
   Contacts,
 } from './resources/contacts/contacts';
+import { Lines } from './resources/lines/lines';
 import { V2 } from './resources/v2/v2';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -822,6 +823,7 @@ export class SendblueAPI {
    */
   sendCarousel: API.SendCarousel = new API.SendCarousel(this);
   v2: API.V2 = new API.V2(this);
+  lines: API.Lines = new API.Lines(this);
 }
 
 SendblueAPI.Messages = Messages;
@@ -833,6 +835,7 @@ SendblueAPI.Contacts = Contacts;
 SendblueAPI.Webhooks = Webhooks;
 SendblueAPI.SendCarousel = SendCarousel;
 SendblueAPI.V2 = V2;
+SendblueAPI.Lines = Lines;
 
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -910,4 +913,6 @@ export declare namespace SendblueAPI {
   };
 
   export { V2 as V2 };
+
+  export { Lines as Lines };
 }

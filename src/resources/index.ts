@@ -23,6 +23,7 @@ export {
   type GroupModifyParams,
   type GroupSendMessageParams,
 } from './groups';
+export { Lines } from './lines/lines';
 export { Lookups, type LookupLookupNumberResponse, type LookupLookupNumberParams } from './lookups';
 export { MediaObjects, type MediaObjectUploadResponse, type MediaObjectUploadParams } from './media-objects';
 export {
