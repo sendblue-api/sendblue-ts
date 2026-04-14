@@ -178,6 +178,24 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'delete',
     httpPath: '/api/v2/totp/secrets/{secret_id}',
   },
+  {
+    clientCallName: 'client.lines.callForwarding.retrieve',
+    fullyQualifiedName: 'lines.callForwarding.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/lines/{sendblue_number}/call-forwarding',
+  },
+  {
+    clientCallName: 'client.lines.callForwarding.update',
+    fullyQualifiedName: 'lines.callForwarding.update',
+    httpMethod: 'put',
+    httpPath: '/api/lines/{sendblue_number}/call-forwarding',
+  },
+  {
+    clientCallName: 'client.lines.callForwarding.delete',
+    fullyQualifiedName: 'lines.callForwarding.delete',
+    httpMethod: 'delete',
+    httpPath: '/api/lines/{sendblue_number}/call-forwarding',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
