@@ -5,7 +5,7 @@ import SendblueAPI from 'sendblue';
 const client = new SendblueAPI({
   apiKey: 'My API Key',
   apiSecret: 'My API Secret',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource bulk', () => {
@@ -23,18 +23,14 @@ describe('resource bulk', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.contacts.bulk.create({
-      contacts: [
-        {
-          phone: 'phone',
-          company_name: 'company_name',
-          custom_variables: { 'Lead Source': 'Website' },
-          first_name: 'first_name',
-          last_name: 'last_name',
-          tags: ['string'],
-        },
-      ],
-    });
+    const response = await client.contacts.bulk.create({ contacts: [{
+    phone: 'phone',
+    company_name: 'company_name',
+    custom_variables: { 'Lead Source': 'Website' },
+    first_name: 'first_name',
+    last_name: 'last_name',
+    tags: ['string'],
+  }] });
   });
 
   // Mock server tests are disabled
