@@ -87,19 +87,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.messages.list(account_email?: string, created_at_gte?: string, created_at_lte?: string, from_number?: string, group_id?: string, is_outbound?: 'true' | 'false', limit?: number, message_type?: 'message' | 'group', number?: string, offset?: number, order_by?: 'createdAt' | 'updatedAt' | 'sentAt', order_direction?: 'asc' | 'desc', sendblue_number?: string, sent_at_gte?: string, sent_at_lte?: string, service?: 'iMessage' | 'SMS' | 'RCS', status?: string, to_number?: string, updated_at_gte?: string, updated_at_lte?: string, worker_id?: string): { data?: object[]; pagination?: object; status?: string; }`\n\n**get** `/api/v2/messages`\n\nRetrieve a list of messages for the authenticated account with comprehensive filtering capabilities.\nRate limited to 100 requests per 10 seconds per account.\n\n## Common Use Cases\n\n**Polling for inbound messages (no webhooks):**\n```\nGET /api/v2/messages?is_outbound=false&sendblue_number=+16292925296&order_by=createdAt&order_direction=desc&limit=50\n```\nTrack processed message IDs to avoid duplicates.\n\n**Get conversation with a specific contact:**\n```\nGET /api/v2/messages?number=+15551234567&order_by=createdAt&order_direction=desc\n```\n\n\n### Parameters\n\n- `account_email?: string`\n  Filter by account email\n\n- `created_at_gte?: string`\n  Filter messages created after this date (ISO 8601 format)\n\n- `created_at_lte?: string`\n  Filter messages created before this date (ISO 8601 format)\n\n- `from_number?: string`\n  Filter by sender phone number\n\n- `group_id?: string`\n  Filter by group ID\n\n- `is_outbound?: 'true' | 'false'`\n  Filter by message direction. Use `false` to get inbound messages (messages sent TO your Sendblue number).\n\n**To get inbound messages for polling:** Use `is_outbound=false` combined with `sendblue_number` or `to_number` set to your Sendblue phone number.\n\nNote: Do NOT use `message_type=inbound` - that parameter only accepts `message` or `group` values.\n\n- `limit?: number`\n  Maximum number of messages to return\n\n- `message_type?: 'message' | 'group'`\n  Filter by message type (1:1 vs group chat). Only accepts `message` or `group`.\n\n**Common mistake:** This is NOT for filtering inbound vs outbound messages. Use `is_outbound` parameter instead.\n\n- `number?: string`\n  Filter by any phone number (from or to)\n\n- `offset?: number`\n  Number of messages to skip\n\n- `order_by?: 'createdAt' | 'updatedAt' | 'sentAt'`\n  Field to order messages by\n\n- `order_direction?: 'asc' | 'desc'`\n  Sort order\n\n- `sendblue_number?: string`\n  Filter by Sendblue phone number\n\n- `sent_at_gte?: string`\n  Filter messages sent after this date (ISO 8601 format)\n\n- `sent_at_lte?: string`\n  Filter messages sent before this date (ISO 8601 format)\n\n- `service?: 'iMessage' | 'SMS' | 'RCS'`\n  Filter by service type\n\n- `status?: string`\n  Filter by message status\n\n- `to_number?: string`\n  Filter by recipient phone number\n\n- `updated_at_gte?: string`\n  Filter messages updated after this date (ISO 8601 format)\n\n- `updated_at_lte?: string`\n  Filter messages updated before this date (ISO 8601 format)\n\n- `worker_id?: string`\n  Filter by worker ID (Admin only)\n\n### Returns\n\n- `{ data?: { accountEmail?: string; content?: string; date_sent?: string; date_updated?: string; error_code?: number; error_detail?: string; error_message?: string; error_reason?: string; from_number?: string; group_display_name?: string; group_id?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; message_type?: 'message' | 'group'; number?: string; opted_out?: boolean; participants?: string[]; plan?: string; send_style?: string; sendblue_number?: string; service?: 'iMessage' | 'SMS' | 'RCS'; status?: string; to_number?: string; was_downgraded?: boolean; }[]; pagination?: { hasMore?: boolean; limit?: number; offset?: number; total?: number; }; status?: string; }`\n\n  - `data?: { accountEmail?: string; content?: string; date_sent?: string; date_updated?: string; error_code?: number; error_detail?: string; error_message?: string; error_reason?: string; from_number?: string; group_display_name?: string; group_id?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; message_type?: 'message' | 'group'; number?: string; opted_out?: boolean; participants?: string[]; plan?: string; send_style?: string; sendblue_number?: string; service?: 'iMessage' | 'SMS' | 'RCS'; status?: string; to_number?: string; was_downgraded?: boolean; }[]`\n  - `pagination?: { hasMore?: boolean; limit?: number; offset?: number; total?: number; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst messages = await client.messages.list();\n\nconsole.log(messages);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.messages.list',
         example:
-          'curl https://api.sendblue.co/api/v2/messages \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst messages = await client.messages.list();\n\nconsole.log(messages.data);",
       },
       python: {
         method: 'messages.list',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nmessages = client.messages.list()\nprint(messages.data)',
       },
-      typescript: {
-        method: 'client.messages.list',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst messages = await client.messages.list();\n\nconsole.log(messages.data);",
+          'curl https://api.sendblue.co/api/v2/messages \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -117,19 +117,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.messages.retrieve(message_id: string): { data?: object; status?: string; }`\n\n**get** `/api/v2/messages/{message_id}`\n\nRetrieve details of a specific message by its ID\n\n### Parameters\n\n- `message_id: string`\n\n### Returns\n\n- `{ data?: { accountEmail?: string; content?: string; date_sent?: string; date_updated?: string; error_code?: number; error_detail?: string; error_message?: string; error_reason?: string; from_number?: string; group_display_name?: string; group_id?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; message_type?: 'message' | 'group'; number?: string; opted_out?: boolean; participants?: string[]; plan?: string; send_style?: string; sendblue_number?: string; service?: 'iMessage' | 'SMS' | 'RCS'; status?: string; to_number?: string; was_downgraded?: boolean; }; status?: string; }`\n\n  - `data?: { accountEmail?: string; content?: string; date_sent?: string; date_updated?: string; error_code?: number; error_detail?: string; error_message?: string; error_reason?: string; from_number?: string; group_display_name?: string; group_id?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; message_type?: 'message' | 'group'; number?: string; opted_out?: boolean; participants?: string[]; plan?: string; send_style?: string; sendblue_number?: string; service?: 'iMessage' | 'SMS' | 'RCS'; status?: string; to_number?: string; was_downgraded?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst message = await client.messages.retrieve('msg_abc123def456');\n\nconsole.log(message);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.messages.retrieve',
         example:
-          'curl https://api.sendblue.co/api/v2/messages/$MESSAGE_ID \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst message = await client.messages.retrieve('msg_abc123def456');\n\nconsole.log(message.data);",
       },
       python: {
         method: 'messages.retrieve',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nmessage = client.messages.retrieve(\n    "msg_abc123def456",\n)\nprint(message.data)',
       },
-      typescript: {
-        method: 'client.messages.retrieve',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst message = await client.messages.retrieve('msg_abc123def456');\n\nconsole.log(message.data);",
+          'curl https://api.sendblue.co/api/v2/messages/$MESSAGE_ID \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -154,19 +154,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## send\n\n`client.messages.send(content: string, from_number: string, number: string, media_url?: string, send_style?: string, status_callback?: string): { account_email?: string; content?: string; date_created?: string; date_updated?: string; error_code?: number; error_message?: string; from_number?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; number?: string; send_style?: string; status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR'; }`\n\n**post** `/api/send-message`\n\nSend an iMessage, SMS, or MMS to a single recipient\n\n### Parameters\n\n- `content: string`\n  Message text content\n\n- `from_number: string`\n  **REQUIRED** - The phone number to send from. Must be one of your registered Sendblue phone numbers in E.164 format.\nWithout this parameter, the message will fail to send.\n\n\n- `number: string`\n  Recipient phone number in E.164 format\n\n- `media_url?: string`\n  URL of media file to send (images, videos, etc.)\n\n- `send_style?: string`\n  The iMessage expressive message style\n\n- `status_callback?: string`\n  Webhook URL for message status updates\n\n### Returns\n\n- `{ account_email?: string; content?: string; date_created?: string; date_updated?: string; error_code?: number; error_message?: string; from_number?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; number?: string; send_style?: string; status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR'; }`\n\n  - `account_email?: string`\n  - `content?: string`\n  - `date_created?: string`\n  - `date_updated?: string`\n  - `error_code?: number`\n  - `error_message?: string`\n  - `from_number?: string`\n  - `is_outbound?: boolean`\n  - `media_url?: string`\n  - `message_handle?: string`\n  - `number?: string`\n  - `send_style?: string`\n  - `status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst messageResponse = await client.messages.send({\n  content: 'Hello, World!',\n  from_number: '+19998887777',\n  number: '+19998887777',\n});\n\nconsole.log(messageResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.messages.send',
         example:
-          'curl https://api.sendblue.co/api/send-message \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "content": "Hello, World!",\n          "from_number": "+19998887777",\n          "number": "+19998887777",\n          "media_url": "https://example.com/image.jpg",\n          "send_style": "celebration",\n          "status_callback": "https://example.com/webhook"\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst messageResponse = await client.messages.send({\n  content: 'Hello, World!',\n  from_number: '+19998887777',\n  number: '+19998887777',\n});\n\nconsole.log(messageResponse.account_email);",
       },
       python: {
         method: 'messages.send',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nmessage_response = client.messages.send(\n    content="Hello, World!",\n    from_number="+19998887777",\n    number="+19998887777",\n)\nprint(message_response.account_email)',
       },
-      typescript: {
-        method: 'client.messages.send',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst messageResponse = await client.messages.send({\n  content: 'Hello, World!',\n  from_number: '+19998887777',\n  number: '+19998887777',\n});\n\nconsole.log(messageResponse.account_email);",
+          'curl https://api.sendblue.co/api/send-message \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "content": "Hello, World!",\n          "from_number": "+19998887777",\n          "number": "+19998887777",\n          "media_url": "https://example.com/image.jpg",\n          "send_style": "celebration",\n          "status_callback": "https://example.com/webhook"\n        }\'',
       },
     },
   },
@@ -185,19 +185,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_status\n\n`client.messages.getStatus(handle: string): { account_email?: string; content?: string; date_created?: string; date_updated?: string; error_code?: number; error_message?: string; from_number?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; number?: string; send_style?: string; status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR'; }`\n\n**get** `/api/status`\n\nRetrieve the current status of a message using its message handle. Useful for resolving pending message statuses and avoiding duplicate messages.\n\n\n### Parameters\n\n- `handle: string`\n  The message handle of the message you want to check status for\n\n### Returns\n\n- `{ account_email?: string; content?: string; date_created?: string; date_updated?: string; error_code?: number; error_message?: string; from_number?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; number?: string; send_style?: string; status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR'; }`\n\n  - `account_email?: string`\n  - `content?: string`\n  - `date_created?: string`\n  - `date_updated?: string`\n  - `error_code?: number`\n  - `error_message?: string`\n  - `from_number?: string`\n  - `is_outbound?: boolean`\n  - `media_url?: string`\n  - `message_handle?: string`\n  - `number?: string`\n  - `send_style?: string`\n  - `status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst messageResponse = await client.messages.getStatus({ handle: 'msg_abc123def456' });\n\nconsole.log(messageResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.messages.getStatus',
         example:
-          'curl https://api.sendblue.co/api/status \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst messageResponse = await client.messages.getStatus({ handle: 'msg_abc123def456' });\n\nconsole.log(messageResponse.account_email);",
       },
       python: {
         method: 'messages.get_status',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nmessage_response = client.messages.get_status(\n    handle="msg_abc123def456",\n)\nprint(message_response.account_email)',
       },
-      typescript: {
-        method: 'client.messages.getStatus',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst messageResponse = await client.messages.getStatus({ handle: 'msg_abc123def456' });\n\nconsole.log(messageResponse.account_email);",
+          'curl https://api.sendblue.co/api/status \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -221,19 +221,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## send_message\n\n`client.groups.sendMessage(content: string, from_number: string, group_id?: string, media_url?: string, numbers?: string[]): { account_email?: string; content?: string; date_created?: string; date_updated?: string; error_code?: number; error_message?: string; from_number?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; number?: string; send_style?: string; status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR'; }`\n\n**post** `/api/send-group-message`\n\nSend a message to a group of recipients (beta feature)\n\n### Parameters\n\n- `content: string`\n  Message text content\n\n- `from_number: string`\n  **REQUIRED** - The phone number to send from. Must be one of your registered Sendblue phone numbers in E.164 format.\nWithout this parameter, the message will fail to send.\n\n\n- `group_id?: string`\n  Unique identifier for an existing group\n\n- `media_url?: string`\n  URL of media file to send\n\n- `numbers?: string[]`\n  Array of recipient phone numbers in E.164 format\n\n### Returns\n\n- `{ account_email?: string; content?: string; date_created?: string; date_updated?: string; error_code?: number; error_message?: string; from_number?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; number?: string; send_style?: string; status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR'; }`\n\n  - `account_email?: string`\n  - `content?: string`\n  - `date_created?: string`\n  - `date_updated?: string`\n  - `error_code?: number`\n  - `error_message?: string`\n  - `from_number?: string`\n  - `is_outbound?: boolean`\n  - `media_url?: string`\n  - `message_handle?: string`\n  - `number?: string`\n  - `send_style?: string`\n  - `status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst messageResponse = await client.groups.sendMessage({ content: 'Hello, everyone!', from_number: '+19998887777' });\n\nconsole.log(messageResponse);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.groups.sendMessage',
         example:
-          'curl https://api.sendblue.co/api/send-group-message \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "content": "Hello, everyone!",\n          "from_number": "+19998887777",\n          "group_id": "group_123456",\n          "media_url": "https://example.com/image.jpg",\n          "numbers": [\n            "+19998887777",\n            "+18887776666"\n          ]\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst messageResponse = await client.groups.sendMessage({\n  content: 'Hello, everyone!',\n  from_number: '+19998887777',\n});\n\nconsole.log(messageResponse.account_email);",
       },
       python: {
         method: 'groups.send_message',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nmessage_response = client.groups.send_message(\n    content="Hello, everyone!",\n    from_number="+19998887777",\n)\nprint(message_response.account_email)',
       },
-      typescript: {
-        method: 'client.groups.sendMessage',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst messageResponse = await client.groups.sendMessage({\n  content: 'Hello, everyone!',\n  from_number: '+19998887777',\n});\n\nconsole.log(messageResponse.account_email);",
+          'curl https://api.sendblue.co/api/send-group-message \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "content": "Hello, everyone!",\n          "from_number": "+19998887777",\n          "group_id": "group_123456",\n          "media_url": "https://example.com/image.jpg",\n          "numbers": [\n            "+19998887777",\n            "+18887776666"\n          ]\n        }\'',
       },
     },
   },
@@ -250,19 +250,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## modify\n\n`client.groups.modify(group_id: string, modify_type: 'add_recipient', number: string): { message?: string; status?: string; }`\n\n**post** `/api/modify-group`\n\nAdd or manage participants in a group chat (beta feature)\n\n### Parameters\n\n- `group_id: string`\n  Group identifier\n\n- `modify_type: 'add_recipient'`\n  Type of modification to perform\n\n- `number: string`\n  Phone number to add/modify in E.164 format\n\n### Returns\n\n- `{ message?: string; status?: string; }`\n\n  - `message?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.groups.modify({\n  group_id: 'group_123456',\n  modify_type: 'add_recipient',\n  number: '+19998887777',\n});\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.groups.modify',
         example:
-          'curl https://api.sendblue.co/api/modify-group \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "group_id": "group_123456",\n          "modify_type": "add_recipient",\n          "number": "+19998887777"\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.groups.modify({\n  group_id: 'group_123456',\n  modify_type: 'add_recipient',\n  number: '+19998887777',\n});\n\nconsole.log(response.message);",
       },
       python: {
         method: 'groups.modify',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.groups.modify(\n    group_id="group_123456",\n    modify_type="add_recipient",\n    number="+19998887777",\n)\nprint(response.message)',
       },
-      typescript: {
-        method: 'client.groups.modify',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.groups.modify({\n  group_id: 'group_123456',\n  modify_type: 'add_recipient',\n  number: '+19998887777',\n});\n\nconsole.log(response.message);",
+          'curl https://api.sendblue.co/api/modify-group \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "group_id": "group_123456",\n          "modify_type": "add_recipient",\n          "number": "+19998887777"\n        }\'',
       },
     },
   },
@@ -279,19 +279,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## upload\n\n`client.mediaObjects.upload(media_url: string): { mediaObjectId?: string; message?: string; status?: string; }`\n\n**post** `/api/upload-media-object`\n\nUpload a media file to Sendblue's CDN for use in messages\n\n### Parameters\n\n- `media_url: string`\n  URL of the media file to upload\n\n### Returns\n\n- `{ mediaObjectId?: string; message?: string; status?: string; }`\n\n  - `mediaObjectId?: string`\n  - `message?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.mediaObjects.upload({ media_url: 'https://example.com/image.jpg' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.mediaObjects.upload',
         example:
-          'curl https://api.sendblue.co/api/upload-media-object \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "media_url": "https://example.com/image.jpg"\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.mediaObjects.upload({ media_url: 'https://example.com/image.jpg' });\n\nconsole.log(response.mediaObjectId);",
       },
       python: {
         method: 'media_objects.upload',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.media_objects.upload(\n    media_url="https://example.com/image.jpg",\n)\nprint(response.media_object_id)',
       },
-      typescript: {
-        method: 'client.mediaObjects.upload',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.mediaObjects.upload({ media_url: 'https://example.com/image.jpg' });\n\nconsole.log(response.mediaObjectId);",
+          'curl https://api.sendblue.co/api/upload-media-object \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "media_url": "https://example.com/image.jpg"\n        }\'',
       },
     },
   },
@@ -309,19 +309,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## lookup_number\n\n`client.lookups.lookupNumber(number: string): { number?: string; service?: 'iMessage' | 'SMS'; }`\n\n**get** `/api/evaluate-service`\n\nDetermine if a phone number supports iMessage or SMS. Useful for checking if a number is an iPhone, if it is real, or which provider to use.\n\n\n### Parameters\n\n- `number: string`\n  The number you want to evaluate in E.164 format\n\n### Returns\n\n- `{ number?: string; service?: 'iMessage' | 'SMS'; }`\n\n  - `number?: string`\n  - `service?: 'iMessage' | 'SMS'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.lookups.lookupNumber({ number: '+19999999999' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.lookups.lookupNumber',
         example:
-          'curl https://api.sendblue.co/api/evaluate-service \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.lookups.lookupNumber({ number: '+19999999999' });\n\nconsole.log(response.number);",
       },
       python: {
         method: 'lookups.lookup_number',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.lookups.lookup_number(\n    number="+19999999999",\n)\nprint(response.number)',
       },
-      typescript: {
-        method: 'client.lookups.lookupNumber',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.lookups.lookupNumber({ number: '+19999999999' });\n\nconsole.log(response.number);",
+          'curl https://api.sendblue.co/api/evaluate-service \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -339,19 +339,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## send\n\n`client.typingIndicators.send(from_number: string, number: string): { error_message?: string; number?: string; status?: 'SENT' | 'ERROR'; }`\n\n**post** `/api/send-typing-indicator`\n\nSend an indication that you are typing to a user. This shows up as the animated three dots on the recipient's device. Not supported in group chats.\n\n\n### Parameters\n\n- `from_number: string`\n  The Sendblue phone number you want to send the typing indicator from (E.164 format). This should be the number you use to send messages.\n\n- `number: string`\n  The number you want to send a typing indicator to (E.164 format)\n\n### Returns\n\n- `{ error_message?: string; number?: string; status?: 'SENT' | 'ERROR'; }`\n\n  - `error_message?: string`\n  - `number?: string`\n  - `status?: 'SENT' | 'ERROR'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.typingIndicators.send({ from_number: '+16292925296', number: '+19998887777' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.typingIndicators.send',
         example:
-          'curl https://api.sendblue.co/api/send-typing-indicator \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "from_number": "+16292925296",\n          "number": "+19998887777"\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.typingIndicators.send({\n  from_number: '+16292925296',\n  number: '+19998887777',\n});\n\nconsole.log(response.error_message);",
       },
       python: {
         method: 'typing_indicators.send',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.typing_indicators.send(\n    from_number="+16292925296",\n    number="+19998887777",\n)\nprint(response.error_message)',
       },
-      typescript: {
-        method: 'client.typingIndicators.send',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.typingIndicators.send({\n  from_number: '+16292925296',\n  number: '+19998887777',\n});\n\nconsole.log(response.error_message);",
+          'curl https://api.sendblue.co/api/send-typing-indicator \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "from_number": "+16292925296",\n          "number": "+19998887777"\n        }\'',
       },
     },
   },
@@ -376,19 +376,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.contacts.list(cid?: string, limit?: number, offset?: number, order_by?: string, order_direction?: 'asc' | 'desc', phone_number?: string): object[]`\n\n**get** `/api/v2/contacts`\n\nRetrieve a list of contacts for the authenticated account\n\n### Parameters\n\n- `cid?: string`\n  Filter by contact ID\n\n- `limit?: number`\n  Maximum number of contacts to return\n\n- `offset?: number`\n  Number of contacts to skip\n\n- `order_by?: string`\n  Field to sort by\n\n- `order_direction?: 'asc' | 'desc'`\n  Sort direction\n\n- `phone_number?: string`\n  Filter by phone number\n\n### Returns\n\n- `{ assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contacts = await client.contacts.list();\n\nconsole.log(contacts);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.list',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contacts = await client.contacts.list();\n\nconsole.log(contacts);",
       },
       python: {
         method: 'contacts.list',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncontacts = client.contacts.list()\nprint(contacts)',
       },
-      typescript: {
-        method: 'client.contacts.list',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contacts = await client.contacts.list();\n\nconsole.log(contacts);",
+          'curl https://api.sendblue.co/api/v2/contacts \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -421,19 +421,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.contacts.create(number: string, assigned_to_email?: string, assignedToEmail?: string, custom_variables?: object, first_name?: string, firstName?: string, last_name?: string, lastName?: string, phone_number?: string, phoneNumber?: string, sendblue_number?: string, sendblueNumber?: string, tags?: string[], update_if_exists?: boolean): { contact?: contact; status?: string; }`\n\n**post** `/api/v2/contacts`\n\nCreate a new contact or update existing if update_if_exists is true\n\n### Parameters\n\n- `number: string`\n  Contact's phone number in E.164 format (preferred)\n\n- `assigned_to_email?: string`\n  Email of assigned user (preferred)\n\n- `assignedToEmail?: string`\n  Email of assigned user (deprecated, use assigned_to_email)\n\n- `custom_variables?: object`\n  Custom key-value pairs. Keys are human-readable labels; new labels are auto-created.\n\n- `first_name?: string`\n  Contact's first name (preferred)\n\n- `firstName?: string`\n  Contact's first name (deprecated, use first_name)\n\n- `last_name?: string`\n  Contact's last name (preferred)\n\n- `lastName?: string`\n  Contact's last name (deprecated, use last_name)\n\n- `phone_number?: string`\n  Contact's phone number (deprecated, use number)\n\n- `phoneNumber?: string`\n  Contact's phone number (deprecated, use number)\n\n- `sendblue_number?: string`\n  Associated Sendblue phone number to send with (preferred)\n\n- `sendblueNumber?: string`\n  Associated Sendblue phone number (deprecated, use sendblue_number)\n\n- `tags?: string[]`\n  Tags for the contact\n\n- `update_if_exists?: boolean`\n  If true, updates the contact if it already exists\n\n### Returns\n\n- `{ contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }`\n\n  - `contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.create({ number: 'number' });\n\nconsole.log(contact);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.create',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "number": "number",\n          "custom_variables": {\n            "Lead Source": "Website"\n          }\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contact = await client.contacts.create({ number: 'number' });\n\nconsole.log(contact.contact);",
       },
       python: {
         method: 'contacts.create',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncontact = client.contacts.create(\n    number="number",\n)\nprint(contact.contact)',
       },
-      typescript: {
-        method: 'client.contacts.create',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contact = await client.contacts.create({ number: 'number' });\n\nconsole.log(contact.contact);",
+          'curl https://api.sendblue.co/api/v2/contacts \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "number": "number",\n          "custom_variables": {\n            "Lead Source": "Website"\n          }\n        }\'',
       },
     },
   },
@@ -449,19 +449,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## count\n\n`client.contacts.count(): { count?: number; }`\n\n**get** `/api/v2/contacts/count`\n\nGet the total number of contacts\n\n### Returns\n\n- `{ count?: number; }`\n\n  - `count?: number`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.contacts.count();\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.count',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts/count \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.contacts.count();\n\nconsole.log(response.count);",
       },
       python: {
         method: 'contacts.count',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.contacts.count()\nprint(response.count)',
       },
-      typescript: {
-        method: 'client.contacts.count',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.contacts.count();\n\nconsole.log(response.count);",
+          'curl https://api.sendblue.co/api/v2/contacts/count \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -478,19 +478,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## verify\n\n`client.contacts.verify(number: string): { status?: string; }`\n\n**post** `/api/v2/contacts/verify`\n\nSend a verification message to a contact\n\n### Parameters\n\n- `number: string`\n  Phone number to verify\n\n### Returns\n\n- `{ status?: string; }`\n\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.contacts.verify({ number: 'number' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.verify',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts/verify \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "number": "number"\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.contacts.verify({ number: 'number' });\n\nconsole.log(response.status);",
       },
       python: {
         method: 'contacts.verify',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.contacts.verify(\n    number="number",\n)\nprint(response.status)',
       },
-      typescript: {
-        method: 'client.contacts.verify',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.contacts.verify({ number: 'number' });\n\nconsole.log(response.status);",
+          'curl https://api.sendblue.co/api/v2/contacts/verify \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "number": "number"\n        }\'',
       },
     },
   },
@@ -508,19 +508,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.contacts.retrieve(phone_number: string): { contact?: contact; status?: string; }`\n\n**get** `/api/v2/contacts/{phone_number}`\n\nRetrieve a specific contact by phone number\n\n### Parameters\n\n- `phone_number: string`\n\n### Returns\n\n- `{ contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }`\n\n  - `contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.retrieve('+1234567890');\n\nconsole.log(contact);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.retrieve',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts/$PHONE_NUMBER \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contact = await client.contacts.retrieve('+1234567890');\n\nconsole.log(contact.contact);",
       },
       python: {
         method: 'contacts.retrieve',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncontact = client.contacts.retrieve(\n    "+1234567890",\n)\nprint(contact.contact)',
       },
-      typescript: {
-        method: 'client.contacts.retrieve',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contact = await client.contacts.retrieve('+1234567890');\n\nconsole.log(contact.contact);",
+          'curl https://api.sendblue.co/api/v2/contacts/$PHONE_NUMBER \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -555,19 +555,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## update\n\n`client.contacts.update(phone_number: string, assigned_to_email?: string, assignedToEmail?: string, company_name?: string, companyName?: string, custom_variables?: object, first_name?: string, firstName?: string, last_name?: string, lastName?: string, opt_out?: boolean, optOut?: boolean, sendblue_number?: string, sendblueNumber?: string, tags?: string[]): { contact?: contact; status?: string; }`\n\n**put** `/api/v2/contacts/{phone_number}`\n\nUpdate an existing contact. You may set SMS opt-out with `opt_out` (boolean); it updates the same recipient record used for inbound keyword opt-outs.\n\n### Parameters\n\n- `phone_number: string`\n\n- `assigned_to_email?: string`\n  Email of assigned user (preferred)\n\n- `assignedToEmail?: string`\n  Deprecated, use assigned_to_email\n\n- `company_name?: string`\n  Company name (preferred)\n\n- `companyName?: string`\n  Deprecated, use company_name\n\n- `custom_variables?: object`\n  Custom key-value pairs. Merged with existing variables (not replaced).\n\n- `first_name?: string`\n  Contact's first name (preferred)\n\n- `firstName?: string`\n  Deprecated, use first_name\n\n- `last_name?: string`\n  Contact's last name (preferred)\n\n- `lastName?: string`\n  Deprecated, use last_name\n\n- `opt_out?: boolean`\n  Whether the contact has opted out of SMS (updates the same recipient record used for inbound keyword opt-outs)\n\n- `optOut?: boolean`\n  Deprecated, use opt_out\n\n- `sendblue_number?: string`\n  Associated Sendblue phone number (preferred)\n\n- `sendblueNumber?: string`\n  Deprecated, use sendblue_number\n\n- `tags?: string[]`\n\n### Returns\n\n- `{ contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }`\n\n  - `contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.update('+1234567890');\n\nconsole.log(contact);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.update',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts/$PHONE_NUMBER \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "custom_variables": {\n            "Plan": "Premium"\n          }\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contact = await client.contacts.update('+1234567890');\n\nconsole.log(contact.contact);",
       },
       python: {
         method: 'contacts.update',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncontact = client.contacts.update(\n    phone_number="+1234567890",\n)\nprint(contact.contact)',
       },
-      typescript: {
-        method: 'client.contacts.update',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contact = await client.contacts.update('+1234567890');\n\nconsole.log(contact.contact);",
+          'curl https://api.sendblue.co/api/v2/contacts/$PHONE_NUMBER \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "custom_variables": {\n            "Plan": "Premium"\n          }\n        }\'',
       },
     },
   },
@@ -584,19 +584,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.contacts.delete(phone_number: string): { status?: string; }`\n\n**delete** `/api/v2/contacts/{phone_number}`\n\nDelete a specific contact\n\n### Parameters\n\n- `phone_number: string`\n\n### Returns\n\n- `{ status?: string; }`\n\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.delete('+1234567890');\n\nconsole.log(contact);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.delete',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts/$PHONE_NUMBER \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contact = await client.contacts.delete('+1234567890');\n\nconsole.log(contact.status);",
       },
       python: {
         method: 'contacts.delete',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncontact = client.contacts.delete(\n    "+1234567890",\n)\nprint(contact.status)',
       },
-      typescript: {
-        method: 'client.contacts.delete',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst contact = await client.contacts.delete('+1234567890');\n\nconsole.log(contact.status);",
+          'curl https://api.sendblue.co/api/v2/contacts/$PHONE_NUMBER \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -614,19 +614,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## opt_out\n\n`client.contacts.optOut(number: string, opted_out?: boolean): { number?: string; opted_out?: boolean; status?: string; }`\n\n**post** `/api/v2/contacts/opt-out`\n\nOpt a contact out (or back in) from receiving messages. When a recipient is opted out,\noutbound messages to that number will be blocked.\n\nPass `opted_out: false` to opt a contact back in.\n\n\n### Parameters\n\n- `number: string`\n  Phone number in E.164 format\n\n- `opted_out?: boolean`\n  Set to false to opt the contact back in (defaults to true)\n\n### Returns\n\n- `{ number?: string; opted_out?: boolean; status?: string; }`\n\n  - `number?: string`\n  - `opted_out?: boolean`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.contacts.optOut({ number: '+14155551234' });\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.optOut',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts/opt-out \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "number": "+14155551234"\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.contacts.optOut({ number: '+14155551234' });\n\nconsole.log(response.number);",
       },
       python: {
         method: 'contacts.opt_out',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.contacts.opt_out(\n    number="+14155551234",\n)\nprint(response.number)',
       },
-      typescript: {
-        method: 'client.contacts.optOut',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.contacts.optOut({ number: '+14155551234' });\n\nconsole.log(response.number);",
+          'curl https://api.sendblue.co/api/v2/contacts/opt-out \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "number": "+14155551234"\n        }\'',
       },
     },
   },
@@ -643,19 +643,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.contacts.bulk.delete(contact_ids: string[]): { amount?: number; status?: string; }`\n\n**delete** `/api/v2/contacts`\n\nDelete multiple contacts by their IDs\n\n### Parameters\n\n- `contact_ids: string[]`\n  Array of phone numbers in E.164 format to delete\n\n### Returns\n\n- `{ amount?: number; status?: string; }`\n\n  - `amount?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst bulk = await client.contacts.bulk.delete({ contact_ids: ['+1234567890', '+0987654321'] });\n\nconsole.log(bulk);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.bulk.delete',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst bulk = await client.contacts.bulk.delete({ contact_ids: ['+1234567890', '+0987654321'] });\n\nconsole.log(bulk.amount);",
       },
       python: {
         method: 'contacts.bulk.delete',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nbulk = client.contacts.bulk.delete(\n    contact_ids=["+1234567890", "+0987654321"],\n)\nprint(bulk.amount)',
       },
-      typescript: {
-        method: 'client.contacts.bulk.delete',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst bulk = await client.contacts.bulk.delete({ contact_ids: ['+1234567890', '+0987654321'] });\n\nconsole.log(bulk.amount);",
+          'curl https://api.sendblue.co/api/v2/contacts \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -675,19 +675,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.contacts.bulk.create(contacts: { phone: string; company_name?: string; custom_variables?: object; first_name?: string; last_name?: string; tags?: string[]; }[]): { contacts?: contact[]; status?: string; }`\n\n**post** `/api/v2/contacts/bulk`\n\nCreate multiple contacts in bulk\n\n### Parameters\n\n- `contacts: { phone: string; company_name?: string; custom_variables?: object; first_name?: string; last_name?: string; tags?: string[]; }[]`\n\n### Returns\n\n- `{ contacts?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]; status?: string; }`\n\n  - `contacts?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst bulk = await client.contacts.bulk.create({ contacts: [{ phone: 'phone' }] });\n\nconsole.log(bulk);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.contacts.bulk.create',
         example:
-          'curl https://api.sendblue.co/api/v2/contacts/bulk \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "contacts": [\n            {\n              "phone": "phone"\n            }\n          ]\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst bulk = await client.contacts.bulk.create({ contacts: [{ phone: 'phone' }] });\n\nconsole.log(bulk.contacts);",
       },
       python: {
         method: 'contacts.bulk.create',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nbulk = client.contacts.bulk.create(\n    contacts=[{\n        "phone": "phone"\n    }],\n)\nprint(bulk.contacts)',
       },
-      typescript: {
-        method: 'client.contacts.bulk.create',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst bulk = await client.contacts.bulk.create({ contacts: [{ phone: 'phone' }] });\n\nconsole.log(bulk.contacts);",
+          'curl https://api.sendblue.co/api/v2/contacts/bulk \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "contacts": [\n            {\n              "phone": "phone"\n            }\n          ]\n        }\'',
       },
     },
   },
@@ -704,19 +704,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.webhooks.list(): { status?: string; webhooks?: object; }`\n\n**get** `/api/account/webhooks`\n\nGet all webhooks configured for the authenticated account\n\n### Returns\n\n- `{ status?: string; webhooks?: { call_log?: string | object[]; contact_created?: string[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }; }`\n\n  - `status?: string`\n  - `webhooks?: { call_log?: string | { url: string; secret?: string; }[]; contact_created?: string[]; globalSecret?: string; line_assigned?: string | { url: string; secret?: string; }[]; line_blocked?: string | { url: string; secret?: string; }[]; outbound?: string | { url: string; secret?: string; }[]; receive?: string | { url: string; secret?: string; }[]; typing_indicator?: string | { url: string; secret?: string; }[]; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhooks = await client.webhooks.list();\n\nconsole.log(webhooks);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.webhooks.list',
         example:
-          'curl https://api.sendblue.co/api/account/webhooks \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst webhooks = await client.webhooks.list();\n\nconsole.log(webhooks.status);",
       },
       python: {
         method: 'webhooks.list',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nwebhooks = client.webhooks.list()\nprint(webhooks.status)',
       },
-      typescript: {
-        method: 'client.webhooks.list',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst webhooks = await client.webhooks.list();\n\nconsole.log(webhooks.status);",
+          'curl https://api.sendblue.co/api/account/webhooks \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -738,19 +738,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.webhooks.create(webhooks: string | { url: string; secret?: string; }[], globalSecret?: string, type?: string): { message?: string; status?: string; webhooks?: object; }`\n\n**post** `/api/account/webhooks`\n\nAdd new webhooks to the account. Webhooks are appended to existing ones.\n\n### Parameters\n\n- `webhooks: string | { url: string; secret?: string; }[]`\n  Array of webhook URLs or webhook objects\n\n- `globalSecret?: string`\n  Global secret for webhook signature verification\n\n- `type?: string`\n  Type of webhook to add\n\n### Returns\n\n- `{ message?: string; status?: string; webhooks?: { call_log?: string | object[]; contact_created?: string[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }; }`\n\n  - `message?: string`\n  - `status?: string`\n  - `webhooks?: { call_log?: string | { url: string; secret?: string; }[]; contact_created?: string[]; globalSecret?: string; line_assigned?: string | { url: string; secret?: string; }[]; line_blocked?: string | { url: string; secret?: string; }[]; outbound?: string | { url: string; secret?: string; }[]; receive?: string | { url: string; secret?: string; }[]; typing_indicator?: string | { url: string; secret?: string; }[]; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhook = await client.webhooks.create({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.webhooks.create',
         example:
-          'curl https://api.sendblue.co/api/account/webhooks \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "webhooks": [\n            "https://example.com"\n          ]\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.create({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook.message);",
       },
       python: {
         method: 'webhooks.create',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nwebhook = client.webhooks.create(\n    webhooks=["https://example.com"],\n)\nprint(webhook.message)',
       },
-      typescript: {
-        method: 'client.webhooks.create',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.create({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook.message);",
+          'curl https://api.sendblue.co/api/account/webhooks \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "webhooks": [\n            "https://example.com"\n          ]\n        }\'',
       },
     },
   },
@@ -770,19 +770,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## update\n\n`client.webhooks.update(webhooks: { call_log?: string | object[]; contact_created?: string[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }): { message?: string; status?: string; webhooks?: object; }`\n\n**put** `/api/account/webhooks`\n\nReplace all webhooks for the account. This overwrites existing webhooks.\n\n### Parameters\n\n- `webhooks: { call_log?: string | { url: string; secret?: string; }[]; contact_created?: string[]; globalSecret?: string; line_assigned?: string | { url: string; secret?: string; }[]; line_blocked?: string | { url: string; secret?: string; }[]; outbound?: string | { url: string; secret?: string; }[]; receive?: string | { url: string; secret?: string; }[]; typing_indicator?: string | { url: string; secret?: string; }[]; }`\n  - `call_log?: string | { url: string; secret?: string; }[]`\n    Webhooks for call log events\n  - `contact_created?: string[]`\n    Webhooks for contact created events (URL strings only)\n  - `globalSecret?: string`\n    Global secret applied to all webhooks\n  - `line_assigned?: string | { url: string; secret?: string; }[]`\n    Webhooks for line assigned events\n  - `line_blocked?: string | { url: string; secret?: string; }[]`\n    Webhooks for line blocked events\n  - `outbound?: string | { url: string; secret?: string; }[]`\n    Webhooks for outbound message status updates\n  - `receive?: string | { url: string; secret?: string; }[]`\n    Webhooks for inbound message events\n  - `typing_indicator?: string | { url: string; secret?: string; }[]`\n    Webhooks for typing indicator events\n\n### Returns\n\n- `{ message?: string; status?: string; webhooks?: { call_log?: string | object[]; contact_created?: string[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }; }`\n\n  - `message?: string`\n  - `status?: string`\n  - `webhooks?: { call_log?: string | { url: string; secret?: string; }[]; contact_created?: string[]; globalSecret?: string; line_assigned?: string | { url: string; secret?: string; }[]; line_blocked?: string | { url: string; secret?: string; }[]; outbound?: string | { url: string; secret?: string; }[]; receive?: string | { url: string; secret?: string; }[]; typing_indicator?: string | { url: string; secret?: string; }[]; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhook = await client.webhooks.update({ webhooks: {} });\n\nconsole.log(webhook);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.webhooks.update',
         example:
-          'curl https://api.sendblue.co/api/account/webhooks \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "webhooks": {}\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.update({ webhooks: {} });\n\nconsole.log(webhook.message);",
       },
       python: {
         method: 'webhooks.update',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nwebhook = client.webhooks.update(\n    webhooks={},\n)\nprint(webhook.message)',
       },
-      typescript: {
-        method: 'client.webhooks.update',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.update({ webhooks: {} });\n\nconsole.log(webhook.message);",
+          'curl https://api.sendblue.co/api/account/webhooks \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "webhooks": {}\n        }\'',
       },
     },
   },
@@ -799,19 +799,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.webhooks.delete(webhooks: string[], type?: string): { message?: string; status?: string; }`\n\n**delete** `/api/account/webhooks`\n\nDelete specific webhooks from the account\n\n### Parameters\n\n- `webhooks: string[]`\n  Array of webhook URLs to delete\n\n- `type?: string`\n  Type of webhook to delete from\n\n### Returns\n\n- `{ message?: string; status?: string; }`\n\n  - `message?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhook = await client.webhooks.delete({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.webhooks.delete',
         example:
-          'curl https://api.sendblue.co/api/account/webhooks \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.delete({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook.message);",
       },
       python: {
         method: 'webhooks.delete',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nwebhook = client.webhooks.delete(\n    webhooks=["https://example.com"],\n)\nprint(webhook.message)',
       },
-      typescript: {
-        method: 'client.webhooks.delete',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst webhook = await client.webhooks.delete({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook.message);",
+          'curl https://api.sendblue.co/api/account/webhooks \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -837,19 +837,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## send\n\n`client.sendCarousel.send(from_number: string, media_urls: string[], number: string, metadata?: object, send_style?: string, status_callback?: string): { accountEmail?: string; from_number?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; message_type?: string; number?: string; status?: string; }`\n\n**post** `/api/send-carousel`\n\nSend a carousel of images to a single recipient. Requires a V2 (Mac Mini) line. The carousel must contain between 2 and 20 HTTPS image URLs. For sending a single image, use `/api/send-message` with `media_url` instead.\n\n\n### Parameters\n\n- `from_number: string`\n  Your Sendblue phone number in E.164 format (must be a V2/Mac Mini line)\n\n- `media_urls: string[]`\n  Array of HTTPS image URLs to send as a carousel (2-20 items)\n\n- `number: string`\n  Recipient phone number in E.164 format\n\n- `metadata?: object`\n  Additional metadata to attach to the message\n\n- `send_style?: string`\n  The iMessage expressive message style\n\n- `status_callback?: string`\n  Webhook URL for message status updates\n\n### Returns\n\n- `{ accountEmail?: string; from_number?: string; is_outbound?: boolean; media_url?: string; message_handle?: string; message_type?: string; number?: string; status?: string; }`\n\n  - `accountEmail?: string`\n  - `from_number?: string`\n  - `is_outbound?: boolean`\n  - `media_url?: string`\n  - `message_handle?: string`\n  - `message_type?: string`\n  - `number?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.sendCarousel.send({\n  from_number: '+19998887777',\n  media_urls: ['https://example.com/image1.jpg', 'https://example.com/image2.jpg', 'https://example.com/image3.jpg'],\n  number: '+19998887777',\n});\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.sendCarousel.send',
         example:
-          'curl https://api.sendblue.co/api/send-carousel \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "from_number": "+19998887777",\n          "media_urls": [\n            "https://example.com/image1.jpg",\n            "https://example.com/image2.jpg",\n            "https://example.com/image3.jpg"\n          ],\n          "number": "+19998887777",\n          "send_style": "celebration",\n          "status_callback": "https://example.com/webhook"\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.sendCarousel.send({\n  from_number: '+19998887777',\n  media_urls: [\n    'https://example.com/image1.jpg',\n    'https://example.com/image2.jpg',\n    'https://example.com/image3.jpg',\n  ],\n  number: '+19998887777',\n});\n\nconsole.log(response.accountEmail);",
       },
       python: {
         method: 'send_carousel.send',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.send_carousel.send(\n    from_number="+19998887777",\n    media_urls=["https://example.com/image1.jpg", "https://example.com/image2.jpg", "https://example.com/image3.jpg"],\n    number="+19998887777",\n)\nprint(response.account_email)',
       },
-      typescript: {
-        method: 'client.sendCarousel.send',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.sendCarousel.send({\n  from_number: '+19998887777',\n  media_urls: [\n    'https://example.com/image1.jpg',\n    'https://example.com/image2.jpg',\n    'https://example.com/image3.jpg',\n  ],\n  number: '+19998887777',\n});\n\nconsole.log(response.accountEmail);",
+          'curl https://api.sendblue.co/api/send-carousel \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "from_number": "+19998887777",\n          "media_urls": [\n            "https://example.com/image1.jpg",\n            "https://example.com/image2.jpg",\n            "https://example.com/image3.jpg"\n          ],\n          "number": "+19998887777",\n          "send_style": "celebration",\n          "status_callback": "https://example.com/webhook"\n        }\'',
       },
     },
   },
@@ -867,19 +867,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## get_code\n\n`client.v2.totp.getCode(secret_id: string): { code?: string; expires_in?: number; status?: string; }`\n\n**get** `/api/v2/totp/code/{secret_id}`\n\nGenerate the current 6- or 8-digit TOTP code for a stored secret, along with how many seconds remain until it rotates.\n\n### Parameters\n\n- `secret_id: string`\n\n### Returns\n\n- `{ code?: string; expires_in?: number; status?: string; }`\n\n  - `code?: string`\n  - `expires_in?: number`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.v2.totp.getCode('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(response);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.v2.totp.getCode',
         example:
-          'curl https://api.sendblue.co/api/v2/totp/code/$SECRET_ID \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.v2.totp.getCode('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(response.code);",
       },
       python: {
         method: 'v2.totp.get_code',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.v2.totp.get_code(\n    "550e8400-e29b-41d4-a716-446655440000",\n)\nprint(response.code)',
       },
-      typescript: {
-        method: 'client.v2.totp.getCode',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.v2.totp.getCode('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(response.code);",
+          'curl https://api.sendblue.co/api/v2/totp/code/$SECRET_ID \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -906,19 +906,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## create\n\n`client.v2.totp.secrets.create(algorithm?: 'SHA1' | 'SHA256' | 'SHA512', digits?: 6 | 8, issuer?: string, label?: string, period?: number, secret?: string, uri?: string): { status?: string; totp_secret?: object; }`\n\n**post** `/api/v2/totp/secrets`\n\nStore an encrypted TOTP secret for your account. Agents can use this instead of a phone-based authenticator app.\n\nProvide either:\n- A `uri` (the `otpauth://` URI from a QR code scan), which auto-populates all fields\n- A base32 `secret` with optional `label`, `issuer`, `algorithm`, `digits`, and `period`\n\n\n### Parameters\n\n- `algorithm?: 'SHA1' | 'SHA256' | 'SHA512'`\n  Hash algorithm\n\n- `digits?: 6 | 8`\n  Code length\n\n- `issuer?: string`\n  Service name (e.g. \"GitHub\", \"Google\")\n\n- `label?: string`\n  Human-readable label for this secret (e.g. \"GitHub - agent@example.com\"). Required unless `uri` is provided.\n\n- `period?: number`\n  Rotation period in seconds\n\n- `secret?: string`\n  Base32-encoded TOTP secret. Omit to auto-generate one.\n\n- `uri?: string`\n  Full `otpauth://totp/...` URI from a QR code. Overrides all other fields if provided.\n\n### Returns\n\n- `{ status?: string; totp_secret?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }; }`\n\n  - `status?: string`\n  - `totp_secret?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst secret = await client.v2.totp.secrets.create();\n\nconsole.log(secret);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.v2.totp.secrets.create',
         example:
-          'curl https://api.sendblue.co/api/v2/totp/secrets \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "issuer": "GitHub",\n          "label": "GitHub - agent@example.com",\n          "secret": "JBSWY3DPEHPK3PXP",\n          "uri": "otpauth://totp/GitHub:agent%40example.com?secret=JBSWY3DPEHPK3PXP&issuer=GitHub"\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst secret = await client.v2.totp.secrets.create();\n\nconsole.log(secret.status);",
       },
       python: {
         method: 'v2.totp.secrets.create',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nsecret = client.v2.totp.secrets.create()\nprint(secret.status)',
       },
-      typescript: {
-        method: 'client.v2.totp.secrets.create',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst secret = await client.v2.totp.secrets.create();\n\nconsole.log(secret.status);",
+          'curl https://api.sendblue.co/api/v2/totp/secrets \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "issuer": "GitHub",\n          "label": "GitHub - agent@example.com",\n          "secret": "JBSWY3DPEHPK3PXP",\n          "uri": "otpauth://totp/GitHub:agent%40example.com?secret=JBSWY3DPEHPK3PXP&issuer=GitHub"\n        }\'',
       },
     },
   },
@@ -936,19 +936,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## list\n\n`client.v2.totp.secrets.list(): { status?: string; totp_secrets?: object[]; }`\n\n**get** `/api/v2/totp/secrets`\n\nList all stored TOTP secrets for the account. The encrypted secret values are never returned.\n\n### Returns\n\n- `{ status?: string; totp_secrets?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }[]; }`\n\n  - `status?: string`\n  - `totp_secrets?: { id?: string; algorithm?: 'SHA1' | 'SHA256' | 'SHA512'; created_at?: string; digits?: number; issuer?: string; label?: string; period?: number; secret?: string; }[]`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst secrets = await client.v2.totp.secrets.list();\n\nconsole.log(secrets);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.v2.totp.secrets.list',
         example:
-          'curl https://api.sendblue.co/api/v2/totp/secrets \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst secrets = await client.v2.totp.secrets.list();\n\nconsole.log(secrets.status);",
       },
       python: {
         method: 'v2.totp.secrets.list',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nsecrets = client.v2.totp.secrets.list()\nprint(secrets.status)',
       },
-      typescript: {
-        method: 'client.v2.totp.secrets.list',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst secrets = await client.v2.totp.secrets.list();\n\nconsole.log(secrets.status);",
+          'curl https://api.sendblue.co/api/v2/totp/secrets \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -965,19 +965,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.v2.totp.secrets.delete(secret_id: string): { status?: string; }`\n\n**delete** `/api/v2/totp/secrets/{secret_id}`\n\nPermanently delete a stored TOTP secret.\n\n### Parameters\n\n- `secret_id: string`\n\n### Returns\n\n- `{ status?: string; }`\n\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst secret = await client.v2.totp.secrets.delete('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(secret);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.v2.totp.secrets.delete',
         example:
-          'curl https://api.sendblue.co/api/v2/totp/secrets/$SECRET_ID \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst secret = await client.v2.totp.secrets.delete('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(secret.status);",
       },
       python: {
         method: 'v2.totp.secrets.delete',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nsecret = client.v2.totp.secrets.delete(\n    "550e8400-e29b-41d4-a716-446655440000",\n)\nprint(secret.status)',
       },
-      typescript: {
-        method: 'client.v2.totp.secrets.delete',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst secret = await client.v2.totp.secrets.delete('550e8400-e29b-41d4-a716-446655440000');\n\nconsole.log(secret.status);",
+          'curl https://api.sendblue.co/api/v2/totp/secrets/$SECRET_ID \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -995,19 +995,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## retrieve\n\n`client.lines.callForwarding.retrieve(sendblue_number: string): { forwarding_number: string; sendblue_number: string; }`\n\n**get** `/api/lines/{sendblue_number}/call-forwarding`\n\nReturns the current call forwarding number for a dedicated phone line.\n\nPer-line forwarding takes priority over the company default forwarding number\nbut is overridden by seat-level forwarding when a seat has a forwarding number set.\n\n**Priority order:** seat forwarding → per-line forwarding → company default forwarding\n\n\n### Parameters\n\n- `sendblue_number: string`\n\n### Returns\n\n- `{ forwarding_number: string; sendblue_number: string; }`\n\n  - `forwarding_number: string`\n  - `sendblue_number: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst callForwarding = await client.lines.callForwarding.retrieve('+12125550101');\n\nconsole.log(callForwarding);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.lines.callForwarding.retrieve',
         example:
-          'curl https://api.sendblue.co/api/lines/$SENDBLUE_NUMBER/call-forwarding \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst callForwarding = await client.lines.callForwarding.retrieve('+12125550101');\n\nconsole.log(callForwarding.forwarding_number);",
       },
       python: {
         method: 'lines.call_forwarding.retrieve',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncall_forwarding = client.lines.call_forwarding.retrieve(\n    "+12125550101",\n)\nprint(call_forwarding.forwarding_number)',
       },
-      typescript: {
-        method: 'client.lines.callForwarding.retrieve',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst callForwarding = await client.lines.callForwarding.retrieve('+12125550101');\n\nconsole.log(callForwarding.forwarding_number);",
+          'curl https://api.sendblue.co/api/lines/$SENDBLUE_NUMBER/call-forwarding \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
@@ -1025,19 +1025,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## update\n\n`client.lines.callForwarding.update(sendblue_number: string, forwarding_number: string): { forwarding_number: string; sendblue_number: string; }`\n\n**put** `/api/lines/{sendblue_number}/call-forwarding`\n\nSets a call forwarding number for a specific dedicated phone line.\nInbound calls to this line will be forwarded to the specified number.\n\nThe `forwarding_number` is normalized to E.164 format before storage.\nUS numbers can be supplied in local format (e.g. `2125550199`).\n\n\n### Parameters\n\n- `sendblue_number: string`\n\n- `forwarding_number: string`\n  Phone number to forward calls to (E.164 or US local format)\n\n### Returns\n\n- `{ forwarding_number: string; sendblue_number: string; }`\n\n  - `forwarding_number: string`\n  - `sendblue_number: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst callForwarding = await client.lines.callForwarding.update('+12125550101', { forwarding_number: '+16692138010' });\n\nconsole.log(callForwarding);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.lines.callForwarding.update',
         example:
-          'curl https://api.sendblue.co/api/lines/$SENDBLUE_NUMBER/call-forwarding \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "forwarding_number": "+16692138010"\n        }\'',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst callForwarding = await client.lines.callForwarding.update('+12125550101', {\n  forwarding_number: '+16692138010',\n});\n\nconsole.log(callForwarding.forwarding_number);",
       },
       python: {
         method: 'lines.call_forwarding.update',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncall_forwarding = client.lines.call_forwarding.update(\n    sendblue_number="+12125550101",\n    forwarding_number="+16692138010",\n)\nprint(call_forwarding.forwarding_number)',
       },
-      typescript: {
-        method: 'client.lines.callForwarding.update',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst callForwarding = await client.lines.callForwarding.update('+12125550101', {\n  forwarding_number: '+16692138010',\n});\n\nconsole.log(callForwarding.forwarding_number);",
+          'curl https://api.sendblue.co/api/lines/$SENDBLUE_NUMBER/call-forwarding \\\n    -X PUT \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "forwarding_number": "+16692138010"\n        }\'',
       },
     },
   },
@@ -1055,19 +1055,19 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     markdown:
       "## delete\n\n`client.lines.callForwarding.delete(sendblue_number: string): { forwarding_number: string; sendblue_number: string; }`\n\n**delete** `/api/lines/{sendblue_number}/call-forwarding`\n\nRemoves the per-line call forwarding number. After clearing, inbound calls\nwill fall back to the company default forwarding number (if configured).\n\nThis operation is idempotent — calling it on a line with no forwarding set\nreturns 200 with `forwarding_number: null`.\n\n\n### Parameters\n\n- `sendblue_number: string`\n\n### Returns\n\n- `{ forwarding_number: string; sendblue_number: string; }`\n\n  - `forwarding_number: string`\n  - `sendblue_number: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst callForwarding = await client.lines.callForwarding.delete('+12125550101');\n\nconsole.log(callForwarding);\n```",
     perLanguage: {
-      http: {
+      typescript: {
+        method: 'client.lines.callForwarding.delete',
         example:
-          'curl https://api.sendblue.co/api/lines/$SENDBLUE_NUMBER/call-forwarding \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst callForwarding = await client.lines.callForwarding.delete('+12125550101');\n\nconsole.log(callForwarding.forwarding_number);",
       },
       python: {
         method: 'lines.call_forwarding.delete',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncall_forwarding = client.lines.call_forwarding.delete(\n    "+12125550101",\n)\nprint(call_forwarding.forwarding_number)',
       },
-      typescript: {
-        method: 'client.lines.callForwarding.delete',
+      http: {
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst callForwarding = await client.lines.callForwarding.delete('+12125550101');\n\nconsole.log(callForwarding.forwarding_number);",
+          'curl https://api.sendblue.co/api/lines/$SENDBLUE_NUMBER/call-forwarding \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
