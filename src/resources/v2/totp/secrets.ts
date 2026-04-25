@@ -199,6 +199,6 @@ export declare namespace Secrets {
     type SecretCreateResponse as SecretCreateResponse,
     type SecretListResponse as SecretListResponse,
     type SecretDeleteResponse as SecretDeleteResponse,
-    type SecretCreateParams as SecretCreateParams,
+    type SecretCreateParams as SecretCreateParams
   };
 }

@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { ClientOptions } from 'sendblue';
+import { ClientOptions } from 'sendblue'
 
 export type WorkerInput = {
   project_name: string;
