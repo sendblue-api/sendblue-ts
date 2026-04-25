@@ -36,10 +36,7 @@ export class Groups extends APIResource {
    * });
    * ```
    */
-  sendMessage(
-    body: GroupSendMessageParams,
-    options?: RequestOptions,
-  ): APIPromise<MessagesAPI.MessageResponse> {
+  sendMessage(body: GroupSendMessageParams, options?: RequestOptions): APIPromise<MessagesAPI.MessageResponse> {
     return this._client.post('/api/send-group-message', { body, ...options });
   }
 }
@@ -100,6 +97,6 @@ export declare namespace Groups {
   export {
     type GroupModifyResponse as GroupModifyResponse,
     type GroupModifyParams as GroupModifyParams,
-    type GroupSendMessageParams as GroupSendMessageParams,
+    type GroupSendMessageParams as GroupSendMessageParams
   };
 }

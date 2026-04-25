@@ -224,14 +224,7 @@ export interface WebhookCreateParams {
   /**
    * Type of webhook to add
    */
-  type?:
-    | 'receive'
-    | 'line_blocked'
-    | 'line_assigned'
-    | 'outbound'
-    | 'typing_indicator'
-    | 'call_log'
-    | 'contact_created';
+  type?: 'receive' | 'line_blocked' | 'line_assigned' | 'outbound' | 'typing_indicator' | 'call_log' | 'contact_created';
 }
 
 export interface WebhookUpdateParams {
@@ -291,14 +284,7 @@ export interface WebhookDeleteParams {
   /**
    * Type of webhook to delete from
    */
-  type?:
-    | 'receive'
-    | 'line_blocked'
-    | 'line_assigned'
-    | 'outbound'
-    | 'typing_indicator'
-    | 'call_log'
-    | 'contact_created';
+  type?: 'receive' | 'line_blocked' | 'line_assigned' | 'outbound' | 'typing_indicator' | 'call_log' | 'contact_created';
 }
 
 export declare namespace Webhooks {
@@ -310,6 +296,6 @@ export declare namespace Webhooks {
     type WebhookDeleteResponse as WebhookDeleteResponse,
     type WebhookCreateParams as WebhookCreateParams,
     type WebhookUpdateParams as WebhookUpdateParams,
-    type WebhookDeleteParams as WebhookDeleteParams,
+    type WebhookDeleteParams as WebhookDeleteParams
   };
 }

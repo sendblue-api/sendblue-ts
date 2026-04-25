@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.8.1 (2026-04-25)
+
+Full Changelog: [v3.8.0...v3.8.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.8.0...v3.8.1)
+
+### Chores
+
+* **formatter:** run prettier and eslint separately ([d44c14c](https://github.com/sendblue-api/sendblue-ts/commit/d44c14c01db83b91efd70ec073b0cc82b82fa568))
+* **internal:** more robust bootstrap script ([2835d1b](https://github.com/sendblue-api/sendblue-ts/commit/2835d1b29272b74906a4c088b27cc97485622a03))
+* restructure docs search code ([401cd0b](https://github.com/sendblue-api/sendblue-ts/commit/401cd0bf7aaf4fdf29488e487c48927ebc3a51c1))
+
 ## 3.8.0 (2026-04-14)
 
 Full Changelog: [v3.7.0...v3.8.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.7.0...v3.8.0)

@@ -5,7 +5,7 @@ import SendblueAPI from 'sendblue';
 const client = new SendblueAPI({
   apiKey: 'My API Key',
   apiSecret: 'My API Secret',
-  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource callForwarding', () => {
@@ -23,9 +23,7 @@ describe('resource callForwarding', () => {
 
   // Mock server tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.lines.callForwarding.update('+12125550101', {
-      forwarding_number: '+16692138010',
-    });
+    const responsePromise = client.lines.callForwarding.update('+12125550101', { forwarding_number: '+16692138010' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -37,9 +35,7 @@ describe('resource callForwarding', () => {
 
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
-    const response = await client.lines.callForwarding.update('+12125550101', {
-      forwarding_number: '+16692138010',
-    });
+    const response = await client.lines.callForwarding.update('+12125550101', { forwarding_number: '+16692138010' });
   });
 
   // Mock server tests are disabled

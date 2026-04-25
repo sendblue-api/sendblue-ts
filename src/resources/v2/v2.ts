@@ -11,5 +11,8 @@ export class V2 extends APIResource {
 V2.Totp = Totp;
 
 export declare namespace V2 {
-  export { Totp as Totp, type TotpGetCodeResponse as TotpGetCodeResponse };
+  export {
+    Totp as Totp,
+    type TotpGetCodeResponse as TotpGetCodeResponse
+  };
 }
