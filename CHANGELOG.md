@@ -1,5 +1,21 @@
 # Changelog
 
+## 3.9.0 (2026-04-28)
+
+Full Changelog: [v3.8.0...v3.9.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.8.0...v3.9.0)
+
+### Features
+
+* support setting headers via env ([7eec563](https://github.com/sendblue-api/sendblue-ts/commit/7eec563cd0217db4e89ac50821d4a1b16b862b84))
+
+
+### Chores
+
+* **formatter:** run prettier and eslint separately ([d44c14c](https://github.com/sendblue-api/sendblue-ts/commit/d44c14c01db83b91efd70ec073b0cc82b82fa568))
+* **internal:** codegen related update ([7d8c5ae](https://github.com/sendblue-api/sendblue-ts/commit/7d8c5aef9d36b22d2161009cfefa5499d5e1def9))
+* **internal:** more robust bootstrap script ([2835d1b](https://github.com/sendblue-api/sendblue-ts/commit/2835d1b29272b74906a4c088b27cc97485622a03))
+* restructure docs search code ([401cd0b](https://github.com/sendblue-api/sendblue-ts/commit/401cd0bf7aaf4fdf29488e487c48927ebc3a51c1))
+
 ## 3.8.0 (2026-04-14)
 
 Full Changelog: [v3.7.0...v3.8.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.7.0...v3.8.0)
