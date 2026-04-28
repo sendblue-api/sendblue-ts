@@ -58,6 +58,6 @@ export interface TypingIndicatorSendParams {
 export declare namespace TypingIndicators {
   export {
     type TypingIndicatorSendResponse as TypingIndicatorSendResponse,
-    type TypingIndicatorSendParams as TypingIndicatorSendParams
+    type TypingIndicatorSendParams as TypingIndicatorSendParams,
   };
 }

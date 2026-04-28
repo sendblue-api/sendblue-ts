@@ -2,7 +2,13 @@
 
 import { APIResource } from '../../../core/resource';
 import * as SecretsAPI from './secrets';
-import { SecretCreateParams, SecretCreateResponse, SecretDeleteResponse, SecretListResponse, Secrets } from './secrets';
+import {
+  SecretCreateParams,
+  SecretCreateResponse,
+  SecretDeleteResponse,
+  SecretListResponse,
+  Secrets,
+} from './secrets';
 import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
@@ -46,15 +52,13 @@ export interface TotpGetCodeResponse {
 Totp.Secrets = Secrets;
 
 export declare namespace Totp {
-  export {
-    type TotpGetCodeResponse as TotpGetCodeResponse
-  };
+  export { type TotpGetCodeResponse as TotpGetCodeResponse };
 
   export {
     Secrets as Secrets,
     type SecretCreateResponse as SecretCreateResponse,
     type SecretListResponse as SecretListResponse,
     type SecretDeleteResponse as SecretDeleteResponse,
-    type SecretCreateParams as SecretCreateParams
+    type SecretCreateParams as SecretCreateParams,
   };
 }

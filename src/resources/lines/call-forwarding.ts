@@ -43,7 +43,11 @@ export class CallForwarding extends APIResource {
    *   });
    * ```
    */
-  update(sendblueNumber: string, body: CallForwardingUpdateParams, options?: RequestOptions): APIPromise<CallForwardingUpdateResponse> {
+  update(
+    sendblueNumber: string,
+    body: CallForwardingUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<CallForwardingUpdateResponse> {
     return this._client.put(path`/api/lines/${sendblueNumber}/call-forwarding`, { body, ...options });
   }
 
@@ -113,6 +117,6 @@ export declare namespace CallForwarding {
     type CallForwardingRetrieveResponse as CallForwardingRetrieveResponse,
     type CallForwardingUpdateResponse as CallForwardingUpdateResponse,
     type CallForwardingDeleteResponse as CallForwardingDeleteResponse,
-    type CallForwardingUpdateParams as CallForwardingUpdateParams
+    type CallForwardingUpdateParams as CallForwardingUpdateParams,
   };
 }

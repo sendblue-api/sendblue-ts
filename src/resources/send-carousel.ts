@@ -88,7 +88,20 @@ export interface SendCarouselSendParams {
   /**
    * The iMessage expressive message style
    */
-  send_style?: 'celebration' | 'shooting_star' | 'fireworks' | 'lasers' | 'love' | 'confetti' | 'balloons' | 'spotlight' | 'echo' | 'invisible' | 'gentle' | 'loud' | 'slam';
+  send_style?:
+    | 'celebration'
+    | 'shooting_star'
+    | 'fireworks'
+    | 'lasers'
+    | 'love'
+    | 'confetti'
+    | 'balloons'
+    | 'spotlight'
+    | 'echo'
+    | 'invisible'
+    | 'gentle'
+    | 'loud'
+    | 'slam';
 
   /**
    * Webhook URL for message status updates
@@ -99,6 +112,6 @@ export interface SendCarouselSendParams {
 export declare namespace SendCarousel {
   export {
     type SendCarouselSendResponse as SendCarouselSendResponse,
-    type SendCarouselSendParams as SendCarouselSendParams
+    type SendCarouselSendParams as SendCarouselSendParams,
   };
 }

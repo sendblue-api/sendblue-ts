@@ -101,6 +101,6 @@ export declare namespace Bulk {
     type BulkCreateResponse as BulkCreateResponse,
     type BulkDeleteResponse as BulkDeleteResponse,
     type BulkCreateParams as BulkCreateParams,
-    type BulkDeleteParams as BulkDeleteParams
+    type BulkDeleteParams as BulkDeleteParams,
   };
 }
