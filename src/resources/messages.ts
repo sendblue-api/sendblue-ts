@@ -48,7 +48,10 @@ export class Messages extends APIResource {
    * const messages = await client.messages.list();
    * ```
    */
-  list(query: MessageListParams | null | undefined = {}, options?: RequestOptions): APIPromise<MessageListResponse> {
+  list(
+    query: MessageListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<MessageListResponse> {
     return this._client.get('/api/v2/messages', { query, ...options });
   }
 
@@ -130,7 +133,20 @@ export interface MessageContent {
    */
   message_handle?: string;
 
-  send_style?: 'celebration' | 'shooting_star' | 'fireworks' | 'lasers' | 'love' | 'confetti' | 'balloons' | 'spotlight' | 'echo' | 'invisible' | 'gentle' | 'loud' | 'slam';
+  send_style?:
+    | 'celebration'
+    | 'shooting_star'
+    | 'fireworks'
+    | 'lasers'
+    | 'love'
+    | 'confetti'
+    | 'balloons'
+    | 'spotlight'
+    | 'echo'
+    | 'invisible'
+    | 'gentle'
+    | 'loud'
+    | 'slam';
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR' | 'RECEIVED';
 
@@ -199,7 +215,20 @@ export interface MessageResponse {
   /**
    * The iMessage expressive message style
    */
-  send_style?: 'celebration' | 'shooting_star' | 'fireworks' | 'lasers' | 'love' | 'confetti' | 'balloons' | 'spotlight' | 'echo' | 'invisible' | 'gentle' | 'loud' | 'slam';
+  send_style?:
+    | 'celebration'
+    | 'shooting_star'
+    | 'fireworks'
+    | 'lasers'
+    | 'love'
+    | 'confetti'
+    | 'balloons'
+    | 'spotlight'
+    | 'echo'
+    | 'invisible'
+    | 'gentle'
+    | 'loud'
+    | 'slam';
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR';
 }
@@ -307,7 +336,20 @@ export namespace MessageRetrieveResponse {
     /**
      * The iMessage expressive message style
      */
-    send_style?: 'celebration' | 'shooting_star' | 'fireworks' | 'lasers' | 'love' | 'confetti' | 'balloons' | 'spotlight' | 'echo' | 'invisible' | 'gentle' | 'loud' | 'slam';
+    send_style?:
+      | 'celebration'
+      | 'shooting_star'
+      | 'fireworks'
+      | 'lasers'
+      | 'love'
+      | 'confetti'
+      | 'balloons'
+      | 'spotlight'
+      | 'echo'
+      | 'invisible'
+      | 'gentle'
+      | 'loud'
+      | 'slam';
 
     /**
      * Sendblue phone number used
@@ -319,7 +361,17 @@ export namespace MessageRetrieveResponse {
      */
     service?: 'iMessage' | 'SMS' | 'RCS';
 
-    status?: 'REGISTERED' | 'PENDING' | 'SENT' | 'DELIVERED' | 'RECEIVED' | 'QUEUED' | 'ERROR' | 'DECLINED' | 'ACCEPTED' | 'SUCCESS';
+    status?:
+      | 'REGISTERED'
+      | 'PENDING'
+      | 'SENT'
+      | 'DELIVERED'
+      | 'RECEIVED'
+      | 'QUEUED'
+      | 'ERROR'
+      | 'DECLINED'
+      | 'ACCEPTED'
+      | 'SUCCESS';
 
     /**
      * Recipient phone number
@@ -438,7 +490,20 @@ export namespace MessageListResponse {
     /**
      * The iMessage expressive message style
      */
-    send_style?: 'celebration' | 'shooting_star' | 'fireworks' | 'lasers' | 'love' | 'confetti' | 'balloons' | 'spotlight' | 'echo' | 'invisible' | 'gentle' | 'loud' | 'slam';
+    send_style?:
+      | 'celebration'
+      | 'shooting_star'
+      | 'fireworks'
+      | 'lasers'
+      | 'love'
+      | 'confetti'
+      | 'balloons'
+      | 'spotlight'
+      | 'echo'
+      | 'invisible'
+      | 'gentle'
+      | 'loud'
+      | 'slam';
 
     /**
      * Sendblue phone number used
@@ -450,7 +515,17 @@ export namespace MessageListResponse {
      */
     service?: 'iMessage' | 'SMS' | 'RCS';
 
-    status?: 'REGISTERED' | 'PENDING' | 'SENT' | 'DELIVERED' | 'RECEIVED' | 'QUEUED' | 'ERROR' | 'DECLINED' | 'ACCEPTED' | 'SUCCESS';
+    status?:
+      | 'REGISTERED'
+      | 'PENDING'
+      | 'SENT'
+      | 'DELIVERED'
+      | 'RECEIVED'
+      | 'QUEUED'
+      | 'ERROR'
+      | 'DECLINED'
+      | 'ACCEPTED'
+      | 'SUCCESS';
 
     /**
      * Recipient phone number
@@ -580,7 +655,17 @@ export interface MessageListParams {
   /**
    * Filter by message status
    */
-  status?: 'REGISTERED' | 'PENDING' | 'SENT' | 'DELIVERED' | 'RECEIVED' | 'QUEUED' | 'ERROR' | 'DECLINED' | 'ACCEPTED' | 'SUCCESS';
+  status?:
+    | 'REGISTERED'
+    | 'PENDING'
+    | 'SENT'
+    | 'DELIVERED'
+    | 'RECEIVED'
+    | 'QUEUED'
+    | 'ERROR'
+    | 'DECLINED'
+    | 'ACCEPTED'
+    | 'SUCCESS';
 
   /**
    * Filter by recipient phone number
@@ -636,7 +721,20 @@ export interface MessageSendParams {
   /**
    * The iMessage expressive message style
    */
-  send_style?: 'celebration' | 'shooting_star' | 'fireworks' | 'lasers' | 'love' | 'confetti' | 'balloons' | 'spotlight' | 'echo' | 'invisible' | 'gentle' | 'loud' | 'slam';
+  send_style?:
+    | 'celebration'
+    | 'shooting_star'
+    | 'fireworks'
+    | 'lasers'
+    | 'love'
+    | 'confetti'
+    | 'balloons'
+    | 'spotlight'
+    | 'echo'
+    | 'invisible'
+    | 'gentle'
+    | 'loud'
+    | 'slam';
 
   /**
    * Webhook URL for message status updates
@@ -652,6 +750,6 @@ export declare namespace Messages {
     type MessageListResponse as MessageListResponse,
     type MessageListParams as MessageListParams,
     type MessageGetStatusParams as MessageGetStatusParams,
-    type MessageSendParams as MessageSendParams
+    type MessageSendParams as MessageSendParams,
   };
 }

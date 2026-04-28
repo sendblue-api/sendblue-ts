@@ -10,9 +10,7 @@ const config: JestConfigWithTsJest = {
     '^sendblue-mcp$': '<rootDir>/src/index.ts',
     '^sendblue-mcp/(.*)$': '<rootDir>/src/$1',
   },
-  modulePathIgnorePatterns: [
-    '<rootDir>/dist/',
-  ],
+  modulePathIgnorePatterns: ['<rootDir>/dist/'],
   testPathIgnorePatterns: ['scripts'],
 };
 

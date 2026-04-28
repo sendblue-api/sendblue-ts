@@ -5,13 +5,16 @@ import SendblueAPI from 'sendblue';
 const client = new SendblueAPI({
   apiKey: 'My API Key',
   apiSecret: 'My API Secret',
-  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource typingIndicators', () => {
   // Mock server tests are disabled
   test.skip('send: only required params', async () => {
-    const responsePromise = client.typingIndicators.send({ from_number: '+16292925296', number: '+19998887777' });
+    const responsePromise = client.typingIndicators.send({
+      from_number: '+16292925296',
+      number: '+19998887777',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -23,6 +26,9 @@ describe('resource typingIndicators', () => {
 
   // Mock server tests are disabled
   test.skip('send: required and optional params', async () => {
-    const response = await client.typingIndicators.send({ from_number: '+16292925296', number: '+19998887777' });
+    const response = await client.typingIndicators.send({
+      from_number: '+16292925296',
+      number: '+19998887777',
+    });
   });
 });

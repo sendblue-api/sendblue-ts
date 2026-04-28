@@ -50,7 +50,11 @@ export class Contacts extends APIResource {
    * const contact = await client.contacts.update('+1234567890');
    * ```
    */
-  update(phoneNumber: string, body: ContactUpdateParams, options?: RequestOptions): APIPromise<ContactUpdateResponse> {
+  update(
+    phoneNumber: string,
+    body: ContactUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<ContactUpdateResponse> {
     return this._client.put(path`/api/v2/contacts/${phoneNumber}`, { body, ...options });
   }
 
@@ -62,7 +66,10 @@ export class Contacts extends APIResource {
    * const contacts = await client.contacts.list();
    * ```
    */
-  list(query: ContactListParams | null | undefined = {}, options?: RequestOptions): APIPromise<ContactListResponse> {
+  list(
+    query: ContactListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ContactListResponse> {
     return this._client.get('/api/v2/contacts', { query, ...options });
   }
 
@@ -197,7 +204,7 @@ export interface ContactUpdateResponse {
   status?: string;
 }
 
-export type ContactListResponse = Array<Contact>
+export type ContactListResponse = Array<Contact>;
 
 export interface ContactDeleteResponse {
   status?: string;
@@ -439,7 +446,7 @@ export declare namespace Contacts {
     type ContactUpdateParams as ContactUpdateParams,
     type ContactListParams as ContactListParams,
     type ContactOptOutParams as ContactOptOutParams,
-    type ContactVerifyParams as ContactVerifyParams
+    type ContactVerifyParams as ContactVerifyParams,
   };
 
   export {
@@ -447,6 +454,6 @@ export declare namespace Contacts {
     type BulkCreateResponse as BulkCreateResponse,
     type BulkDeleteResponse as BulkDeleteResponse,
     type BulkCreateParams as BulkCreateParams,
-    type BulkDeleteParams as BulkDeleteParams
+    type BulkDeleteParams as BulkDeleteParams,
   };
 }

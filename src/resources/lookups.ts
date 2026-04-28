@@ -12,7 +12,10 @@ export class Lookups extends APIResource {
    * Determine if a phone number supports iMessage or SMS. Useful for checking if a
    * number is an iPhone, if it is real, or which provider to use.
    */
-  lookupNumber(query: LookupLookupNumberParams, options?: RequestOptions): APIPromise<LookupLookupNumberResponse> {
+  lookupNumber(
+    query: LookupLookupNumberParams,
+    options?: RequestOptions,
+  ): APIPromise<LookupLookupNumberResponse> {
     return this._client.get('/api/evaluate-service', { query, ...options });
   }
 }
@@ -39,6 +42,6 @@ export interface LookupLookupNumberParams {
 export declare namespace Lookups {
   export {
     type LookupLookupNumberResponse as LookupLookupNumberResponse,
-    type LookupLookupNumberParams as LookupLookupNumberParams
+    type LookupLookupNumberParams as LookupLookupNumberParams,
   };
 }

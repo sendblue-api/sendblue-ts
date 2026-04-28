@@ -5,7 +5,7 @@ import SendblueAPI from 'sendblue';
 const client = new SendblueAPI({
   apiKey: 'My API Key',
   apiSecret: 'My API Secret',
-  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource secrets', () => {

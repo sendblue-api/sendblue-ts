@@ -59,8 +59,8 @@ function getTSDiagnostics(code: string): string[] {
   const codeWithImport = [
     'import { SendblueAPI } from "sendblue";',
     functionSource.type === 'declaration' ?
-      `async function run(${functionSource.client}: SendblueAPI)` :
-      `const run: (${functionSource.client}: SendblueAPI) => Promise<unknown> =`,
+      `async function run(${functionSource.client}: SendblueAPI)`
+    : `const run: (${functionSource.client}: SendblueAPI) => Promise<unknown> =`,
     functionSource.code,
   ].join('\n');
   const sourcePath = path.resolve('code.ts');
@@ -108,37 +108,37 @@ function getTSDiagnostics(code: string): string[] {
 
 const fuse = new Fuse(
   [
-    "client.messages.getStatus",
-    "client.messages.list",
-    "client.messages.retrieve",
-    "client.messages.send",
-    "client.groups.modify",
-    "client.groups.sendMessage",
-    "client.mediaObjects.upload",
-    "client.lookups.lookupNumber",
-    "client.typingIndicators.send",
-    "client.contacts.count",
-    "client.contacts.create",
-    "client.contacts.delete",
-    "client.contacts.list",
-    "client.contacts.optOut",
-    "client.contacts.retrieve",
-    "client.contacts.update",
-    "client.contacts.verify",
-    "client.contacts.bulk.create",
-    "client.contacts.bulk.delete",
-    "client.webhooks.create",
-    "client.webhooks.delete",
-    "client.webhooks.list",
-    "client.webhooks.update",
-    "client.sendCarousel.send",
-    "client.v2.totp.getCode",
-    "client.v2.totp.secrets.create",
-    "client.v2.totp.secrets.delete",
-    "client.v2.totp.secrets.list",
-    "client.lines.callForwarding.delete",
-    "client.lines.callForwarding.retrieve",
-    "client.lines.callForwarding.update"
+    'client.messages.getStatus',
+    'client.messages.list',
+    'client.messages.retrieve',
+    'client.messages.send',
+    'client.groups.modify',
+    'client.groups.sendMessage',
+    'client.mediaObjects.upload',
+    'client.lookups.lookupNumber',
+    'client.typingIndicators.send',
+    'client.contacts.count',
+    'client.contacts.create',
+    'client.contacts.delete',
+    'client.contacts.list',
+    'client.contacts.optOut',
+    'client.contacts.retrieve',
+    'client.contacts.update',
+    'client.contacts.verify',
+    'client.contacts.bulk.create',
+    'client.contacts.bulk.delete',
+    'client.webhooks.create',
+    'client.webhooks.delete',
+    'client.webhooks.list',
+    'client.webhooks.update',
+    'client.sendCarousel.send',
+    'client.v2.totp.getCode',
+    'client.v2.totp.secrets.create',
+    'client.v2.totp.secrets.delete',
+    'client.v2.totp.secrets.list',
+    'client.lines.callForwarding.delete',
+    'client.lines.callForwarding.retrieve',
+    'client.lines.callForwarding.update',
   ],
   { threshold: 1, shouldSort: true },
 );
@@ -221,7 +221,12 @@ function parseError(code: string, error: unknown): string | undefined {
     // Deno uses V8; the first "<anonymous>:LINE:COLUMN" is the top of stack.
     const lineNumber = error.stack?.match(/<anonymous>:([0-9]+):[0-9]+/)?.[1];
     // -1 for the zero-based indexing
-    const line = lineNumber && code.split('\n').at(parseInt(lineNumber, 10) - 1)?.trim();
+    const line =
+      lineNumber &&
+      code
+        .split('\n')
+        .at(parseInt(lineNumber, 10) - 1)
+        ?.trim();
     return line ? `${message}\n  at line ${lineNumber}\n    ${line}` : message;
   } catch {
     return message;
@@ -233,8 +238,9 @@ const fetch = async (req: Request): Promise<Response> => {
 
   const runFunctionSource = code ? getRunFunctionSource(code) : null;
   if (!runFunctionSource) {
-    const message = code
-      ? 'The code is missing a top-level `run` function.'
+    const message =
+      code ?
+        'The code is missing a top-level `run` function.'
       : 'The code argument is missing. Provide one containing a top-level `run` function.';
     return Response.json(
       {
@@ -279,7 +285,7 @@ const fetch = async (req: Request): Promise<Response> => {
   try {
     let run_ = async (client: any) => {};
     run_ = (await tseval(`${code}\nexport default run;`)).default;
-    const result = await run_(makeSdkProxy(client, { path: ["client"] }));
+    const result = await run_(makeSdkProxy(client, { path: ['client'] }));
     return Response.json({
       is_error: false,
       result,

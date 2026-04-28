@@ -20,18 +20,63 @@ import { APIPromise } from './core/api-promise';
 import { GroupModifyParams, GroupModifyResponse, GroupSendMessageParams, Groups } from './resources/groups';
 import { LookupLookupNumberParams, LookupLookupNumberResponse, Lookups } from './resources/lookups';
 import { MediaObjectUploadParams, MediaObjectUploadResponse, MediaObjects } from './resources/media-objects';
-import { MessageContent, MessageGetStatusParams, MessageListParams, MessageListResponse, MessageResponse, MessageRetrieveResponse, MessageSendParams, Messages } from './resources/messages';
+import {
+  MessageContent,
+  MessageGetStatusParams,
+  MessageListParams,
+  MessageListResponse,
+  MessageResponse,
+  MessageRetrieveResponse,
+  MessageSendParams,
+  Messages,
+} from './resources/messages';
 import { SendCarousel, SendCarouselSendParams, SendCarouselSendResponse } from './resources/send-carousel';
-import { TypingIndicatorSendParams, TypingIndicatorSendResponse, TypingIndicators } from './resources/typing-indicators';
-import { WebhookConfiguration, WebhookCreateParams, WebhookCreateResponse, WebhookDeleteParams, WebhookDeleteResponse, WebhookListResponse, WebhookUpdateParams, WebhookUpdateResponse, Webhooks } from './resources/webhooks';
-import { Contact, ContactCountResponse, ContactCreateParams, ContactCreateResponse, ContactDeleteResponse, ContactListParams, ContactListResponse, ContactOptOutParams, ContactOptOutResponse, ContactRetrieveResponse, ContactUpdateParams, ContactUpdateResponse, ContactVerifyParams, ContactVerifyResponse, Contacts } from './resources/contacts/contacts';
+import {
+  TypingIndicatorSendParams,
+  TypingIndicatorSendResponse,
+  TypingIndicators,
+} from './resources/typing-indicators';
+import {
+  WebhookConfiguration,
+  WebhookCreateParams,
+  WebhookCreateResponse,
+  WebhookDeleteParams,
+  WebhookDeleteResponse,
+  WebhookListResponse,
+  WebhookUpdateParams,
+  WebhookUpdateResponse,
+  Webhooks,
+} from './resources/webhooks';
+import {
+  Contact,
+  ContactCountResponse,
+  ContactCreateParams,
+  ContactCreateResponse,
+  ContactDeleteResponse,
+  ContactListParams,
+  ContactListResponse,
+  ContactOptOutParams,
+  ContactOptOutResponse,
+  ContactRetrieveResponse,
+  ContactUpdateParams,
+  ContactUpdateResponse,
+  ContactVerifyParams,
+  ContactVerifyResponse,
+  Contacts,
+} from './resources/contacts/contacts';
 import { Lines } from './resources/lines/lines';
 import { V2 } from './resources/v2/v2';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
 import { readEnv } from './internal/utils/env';
-import { type LogLevel, type Logger, formatRequestDetails, loggerFor, parseLogLevel } from './internal/utils/log';
+import {
+  type LogLevel,
+  type Logger,
+  formatRequestDetails,
+  loggerFor,
+  parseLogLevel,
+} from './internal/utils/log';
 import { isEmptyObj } from './internal/utils/values';
 
 export interface ClientOptions {
@@ -115,7 +160,7 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Sendblue API API. 
+ * API Client for interfacing with the Sendblue API API.
  */
 export class SendblueAPI {
   apiKey: string;
@@ -154,12 +199,12 @@ export class SendblueAPI {
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.SendblueAPIError(
-        'The SENDBLUE_API_API_KEY environment variable is missing or empty; either provide it, or instantiate the SendblueAPI client with an apiKey option, like new SendblueAPI({ apiKey: \'My API Key\' }).'
+        "The SENDBLUE_API_API_KEY environment variable is missing or empty; either provide it, or instantiate the SendblueAPI client with an apiKey option, like new SendblueAPI({ apiKey: 'My API Key' }).",
       );
     }
     if (apiSecret === undefined) {
       throw new Errors.SendblueAPIError(
-        'The SENDBLUE_API_API_SECRET environment variable is missing or empty; either provide it, or instantiate the SendblueAPI client with an apiSecret option, like new SendblueAPI({ apiSecret: \'My API Secret\' }).'
+        "The SENDBLUE_API_API_SECRET environment variable is missing or empty; either provide it, or instantiate the SendblueAPI client with an apiSecret option, like new SendblueAPI({ apiSecret: 'My API Secret' }).",
       );
     }
 
@@ -176,7 +221,10 @@ export class SendblueAPI {
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
-    this.logLevel = parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ?? parseLogLevel(readEnv('SENDBLUE_API_LOG'), 'process.env[\'SENDBLUE_API_LOG\']', this) ?? defaultLogLevel;
+    this.logLevel =
+      parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
+      parseLogLevel(readEnv('SENDBLUE_API_LOG'), "process.env['SENDBLUE_API_LOG']", this) ??
+      defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
@@ -203,7 +251,7 @@ export class SendblueAPI {
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
       apiSecret: this.apiSecret,
-      ...options
+      ...options,
     });
     return client;
   }
@@ -216,7 +264,7 @@ export class SendblueAPI {
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {
-    return this._options.defaultQuery
+    return this._options.defaultQuery;
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
@@ -259,7 +307,11 @@ export class SendblueAPI {
     return Errors.APIError.generate(status, error, message, headers);
   }
 
-  buildURL(path: string, query: Record<string, unknown> | null | undefined, defaultBaseURL?: string | undefined): string {
+  buildURL(
+    path: string,
+    query: Record<string, unknown> | null | undefined,
+    defaultBaseURL?: string | undefined,
+  ): string {
     const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
     const url =
       isAbsoluteURL(path) ?
@@ -347,7 +399,9 @@ export class SendblueAPI {
 
     await this.prepareOptions(options);
 
-    const { req, url, timeout } = await this.buildRequest(options, { retryCount: maxRetries - retriesRemaining });
+    const { req, url, timeout } = await this.buildRequest(options, {
+      retryCount: maxRetries - retriesRemaining,
+    });
 
     await this.prepareRequest(req, { url, options });
 
@@ -356,7 +410,16 @@ export class SendblueAPI {
     const retryLogStr = retryOfRequestLogID === undefined ? '' : `, retryOf: ${retryOfRequestLogID}`;
     const startTime = Date.now();
 
-    loggerFor(this).debug(`[${requestLogID}] sending request`, formatRequestDetails({ retryOfRequestLogID, method: options.method, url, options, headers: req.headers }));
+    loggerFor(this).debug(
+      `[${requestLogID}] sending request`,
+      formatRequestDetails({
+        retryOfRequestLogID,
+        method: options.method,
+        url,
+        options,
+        headers: req.headers,
+      }),
+    );
 
     if (options.signal?.aborted) {
       throw new Errors.APIUserAbortError();
@@ -375,21 +438,45 @@ export class SendblueAPI {
       // deno throws "TypeError: error sending request for url (https://example/): client error (Connect): tcp connect error: Operation timed out (os error 60): Operation timed out (os error 60)"
       // undici throws "TypeError: fetch failed" with cause "ConnectTimeoutError: Connect Timeout Error (attempted address: example:443, timeout: 1ms)"
       // others do not provide enough information to distinguish timeouts from other connection errors
-      const isTimeout = isAbortError(response) || /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''))
+      const isTimeout =
+        isAbortError(response) ||
+        /timed? ?out/i.test(String(response) + ('cause' in response ? String(response.cause) : ''));
       if (retriesRemaining) {
-        loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`)
-        loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
+        loggerFor(this).info(
+          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - ${retryMessage}`,
+        );
+        loggerFor(this).debug(
+          `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (${retryMessage})`,
+          formatRequestDetails({
+            retryOfRequestLogID,
+            url,
+            durationMs: headersTime - startTime,
+            message: response.message,
+          }),
+        );
         return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID);
       }
-      loggerFor(this).info(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`)
-      loggerFor(this).debug(`[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`, formatRequestDetails({ retryOfRequestLogID, url, durationMs: headersTime - startTime, message: response.message }));
+      loggerFor(this).info(
+        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} - error; no more retries left`,
+      );
+      loggerFor(this).debug(
+        `[${requestLogID}] connection ${isTimeout ? 'timed out' : 'failed'} (error; no more retries left)`,
+        formatRequestDetails({
+          retryOfRequestLogID,
+          url,
+          durationMs: headersTime - startTime,
+          message: response.message,
+        }),
+      );
       if (isTimeout) {
         throw new Errors.APIConnectionTimeoutError();
       }
       throw new Errors.APIConnectionError({ cause: response });
     }
 
-    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${response.ok ? 'succeeded' : 'failed'} with status ${response.status} in ${headersTime - startTime}ms`;
+    const responseInfo = `[${requestLogID}${retryLogStr}] ${req.method} ${url} ${
+      response.ok ? 'succeeded' : 'failed'
+    } with status ${response.status} in ${headersTime - startTime}ms`;
 
     if (!response.ok) {
       const shouldRetry = await this.shouldRetry(response);
@@ -398,27 +485,60 @@ export class SendblueAPI {
 
         // We don't need the body of this response.
         await Shims.CancelReadableStream(response.body);
-        loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
-        loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
-        return this.retryRequest(options, retriesRemaining, retryOfRequestLogID ?? requestLogID, response.headers);
+        loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
+        loggerFor(this).debug(
+          `[${requestLogID}] response error (${retryMessage})`,
+          formatRequestDetails({
+            retryOfRequestLogID,
+            url: response.url,
+            status: response.status,
+            headers: response.headers,
+            durationMs: headersTime - startTime,
+          }),
+        );
+        return this.retryRequest(
+          options,
+          retriesRemaining,
+          retryOfRequestLogID ?? requestLogID,
+          response.headers,
+        );
       }
 
       const retryMessage = shouldRetry ? `error; no more retries left` : `error; not retryable`;
 
-      loggerFor(this).info(`${responseInfo} - ${retryMessage}`)
+      loggerFor(this).info(`${responseInfo} - ${retryMessage}`);
 
       const errText = await response.text().catch((err: any) => castToError(err).message);
       const errJSON = safeJSON(errText) as any;
       const errMessage = errJSON ? undefined : errText;
 
-      loggerFor(this).debug(`[${requestLogID}] response error (${retryMessage})`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, message: errMessage, durationMs: Date.now() - startTime }));
+      loggerFor(this).debug(
+        `[${requestLogID}] response error (${retryMessage})`,
+        formatRequestDetails({
+          retryOfRequestLogID,
+          url: response.url,
+          status: response.status,
+          headers: response.headers,
+          message: errMessage,
+          durationMs: Date.now() - startTime,
+        }),
+      );
 
       const err = this.makeStatusError(response.status, errJSON, errMessage, response.headers);
       throw err;
     }
 
-    loggerFor(this).info(responseInfo)
-    loggerFor(this).debug(`[${requestLogID}] response start`, formatRequestDetails({ retryOfRequestLogID, url: response.url, status: response.status, headers: response.headers, durationMs: headersTime - startTime }));
+    loggerFor(this).info(responseInfo);
+    loggerFor(this).debug(
+      `[${requestLogID}] response start`,
+      formatRequestDetails({
+        retryOfRequestLogID,
+        url: response.url,
+        status: response.status,
+        headers: response.headers,
+        durationMs: headersTime - startTime,
+      }),
+    );
 
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
@@ -435,7 +555,9 @@ export class SendblueAPI {
 
     const timeout = setTimeout(abort, ms);
 
-    const isReadableBody = ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) || (typeof options.body === "object" && options.body !== null && Symbol.asyncIterator in options.body);
+    const isReadableBody =
+      ((globalThis as any).ReadableStream && options.body instanceof (globalThis as any).ReadableStream) ||
+      (typeof options.body === 'object' && options.body !== null && Symbol.asyncIterator in options.body);
 
     const fetchOptions: RequestInit = {
       signal: controller.signal as any,
@@ -450,7 +572,6 @@ export class SendblueAPI {
     }
 
     try {
-
       // use undefined this binding; fetch errors if bound to something else in browser/cloudflare
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
@@ -551,11 +672,12 @@ export class SendblueAPI {
     const req: FinalizedRequestInit = {
       method,
       headers: reqHeaders,
-      ...(options.signal && { signal: options.signal}),
-      ...((globalThis as any).ReadableStream && body instanceof (globalThis as any).ReadableStream && { duplex: "half" }),
+      ...(options.signal && { signal: options.signal }),
+      ...((globalThis as any).ReadableStream &&
+        body instanceof (globalThis as any).ReadableStream && { duplex: 'half' }),
       ...(body && { body }),
-      ...(this.fetchOptions as any ?? {}),
-      ...(options.fetchOptions as any ?? {}),
+      ...((this.fetchOptions as any) ?? {}),
+      ...((options.fetchOptions as any) ?? {}),
     };
 
     return { req, url, timeout: options.timeout };
@@ -580,15 +702,17 @@ export class SendblueAPI {
 
     const headers = buildHeaders([
       idempotencyHeaders,
-      {Accept: 'application/json',
-      'User-Agent': this.getUserAgent(),
-      'X-Stainless-Retry-Count': String(retryCount),
-      ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
-      ...getPlatformHeaders()},
+      {
+        Accept: 'application/json',
+        'User-Agent': this.getUserAgent(),
+        'X-Stainless-Retry-Count': String(retryCount),
+        ...(options.timeout ? { 'X-Stainless-Timeout': String(Math.trunc(options.timeout / 1000)) } : {}),
+        ...getPlatformHeaders(),
+      },
       await this.authHeaders(options),
       this._options.defaultHeaders,
       bodyHeaders,
-      options.headers
+      options.headers,
     ]);
 
     this.validateHeaders(headers);
@@ -615,11 +739,9 @@ export class SendblueAPI {
       ArrayBuffer.isView(body) ||
       body instanceof ArrayBuffer ||
       body instanceof DataView ||
-      (
-        typeof body === 'string' &&
+      (typeof body === 'string' &&
         // Preserve legacy string encoding behavior for now
-        headers.values.has('content-type')
-      ) ||
+        headers.values.has('content-type')) ||
       // `Blob` is superset of `File`
       ((globalThis as any).Blob && body instanceof (globalThis as any).Blob) ||
       // `FormData` -> `multipart/form-data`
@@ -650,7 +772,7 @@ export class SendblueAPI {
   }
 
   static SendblueAPI = this;
-  static DEFAULT_TIMEOUT = 60000 // 1 minute
+  static DEFAULT_TIMEOUT = 60000; // 1 minute
 
   static SendblueAPIError = Errors.SendblueAPIError;
   static APIError = Errors.APIError;
@@ -716,85 +838,81 @@ SendblueAPI.V2 = V2;
 SendblueAPI.Lines = Lines;
 
 export declare namespace SendblueAPI {
-      export type RequestOptions = Opts.RequestOptions;
+  export type RequestOptions = Opts.RequestOptions;
 
-      export {
-  Messages as Messages,
-  type MessageContent as MessageContent,
-  type MessageResponse as MessageResponse,
-  type MessageRetrieveResponse as MessageRetrieveResponse,
-  type MessageListResponse as MessageListResponse,
-  type MessageListParams as MessageListParams,
-  type MessageGetStatusParams as MessageGetStatusParams,
-  type MessageSendParams as MessageSendParams
-};
+  export {
+    Messages as Messages,
+    type MessageContent as MessageContent,
+    type MessageResponse as MessageResponse,
+    type MessageRetrieveResponse as MessageRetrieveResponse,
+    type MessageListResponse as MessageListResponse,
+    type MessageListParams as MessageListParams,
+    type MessageGetStatusParams as MessageGetStatusParams,
+    type MessageSendParams as MessageSendParams,
+  };
 
-export {
-  Groups as Groups,
-  type GroupModifyResponse as GroupModifyResponse,
-  type GroupModifyParams as GroupModifyParams,
-  type GroupSendMessageParams as GroupSendMessageParams
-};
+  export {
+    Groups as Groups,
+    type GroupModifyResponse as GroupModifyResponse,
+    type GroupModifyParams as GroupModifyParams,
+    type GroupSendMessageParams as GroupSendMessageParams,
+  };
 
-export {
-  MediaObjects as MediaObjects,
-  type MediaObjectUploadResponse as MediaObjectUploadResponse,
-  type MediaObjectUploadParams as MediaObjectUploadParams
-};
+  export {
+    MediaObjects as MediaObjects,
+    type MediaObjectUploadResponse as MediaObjectUploadResponse,
+    type MediaObjectUploadParams as MediaObjectUploadParams,
+  };
 
-export {
-  Lookups as Lookups,
-  type LookupLookupNumberResponse as LookupLookupNumberResponse,
-  type LookupLookupNumberParams as LookupLookupNumberParams
-};
+  export {
+    Lookups as Lookups,
+    type LookupLookupNumberResponse as LookupLookupNumberResponse,
+    type LookupLookupNumberParams as LookupLookupNumberParams,
+  };
 
-export {
-  TypingIndicators as TypingIndicators,
-  type TypingIndicatorSendResponse as TypingIndicatorSendResponse,
-  type TypingIndicatorSendParams as TypingIndicatorSendParams
-};
+  export {
+    TypingIndicators as TypingIndicators,
+    type TypingIndicatorSendResponse as TypingIndicatorSendResponse,
+    type TypingIndicatorSendParams as TypingIndicatorSendParams,
+  };
 
-export {
-  Contacts as Contacts,
-  type Contact as Contact,
-  type ContactCreateResponse as ContactCreateResponse,
-  type ContactRetrieveResponse as ContactRetrieveResponse,
-  type ContactUpdateResponse as ContactUpdateResponse,
-  type ContactListResponse as ContactListResponse,
-  type ContactDeleteResponse as ContactDeleteResponse,
-  type ContactCountResponse as ContactCountResponse,
-  type ContactOptOutResponse as ContactOptOutResponse,
-  type ContactVerifyResponse as ContactVerifyResponse,
-  type ContactCreateParams as ContactCreateParams,
-  type ContactUpdateParams as ContactUpdateParams,
-  type ContactListParams as ContactListParams,
-  type ContactOptOutParams as ContactOptOutParams,
-  type ContactVerifyParams as ContactVerifyParams
-};
+  export {
+    Contacts as Contacts,
+    type Contact as Contact,
+    type ContactCreateResponse as ContactCreateResponse,
+    type ContactRetrieveResponse as ContactRetrieveResponse,
+    type ContactUpdateResponse as ContactUpdateResponse,
+    type ContactListResponse as ContactListResponse,
+    type ContactDeleteResponse as ContactDeleteResponse,
+    type ContactCountResponse as ContactCountResponse,
+    type ContactOptOutResponse as ContactOptOutResponse,
+    type ContactVerifyResponse as ContactVerifyResponse,
+    type ContactCreateParams as ContactCreateParams,
+    type ContactUpdateParams as ContactUpdateParams,
+    type ContactListParams as ContactListParams,
+    type ContactOptOutParams as ContactOptOutParams,
+    type ContactVerifyParams as ContactVerifyParams,
+  };
 
-export {
-  Webhooks as Webhooks,
-  type WebhookConfiguration as WebhookConfiguration,
-  type WebhookCreateResponse as WebhookCreateResponse,
-  type WebhookUpdateResponse as WebhookUpdateResponse,
-  type WebhookListResponse as WebhookListResponse,
-  type WebhookDeleteResponse as WebhookDeleteResponse,
-  type WebhookCreateParams as WebhookCreateParams,
-  type WebhookUpdateParams as WebhookUpdateParams,
-  type WebhookDeleteParams as WebhookDeleteParams
-};
+  export {
+    Webhooks as Webhooks,
+    type WebhookConfiguration as WebhookConfiguration,
+    type WebhookCreateResponse as WebhookCreateResponse,
+    type WebhookUpdateResponse as WebhookUpdateResponse,
+    type WebhookListResponse as WebhookListResponse,
+    type WebhookDeleteResponse as WebhookDeleteResponse,
+    type WebhookCreateParams as WebhookCreateParams,
+    type WebhookUpdateParams as WebhookUpdateParams,
+    type WebhookDeleteParams as WebhookDeleteParams,
+  };
 
-export {
-  SendCarousel as SendCarousel,
-  type SendCarouselSendResponse as SendCarouselSendResponse,
-  type SendCarouselSendParams as SendCarouselSendParams
-};
+  export {
+    SendCarousel as SendCarousel,
+    type SendCarouselSendResponse as SendCarouselSendResponse,
+    type SendCarouselSendParams as SendCarouselSendParams,
+  };
 
-export {
-  V2 as V2
-};
+  export { V2 as V2 };
 
-export {
-  Lines as Lines
-};
-    }
+  export { Lines as Lines };
+}
