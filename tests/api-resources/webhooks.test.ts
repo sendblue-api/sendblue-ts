@@ -5,7 +5,7 @@ import SendblueAPI from 'sendblue';
 const client = new SendblueAPI({
   apiKey: 'My API Key',
   apiSecret: 'My API Secret',
-  baseURL: process.env["TEST_API_BASE_URL"] ?? 'http://127.0.0.1:4010',
+  baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
 describe('resource webhooks', () => {
@@ -24,10 +24,10 @@ describe('resource webhooks', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.webhooks.create({
-    webhooks: ['https://example.com'],
-    globalSecret: 'globalSecret',
-    type: 'receive',
-  });
+      webhooks: ['https://example.com'],
+      globalSecret: 'globalSecret',
+      type: 'receive',
+    });
   });
 
   // Mock server tests are disabled
@@ -44,16 +44,18 @@ describe('resource webhooks', () => {
 
   // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
-    const response = await client.webhooks.update({ webhooks: {
-    call_log: ['https://example.com'],
-    contact_created: ['https://example.com'],
-    globalSecret: 'whsec_global123',
-    line_assigned: ['https://example.com'],
-    line_blocked: ['https://example.com'],
-    outbound: ['https://example.com'],
-    receive: ['https://example.com'],
-    typing_indicator: ['https://example.com'],
-  } });
+    const response = await client.webhooks.update({
+      webhooks: {
+        call_log: ['https://example.com'],
+        contact_created: ['https://example.com'],
+        globalSecret: 'whsec_global123',
+        line_assigned: ['https://example.com'],
+        line_blocked: ['https://example.com'],
+        outbound: ['https://example.com'],
+        receive: ['https://example.com'],
+        typing_indicator: ['https://example.com'],
+      },
+    });
   });
 
   // Mock server tests are disabled
