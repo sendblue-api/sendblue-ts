@@ -106,11 +106,13 @@ export const formatRequestDetails = (details: {
         ([name, value]) => [
           name,
           (
-            name.toLowerCase() === 'sb-api-key-id' ||
-            name.toLowerCase() === 'sb-api-secret-key' ||
             name.toLowerCase() === 'authorization' ||
+            name.toLowerCase() === 'api-key' ||
+            name.toLowerCase() === 'x-api-key' ||
             name.toLowerCase() === 'cookie' ||
-            name.toLowerCase() === 'set-cookie'
+            name.toLowerCase() === 'set-cookie' ||
+            name.toLowerCase() === 'sb-api-key-id' ||
+            name.toLowerCase() === 'sb-api-secret-key'
           ) ?
             '***'
           : value,
