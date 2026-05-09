@@ -179,6 +179,24 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/totp/secrets/{secret_id}',
   },
   {
+    clientCallName: 'client.v2.seats.retrieve',
+    fullyQualifiedName: 'v2.seats.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v2/seats/{seat_id}',
+  },
+  {
+    clientCallName: 'client.v2.seats.list',
+    fullyQualifiedName: 'v2.seats.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/seats',
+  },
+  {
+    clientCallName: 'client.v2.seats.count',
+    fullyQualifiedName: 'v2.seats.count',
+    httpMethod: 'get',
+    httpPath: '/api/v2/seats/count',
+  },
+  {
     clientCallName: 'client.lines.callForwarding.retrieve',
     fullyQualifiedName: 'lines.callForwarding.retrieve',
     httpMethod: 'get',

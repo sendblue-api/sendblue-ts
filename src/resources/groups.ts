@@ -94,6 +94,14 @@ export interface GroupSendMessageParams {
    * Array of recipient phone numbers in E.164 format
    */
   numbers?: Array<string>;
+
+  /**
+   * Optional. Identifies the seat (user) sending the group message so it is
+   * attributed to a specific rep. Accepts either the seat UUID or the Firebase Auth
+   * subject. When provided, `sender_email` is auto-populated on the message record
+   * and webhook payloads. Returns 400 if the seat is not found.
+   */
+  seat_id?: string;
 }
 
 export declare namespace Groups {

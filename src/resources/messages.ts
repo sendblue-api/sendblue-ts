@@ -133,6 +133,12 @@ export interface MessageContent {
    */
   message_handle?: string;
 
+  /**
+   * UUID of the seat that sent the message. Present when `seat_id` was provided on
+   * send, or for dashboard-originated group messages.
+   */
+  seat_id?: string | null;
+
   send_style?:
     | 'celebration'
     | 'shooting_star'
@@ -147,6 +153,12 @@ export interface MessageContent {
     | 'gentle'
     | 'loud'
     | 'slam';
+
+  /**
+   * Email of the seat (user) that sent the message. Auto-populated when a `seat_id`
+   * is provided on send. `null` for messages sent without a `seat_id`.
+   */
+  sender_email?: string | null;
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR' | 'RECEIVED';
 
@@ -213,6 +225,12 @@ export interface MessageResponse {
   number?: string;
 
   /**
+   * UUID of the seat that sent the message. Present when `seat_id` was provided on
+   * send, or for dashboard-originated group messages.
+   */
+  seat_id?: string | null;
+
+  /**
    * The iMessage expressive message style
    */
   send_style?:
@@ -229,6 +247,12 @@ export interface MessageResponse {
     | 'gentle'
     | 'loud'
     | 'slam';
+
+  /**
+   * Email of the seat (user) that sent the message. Auto-populated when a `seat_id`
+   * is provided on send. `null` for messages sent without a `seat_id`.
+   */
+  sender_email?: string | null;
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR';
 }
@@ -334,6 +358,12 @@ export namespace MessageRetrieveResponse {
     plan?: string;
 
     /**
+     * UUID of the seat that sent the message. Present when `seat_id` was provided on
+     * send, or for dashboard-originated group messages.
+     */
+    seat_id?: string | null;
+
+    /**
      * The iMessage expressive message style
      */
     send_style?:
@@ -355,6 +385,12 @@ export namespace MessageRetrieveResponse {
      * Sendblue phone number used
      */
     sendblue_number?: string | null;
+
+    /**
+     * Email of the seat (user) that sent the message. Auto-populated when a `seat_id`
+     * is provided on send. `null` for messages sent without a `seat_id`.
+     */
+    sender_email?: string | null;
 
     /**
      * The messaging service used
@@ -488,6 +524,12 @@ export namespace MessageListResponse {
     plan?: string;
 
     /**
+     * UUID of the seat that sent the message. Present when `seat_id` was provided on
+     * send, or for dashboard-originated group messages.
+     */
+    seat_id?: string | null;
+
+    /**
      * The iMessage expressive message style
      */
     send_style?:
@@ -509,6 +551,12 @@ export namespace MessageListResponse {
      * Sendblue phone number used
      */
     sendblue_number?: string | null;
+
+    /**
+     * Email of the seat (user) that sent the message. Auto-populated when a `seat_id`
+     * is provided on send. `null` for messages sent without a `seat_id`.
+     */
+    sender_email?: string | null;
 
     /**
      * The messaging service used
@@ -717,6 +765,14 @@ export interface MessageSendParams {
    * URL of media file to send (images, videos, etc.)
    */
   media_url?: string;
+
+  /**
+   * Optional. Identifies the seat (user) sending the message so the message is
+   * attributed to a specific rep. Accepts either the seat UUID or the Firebase Auth
+   * subject. When provided, `sender_email` is auto-populated on the message record
+   * and webhook payloads. Returns 400 if the seat is not found.
+   */
+  seat_id?: string;
 
   /**
    * The iMessage expressive message style

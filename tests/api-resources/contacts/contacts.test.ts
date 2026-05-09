@@ -84,7 +84,7 @@ describe('resource contacts', () => {
       client.contacts.list(
         {
           cid: 'cid',
-          limit: 0,
+          limit: 1,
           offset: 0,
           order_by: 'order_by',
           order_direction: 'asc',

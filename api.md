@@ -145,6 +145,20 @@ Methods:
 - <code title="get /api/v2/totp/secrets">client.v2.totp.secrets.<a href="./src/resources/v2/totp/secrets.ts">list</a>() -> SecretListResponse</code>
 - <code title="delete /api/v2/totp/secrets/{secret_id}">client.v2.totp.secrets.<a href="./src/resources/v2/totp/secrets.ts">delete</a>(secretID) -> SecretDeleteResponse</code>
 
+## Seats
+
+Types:
+
+- <code><a href="./src/resources/v2/seats.ts">SeatRetrieveResponse</a></code>
+- <code><a href="./src/resources/v2/seats.ts">SeatListResponse</a></code>
+- <code><a href="./src/resources/v2/seats.ts">SeatCountResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/seats/{seat_id}">client.v2.seats.<a href="./src/resources/v2/seats.ts">retrieve</a>(seatID) -> SeatRetrieveResponse</code>
+- <code title="get /api/v2/seats">client.v2.seats.<a href="./src/resources/v2/seats.ts">list</a>({ ...params }) -> SeatListResponse</code>
+- <code title="get /api/v2/seats/count">client.v2.seats.<a href="./src/resources/v2/seats.ts">count</a>({ ...params }) -> SeatCountResponse</code>
+
 # Lines
 
 ## CallForwarding

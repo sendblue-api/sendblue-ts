@@ -31,7 +31,7 @@ async function run(client) {
     number: 'REPLACE_ME',
   });
 
-  console.log(messageResponse.account_email);
+  console.log(messageResponse.seat_id);
 }
 \`\`\`
 

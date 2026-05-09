@@ -42,7 +42,7 @@ const messageResponse = await client.messages.send({
   number: 'REPLACE_ME',
 });
 
-console.log(messageResponse.account_email);
+console.log(messageResponse.seat_id);
 ```
 
 ### Request & Response types
@@ -188,7 +188,7 @@ const { data: messageResponse, response: raw } = await client.messages
   })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(messageResponse.account_email);
+console.log(messageResponse.seat_id);
 ```
 
 ### Logging
