@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.9.1 (2026-05-09)
+
+Full Changelog: [v3.9.0...v3.9.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.9.0...v3.9.1)
+
+### Bug Fixes
+
+* harden /accounts/messages + cap unbounded findMany calls (hotfix) ([0571c25](https://github.com/sendblue-api/sendblue-ts/commit/0571c25218552d42fd2afd704cf952287ac69c53))
+
+
+### Chores
+
+* avoid formatting file that gets changed during releases ([536c9f7](https://github.com/sendblue-api/sendblue-ts/commit/536c9f7fa845b221ce837d14d7e656f0ce47c0f0))
+* **format:** run eslint and prettier separately ([7703ea6](https://github.com/sendblue-api/sendblue-ts/commit/7703ea6db43a203bf0f70720e5d7c21694c681b9))
+* redact api-key headers in debug logs ([6dc6202](https://github.com/sendblue-api/sendblue-ts/commit/6dc6202b9ffcf26f40030e1e3259eda70a42266b))
+
 ## 3.9.0 (2026-04-28)
 
 Full Changelog: [v3.8.0...v3.9.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.8.0...v3.9.0)
