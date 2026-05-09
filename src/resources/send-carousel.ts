@@ -86,6 +86,14 @@ export interface SendCarouselSendParams {
   metadata?: unknown;
 
   /**
+   * Optional. Identifies the seat (user) sending the carousel so it is attributed to
+   * a specific rep. Accepts either the seat UUID or the Firebase Auth subject. When
+   * provided, `sender_email` is auto-populated on the message record and webhook
+   * payloads. Returns 400 if the seat is not found.
+   */
+  seat_id?: string;
+
+  /**
    * The iMessage expressive message style
    */
   send_style?:
