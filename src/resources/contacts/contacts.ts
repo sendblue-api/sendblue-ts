@@ -385,12 +385,12 @@ export interface ContactListParams {
   cid?: string;
 
   /**
-   * Maximum number of contacts to return
+   * Maximum number of contacts to return. Defaults to 100, capped at 1000.
    */
   limit?: number;
 
   /**
-   * Number of contacts to skip
+   * Number of contacts to skip. Capped at 10000.
    */
   offset?: number;
 
