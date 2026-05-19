@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.9.2 (2026-05-19)
+
+Full Changelog: [v3.9.1...v3.9.2](https://github.com/sendblue-api/sendblue-ts/compare/v3.9.1...v3.9.2)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([9e65f03](https://github.com/sendblue-api/sendblue-ts/commit/9e65f037c18b17eb54cea4aab56bc23e82a468e4))
+
+
+### Chores
+
+* **tests:** remove redundant File import ([28e637d](https://github.com/sendblue-api/sendblue-ts/commit/28e637da30220a15137be5fbb746f6efaec862c6))
+
 ## 3.9.1 (2026-05-09)
 
 Full Changelog: [v3.9.0...v3.9.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.9.0...v3.9.1)
