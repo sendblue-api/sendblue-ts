@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from 'sendblue/internal/to-file';
 import { toFile } from 'sendblue/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';
