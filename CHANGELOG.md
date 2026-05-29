@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.9.3 (2026-05-29)
+
+Full Changelog: [v3.9.2...v3.9.3](https://github.com/sendblue-api/sendblue-ts/compare/v3.9.2...v3.9.3)
+
+### Bug Fixes
+
+* **mcp:** use `pure-lockfile` when building mcp server ([2f020f2](https://github.com/sendblue-api/sendblue-ts/commit/2f020f2d53d8a9d9a1b2e546c6e7a93fbb4b9486))
+
+
+### Chores
+
+* **internal:** codegen related update ([0bb5397](https://github.com/sendblue-api/sendblue-ts/commit/0bb5397c76c5acf2290d62529a77ddd5ca6734bc))
+
 ## 3.9.2 (2026-05-19)
 
 Full Changelog: [v3.9.1...v3.9.2](https://github.com/sendblue-api/sendblue-ts/compare/v3.9.1...v3.9.2)
