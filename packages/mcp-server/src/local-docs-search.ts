@@ -336,10 +336,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "Send an indication that you are typing to a user. This shows up as the animated three dots on the recipient's device. Not supported in group chats.\n",
     stainlessPath: '(resource) typing_indicators > (method) send',
     qualified: 'client.typingIndicators.send',
-    params: ['from_number: string;', 'number: string;'],
+    params: [
+      'from_number: string;',
+      'number: string;',
+      'max_duration_ms?: number;',
+      "state?: 'start' | 'stop';",
+    ],
     response: "{ error_message?: string; number?: string; status?: 'SENT' | 'ERROR'; }",
     markdown:
-      "## send\n\n`client.typingIndicators.send(from_number: string, number: string): { error_message?: string; number?: string; status?: 'SENT' | 'ERROR'; }`\n\n**post** `/api/send-typing-indicator`\n\nSend an indication that you are typing to a user. This shows up as the animated three dots on the recipient's device. Not supported in group chats.\n\n\n### Parameters\n\n- `from_number: string`\n  The Sendblue phone number you want to send the typing indicator from (E.164 format). This should be the number you use to send messages.\n\n- `number: string`\n  The number you want to send a typing indicator to (E.164 format)\n\n### Returns\n\n- `{ error_message?: string; number?: string; status?: 'SENT' | 'ERROR'; }`\n\n  - `error_message?: string`\n  - `number?: string`\n  - `status?: 'SENT' | 'ERROR'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.typingIndicators.send({ from_number: '+16292925296', number: '+19998887777' });\n\nconsole.log(response);\n```",
+      "## send\n\n`client.typingIndicators.send(from_number: string, number: string, max_duration_ms?: number, state?: 'start' | 'stop'): { error_message?: string; number?: string; status?: 'SENT' | 'ERROR'; }`\n\n**post** `/api/send-typing-indicator`\n\nSend an indication that you are typing to a user. This shows up as the animated three dots on the recipient's device. Not supported in group chats.\n\n\n### Parameters\n\n- `from_number: string`\n  The Sendblue phone number you want to send the typing indicator from (E.164 format). This should be the number you use to send messages.\n\n- `number: string`\n  The number you want to send a typing indicator to (E.164 format)\n\n- `max_duration_ms?: number`\n  Optional maximum duration for a start indicator, in milliseconds.\n\n- `state?: 'start' | 'stop'`\n  Optional typing state. Defaults to a start indicator when omitted.\n\n### Returns\n\n- `{ error_message?: string; number?: string; status?: 'SENT' | 'ERROR'; }`\n\n  - `error_message?: string`\n  - `number?: string`\n  - `status?: 'SENT' | 'ERROR'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.typingIndicators.send({ from_number: '+16292925296', number: '+19998887777' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.typingIndicators.send',
@@ -353,7 +358,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
       http: {
         example:
-          'curl https://api.sendblue.co/api/send-typing-indicator \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "from_number": "+16292925296",\n          "number": "+19998887777"\n        }\'',
+          'curl https://api.sendblue.co/api/send-typing-indicator \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "from_number": "+16292925296",\n          "number": "+19998887777",\n          "max_duration_ms": 120000,\n          "state": "start"\n        }\'',
       },
     },
   },
