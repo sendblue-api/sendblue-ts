@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.10.0 (2026-06-04)
+
+Full Changelog: [v3.9.3...v3.10.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.9.3...v3.10.0)
+
+### Features
+
+* Typing v2: hybrid send (start/stop + max_duration_ms) + inbound typing_indicator webhook ([d6d98f9](https://github.com/sendblue-api/sendblue-ts/commit/d6d98f9dd316afed6ee8ce9791a5f1edfc413972))
+
 ## 3.9.3 (2026-05-29)
 
 Full Changelog: [v3.9.2...v3.9.3](https://github.com/sendblue-api/sendblue-ts/compare/v3.9.2...v3.9.3)
