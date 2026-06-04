@@ -29,6 +29,8 @@ describe('resource typingIndicators', () => {
     const response = await client.typingIndicators.send({
       from_number: '+16292925296',
       number: '+19998887777',
+      max_duration_ms: 120000,
+      state: 'start',
     });
   });
 });
