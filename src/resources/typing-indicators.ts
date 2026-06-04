@@ -53,6 +53,16 @@ export interface TypingIndicatorSendParams {
    * The number you want to send a typing indicator to (E.164 format)
    */
   number: string;
+
+  /**
+   * Optional maximum duration for a start indicator, in milliseconds.
+   */
+  max_duration_ms?: number;
+
+  /**
+   * Optional typing state. Defaults to a start indicator when omitted.
+   */
+  state?: 'start' | 'stop';
 }
 
 export declare namespace TypingIndicators {
