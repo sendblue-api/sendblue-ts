@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.10.1 (2026-06-17)
+
+Full Changelog: [v3.10.0...v3.10.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.10.0...v3.10.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([ae735ab](https://github.com/sendblue-api/sendblue-ts/commit/ae735abd2b2e92ef45ca595d6ad718f2ef56ed4d))
+
 ## 3.10.0 (2026-06-04)
 
 Full Changelog: [v3.9.3...v3.10.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.9.3...v3.10.0)
