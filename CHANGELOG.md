@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.10.2 (2026-06-21)
+
+Full Changelog: [v3.10.1...v3.10.2](https://github.com/sendblue-api/sendblue-ts/compare/v3.10.1...v3.10.2)
+
 ## 3.10.1 (2026-06-17)
 
 Full Changelog: [v3.10.0...v3.10.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.10.0...v3.10.1)
