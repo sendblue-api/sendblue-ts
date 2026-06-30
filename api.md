@@ -174,3 +174,13 @@ Methods:
 - <code title="get /api/lines/{sendblue_number}/call-forwarding">client.lines.callForwarding.<a href="./src/resources/lines/call-forwarding.ts">retrieve</a>(sendblueNumber) -> CallForwardingRetrieveResponse</code>
 - <code title="put /api/lines/{sendblue_number}/call-forwarding">client.lines.callForwarding.<a href="./src/resources/lines/call-forwarding.ts">update</a>(sendblueNumber, { ...params }) -> CallForwardingUpdateResponse</code>
 - <code title="delete /api/lines/{sendblue_number}/call-forwarding">client.lines.callForwarding.<a href="./src/resources/lines/call-forwarding.ts">delete</a>(sendblueNumber) -> CallForwardingDeleteResponse</code>
+
+# RequestLocation
+
+Types:
+
+- <code><a href="./src/resources/request-location.ts">RequestLocationCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /api/request-location">client.requestLocation.<a href="./src/resources/request-location.ts">create</a>({ ...params }) -> RequestLocationCreateResponse</code>

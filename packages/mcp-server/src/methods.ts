@@ -214,6 +214,12 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'delete',
     httpPath: '/api/lines/{sendblue_number}/call-forwarding',
   },
+  {
+    clientCallName: 'client.requestLocation.create',
+    fullyQualifiedName: 'requestLocation.create',
+    httpMethod: 'post',
+    httpPath: '/api/request-location',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
