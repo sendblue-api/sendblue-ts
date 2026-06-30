@@ -210,6 +210,11 @@ export interface MessageResponse {
   is_outbound?: boolean;
 
   /**
+   * Decoded Find My location share coordinates.
+   */
+  location?: MessageResponse.Location;
+
+  /**
    * URL of attached media
    */
   media_url?: string;
@@ -218,6 +223,8 @@ export interface MessageResponse {
    * Unique identifier for tracking the message
    */
   message_handle?: string;
+
+  message_type?: 'message' | 'group' | 'location';
 
   /**
    * Recipient phone number
@@ -255,6 +262,34 @@ export interface MessageResponse {
   sender_email?: string | null;
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR';
+}
+
+export namespace MessageResponse {
+  /**
+   * Decoded Find My location share coordinates.
+   */
+  export interface Location {
+    latitude: number;
+
+    longitude: number;
+
+    /**
+     * Horizontal accuracy in meters
+     */
+    accuracy?: number;
+
+    /**
+     * Altitude in meters
+     */
+    altitude?: number;
+
+    /**
+     * Share duration selected by the recipient
+     */
+    duration?: string;
+
+    timestamp?: string;
+  }
 }
 
 export interface MessageRetrieveResponse {
@@ -326,6 +361,11 @@ export namespace MessageRetrieveResponse {
     is_outbound?: boolean;
 
     /**
+     * Decoded Find My location share coordinates.
+     */
+    location?: Data.Location;
+
+    /**
      * URL of attached media
      */
     media_url?: string | null;
@@ -335,7 +375,7 @@ export namespace MessageRetrieveResponse {
      */
     message_handle?: string;
 
-    message_type?: 'message' | 'group';
+    message_type?: 'message' | 'group' | 'location';
 
     /**
      * Primary phone number (to_number for outbound, from_number for inbound)
@@ -419,6 +459,34 @@ export namespace MessageRetrieveResponse {
      */
     was_downgraded?: boolean;
   }
+
+  export namespace Data {
+    /**
+     * Decoded Find My location share coordinates.
+     */
+    export interface Location {
+      latitude: number;
+
+      longitude: number;
+
+      /**
+       * Horizontal accuracy in meters
+       */
+      accuracy?: number;
+
+      /**
+       * Altitude in meters
+       */
+      altitude?: number;
+
+      /**
+       * Share duration selected by the recipient
+       */
+      duration?: string;
+
+      timestamp?: string;
+    }
+  }
 }
 
 export interface MessageListResponse {
@@ -492,6 +560,11 @@ export namespace MessageListResponse {
     is_outbound?: boolean;
 
     /**
+     * Decoded Find My location share coordinates.
+     */
+    location?: Data.Location;
+
+    /**
      * URL of attached media
      */
     media_url?: string | null;
@@ -501,7 +574,7 @@ export namespace MessageListResponse {
      */
     message_handle?: string;
 
-    message_type?: 'message' | 'group';
+    message_type?: 'message' | 'group' | 'location';
 
     /**
      * Primary phone number (to_number for outbound, from_number for inbound)
@@ -584,6 +657,34 @@ export namespace MessageListResponse {
      * Whether the message was downgraded from iMessage to SMS
      */
     was_downgraded?: boolean;
+  }
+
+  export namespace Data {
+    /**
+     * Decoded Find My location share coordinates.
+     */
+    export interface Location {
+      latitude: number;
+
+      longitude: number;
+
+      /**
+       * Horizontal accuracy in meters
+       */
+      accuracy?: number;
+
+      /**
+       * Altitude in meters
+       */
+      altitude?: number;
+
+      /**
+       * Share duration selected by the recipient
+       */
+      duration?: string;
+
+      timestamp?: string;
+    }
   }
 
   export interface Pagination {

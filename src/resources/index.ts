@@ -36,6 +36,11 @@ export {
   type MessageGetStatusParams,
   type MessageSendParams,
 } from './messages';
+export {
+  RequestLocation,
+  type RequestLocationCreateResponse,
+  type RequestLocationCreateParams,
+} from './request-location';
 export { SendCarousel, type SendCarouselSendResponse, type SendCarouselSendParams } from './send-carousel';
 export {
   TypingIndicators,

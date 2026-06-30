@@ -30,6 +30,11 @@ import {
   MessageSendParams,
   Messages,
 } from './resources/messages';
+import {
+  RequestLocation,
+  RequestLocationCreateParams,
+  RequestLocationCreateResponse,
+} from './resources/request-location';
 import { SendCarousel, SendCarouselSendParams, SendCarouselSendResponse } from './resources/send-carousel';
 import {
   TypingIndicatorSendParams,
@@ -844,6 +849,10 @@ export class SendblueAPI {
   sendCarousel: API.SendCarousel = new API.SendCarousel(this);
   v2: API.V2 = new API.V2(this);
   lines: API.Lines = new API.Lines(this);
+  /**
+   * Operations for sending and managing messages
+   */
+  requestLocation: API.RequestLocation = new API.RequestLocation(this);
 }
 
 SendblueAPI.Messages = Messages;
@@ -856,6 +865,7 @@ SendblueAPI.Webhooks = Webhooks;
 SendblueAPI.SendCarousel = SendCarousel;
 SendblueAPI.V2 = V2;
 SendblueAPI.Lines = Lines;
+SendblueAPI.RequestLocation = RequestLocation;
 
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -935,4 +945,10 @@ export declare namespace SendblueAPI {
   export { V2 as V2 };
 
   export { Lines as Lines };
+
+  export {
+    RequestLocation as RequestLocation,
+    type RequestLocationCreateResponse as RequestLocationCreateResponse,
+    type RequestLocationCreateParams as RequestLocationCreateParams,
+  };
 }
