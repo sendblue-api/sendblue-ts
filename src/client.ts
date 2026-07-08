@@ -18,6 +18,13 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { GroupModifyParams, GroupModifyResponse, GroupSendMessageParams, Groups } from './resources/groups';
+import {
+  Location,
+  LocationListParams,
+  LocationListResponse,
+  LocationRetrieveParams,
+  LocationRetrieveResponse,
+} from './resources/location';
 import { LookupLookupNumberParams, LookupLookupNumberResponse, Lookups } from './resources/lookups';
 import { MediaObjectUploadParams, MediaObjectUploadResponse, MediaObjects } from './resources/media-objects';
 import {
@@ -853,6 +860,10 @@ export class SendblueAPI {
    * Operations for sending and managing messages
    */
   requestLocation: API.RequestLocation = new API.RequestLocation(this);
+  /**
+   * Operations for sending and managing messages
+   */
+  location: API.Location = new API.Location(this);
 }
 
 SendblueAPI.Messages = Messages;
@@ -866,6 +877,7 @@ SendblueAPI.SendCarousel = SendCarousel;
 SendblueAPI.V2 = V2;
 SendblueAPI.Lines = Lines;
 SendblueAPI.RequestLocation = RequestLocation;
+SendblueAPI.Location = Location;
 
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -950,5 +962,13 @@ export declare namespace SendblueAPI {
     RequestLocation as RequestLocation,
     type RequestLocationCreateResponse as RequestLocationCreateResponse,
     type RequestLocationCreateParams as RequestLocationCreateParams,
+  };
+
+  export {
+    Location as Location,
+    type LocationRetrieveResponse as LocationRetrieveResponse,
+    type LocationListResponse as LocationListResponse,
+    type LocationRetrieveParams as LocationRetrieveParams,
+    type LocationListParams as LocationListParams,
   };
 }
