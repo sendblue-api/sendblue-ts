@@ -143,6 +143,8 @@ const fuse = new Fuse(
     'client.lines.callForwarding.retrieve',
     'client.lines.callForwarding.update',
     'client.requestLocation.create',
+    'client.location.list',
+    'client.location.retrieve',
   ],
   { threshold: 1, shouldSort: true },
 );

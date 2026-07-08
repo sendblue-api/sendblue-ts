@@ -24,6 +24,13 @@ export {
   type GroupSendMessageParams,
 } from './groups';
 export { Lines } from './lines/lines';
+export {
+  Location,
+  type LocationRetrieveResponse,
+  type LocationListResponse,
+  type LocationRetrieveParams,
+  type LocationListParams,
+} from './location';
 export { Lookups, type LookupLookupNumberResponse, type LookupLookupNumberParams } from './lookups';
 export { MediaObjects, type MediaObjectUploadResponse, type MediaObjectUploadParams } from './media-objects';
 export {

@@ -220,6 +220,18 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'post',
     httpPath: '/api/request-location',
   },
+  {
+    clientCallName: 'client.location.retrieve',
+    fullyQualifiedName: 'location.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/location/{number}',
+  },
+  {
+    clientCallName: 'client.location.list',
+    fullyQualifiedName: 'location.list',
+    httpMethod: 'get',
+    httpPath: '/api/location',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {

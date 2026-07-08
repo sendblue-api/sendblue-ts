@@ -1201,6 +1201,68 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
     },
   },
+  {
+    name: 'list',
+    endpoint: '/api/location',
+    httpMethod: 'get',
+    summary: 'List current shared locations',
+    description:
+      'Read the current Find My locations already shared with a supported Sendblue number. For shared-worker-backed lines, results are filtered to verified contacts.\n',
+    stainlessPath: '(resource) location > (method) list',
+    qualified: 'client.location.list',
+    params: ['from_number: string;'],
+    response:
+      "{ from_number?: string; locations?: { location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; }[]; status?: 'OK'; }",
+    markdown:
+      "## list\n\n`client.location.list(from_number: string): { from_number?: string; locations?: object[]; status?: 'OK'; }`\n\n**get** `/api/location`\n\nRead the current Find My locations already shared with a supported Sendblue number. For shared-worker-backed lines, results are filtered to verified contacts.\n\n\n### Parameters\n\n- `from_number: string`\n  Your Sendblue number in E.164 format\n\n### Returns\n\n- `{ from_number?: string; locations?: { location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; }[]; status?: 'OK'; }`\n\n  - `from_number?: string`\n  - `locations?: { location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; }[]`\n  - `status?: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst locations = await client.location.list({ from_number: '+18887776666' });\n\nconsole.log(locations);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.location.list',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst locations = await client.location.list({ from_number: '+18887776666' });\n\nconsole.log(locations.from_number);",
+      },
+      python: {
+        method: 'location.list',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nlocations = client.location.list(\n    from_number="+18887776666",\n)\nprint(locations.from_number)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/location \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/location/{number}',
+    httpMethod: 'get',
+    summary: 'Get one current shared location',
+    description:
+      'Read the current Find My location for one contact if that contact already shares with the sending Sendblue number.\n',
+    stainlessPath: '(resource) location > (method) retrieve',
+    qualified: 'client.location.retrieve',
+    params: ['number: string;', 'from_number: string;'],
+    response:
+      "{ from_number?: string; location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK'; }",
+    markdown:
+      "## retrieve\n\n`client.location.retrieve(number: string, from_number: string): { from_number?: string; location?: object; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK'; }`\n\n**get** `/api/location/{number}`\n\nRead the current Find My location for one contact if that contact already shares with the sending Sendblue number.\n\n\n### Parameters\n\n- `number: string`\n\n- `from_number: string`\n  Your Sendblue number in E.164 format\n\n### Returns\n\n- `{ from_number?: string; location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK'; }`\n\n  - `from_number?: string`\n  - `location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }`\n  - `number?: string`\n  - `state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'`\n  - `status?: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst location = await client.location.retrieve('+19998887777', { from_number: '+18887776666' });\n\nconsole.log(location);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.location.retrieve',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst location = await client.location.retrieve('+19998887777', { from_number: '+18887776666' });\n\nconsole.log(location.from_number);",
+      },
+      python: {
+        method: 'location.retrieve',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nlocation = client.location.retrieve(\n    number="+19998887777",\n    from_number="+18887776666",\n)\nprint(location.from_number)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/location/$NUMBER \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
 ];
 
 const EMBEDDED_READMES: { language: string; content: string }[] = [

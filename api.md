@@ -184,3 +184,15 @@ Types:
 Methods:
 
 - <code title="post /api/request-location">client.requestLocation.<a href="./src/resources/request-location.ts">create</a>({ ...params }) -> RequestLocationCreateResponse</code>
+
+# Location
+
+Types:
+
+- <code><a href="./src/resources/location.ts">LocationRetrieveResponse</a></code>
+- <code><a href="./src/resources/location.ts">LocationListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/location/{number}">client.location.<a href="./src/resources/location.ts">retrieve</a>(number, { ...params }) -> LocationRetrieveResponse</code>
+- <code title="get /api/location">client.location.<a href="./src/resources/location.ts">list</a>({ ...params }) -> LocationListResponse</code>
