@@ -66,9 +66,9 @@ export namespace WebhookCreateResponse {
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for contact created events (URL strings only)
+     * Webhooks for contact created events
      */
-    contact_created?: Array<string>;
+    contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Global secret applied to all webhooks
@@ -118,9 +118,9 @@ export namespace WebhookUpdateResponse {
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for contact created events (URL strings only)
+     * Webhooks for contact created events
      */
-    contact_created?: Array<string>;
+    contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Global secret applied to all webhooks
@@ -168,9 +168,9 @@ export namespace WebhookListResponse {
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for contact created events (URL strings only)
+     * Webhooks for contact created events
      */
-    contact_created?: Array<string>;
+    contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Global secret applied to all webhooks
@@ -246,9 +246,9 @@ export namespace WebhookUpdateParams {
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for contact created events (URL strings only)
+     * Webhooks for contact created events
      */
-    contact_created?: Array<string>;
+    contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Global secret applied to all webhooks
