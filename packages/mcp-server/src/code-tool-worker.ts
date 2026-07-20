@@ -145,6 +145,7 @@ const fuse = new Fuse(
     'client.requestLocation.create',
     'client.location.list',
     'client.location.retrieve',
+    'client.location.watch',
   ],
   { threshold: 1, shouldSort: true },
 );
