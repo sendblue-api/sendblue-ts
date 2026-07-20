@@ -191,8 +191,10 @@ Types:
 
 - <code><a href="./src/resources/location.ts">LocationRetrieveResponse</a></code>
 - <code><a href="./src/resources/location.ts">LocationListResponse</a></code>
+- <code><a href="./src/resources/location.ts">LocationWatchResponse</a></code>
 
 Methods:
 
 - <code title="get /api/location/{number}">client.location.<a href="./src/resources/location.ts">retrieve</a>(number, { ...params }) -> LocationRetrieveResponse</code>
 - <code title="get /api/location">client.location.<a href="./src/resources/location.ts">list</a>({ ...params }) -> LocationListResponse</code>
+- <code title="get /api/location/{number}/watch">client.location.<a href="./src/resources/location.ts">watch</a>(number, { ...params }) -> LocationWatchResponse</code>

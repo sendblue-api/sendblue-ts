@@ -9,10 +9,12 @@ import { RequestOptions } from '../internal/request-options';
  */
 export class RequestLocation extends APIResource {
   /**
-   * Send a Find My location request to an iMessage recipient from a supported
-   * Sendblue line. The request is queued like a normal outbound iMessage. If the
-   * recipient accepts and shares, the location is delivered later as an inbound
-   * `message_type: location` webhook.
+   * Send a Find My location request to an iMessage recipient from a dedicated
+   * Mac-backed Sendblue line. Shared lines cannot initiate location sharing. The
+   * request is queued like a normal outbound iMessage. If the recipient accepts and
+   * shares, the location is delivered later as an inbound `message_type: location`
+   * webhook. Passive inbound location webhooks remain available on shared lines as
+   * part of the iMessage conversation.
    *
    * @example
    * ```ts

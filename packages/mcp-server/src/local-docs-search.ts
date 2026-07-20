@@ -1176,14 +1176,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'post',
     summary: "Request a contact's location",
     description:
-      'Send a Find My location request to an iMessage recipient from a supported Sendblue line. The request is queued like a normal outbound iMessage. If the recipient accepts and shares, the location is delivered later as an inbound `message_type: location` webhook.\n',
+      'Send a Find My location request to an iMessage recipient from a dedicated Mac-backed Sendblue line. Shared lines cannot initiate location sharing. The request is queued like a normal outbound iMessage. If the recipient accepts and shares, the location is delivered later as an inbound `message_type: location` webhook. Passive inbound location webhooks remain available on shared lines as part of the iMessage conversation.\n',
     stainlessPath: '(resource) request_location > (method) create',
     qualified: 'client.requestLocation.create',
     params: ['from_number: string;', 'number: string;'],
     response:
       "{ message?: string; message_handle?: string; number?: string; status?: 'QUEUED'; uuid?: string; }",
     markdown:
-      "## create\n\n`client.requestLocation.create(from_number: string, number: string): { message?: string; message_handle?: string; number?: string; status?: 'QUEUED'; uuid?: string; }`\n\n**post** `/api/request-location`\n\nSend a Find My location request to an iMessage recipient from a supported Sendblue line. The request is queued like a normal outbound iMessage. If the recipient accepts and shares, the location is delivered later as an inbound `message_type: location` webhook.\n\n\n### Parameters\n\n- `from_number: string`\n  Your supported Sendblue number in E.164 format\n\n- `number: string`\n  Recipient phone number in E.164 format\n\n### Returns\n\n- `{ message?: string; message_handle?: string; number?: string; status?: 'QUEUED'; uuid?: string; }`\n\n  - `message?: string`\n  - `message_handle?: string`\n  - `number?: string`\n  - `status?: 'QUEUED'`\n  - `uuid?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst requestLocation = await client.requestLocation.create({ from_number: '+18887776666', number: '+19998887777' });\n\nconsole.log(requestLocation);\n```",
+      "## create\n\n`client.requestLocation.create(from_number: string, number: string): { message?: string; message_handle?: string; number?: string; status?: 'QUEUED'; uuid?: string; }`\n\n**post** `/api/request-location`\n\nSend a Find My location request to an iMessage recipient from a dedicated Mac-backed Sendblue line. Shared lines cannot initiate location sharing. The request is queued like a normal outbound iMessage. If the recipient accepts and shares, the location is delivered later as an inbound `message_type: location` webhook. Passive inbound location webhooks remain available on shared lines as part of the iMessage conversation.\n\n\n### Parameters\n\n- `from_number: string`\n  Your supported Sendblue number in E.164 format\n\n- `number: string`\n  Recipient phone number in E.164 format\n\n### Returns\n\n- `{ message?: string; message_handle?: string; number?: string; status?: 'QUEUED'; uuid?: string; }`\n\n  - `message?: string`\n  - `message_handle?: string`\n  - `number?: string`\n  - `status?: 'QUEUED'`\n  - `uuid?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst requestLocation = await client.requestLocation.create({ from_number: '+18887776666', number: '+19998887777' });\n\nconsole.log(requestLocation);\n```",
     perLanguage: {
       typescript: {
         method: 'client.requestLocation.create',
@@ -1207,14 +1207,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'List current shared locations',
     description:
-      'Read the current Find My locations already shared with a supported Sendblue number. For shared-worker-backed lines, results are filtered to verified contacts.\n',
+      'Read the current Find My locations already shared with a dedicated Mac-backed Sendblue number. Shared lines cannot use this endpoint.\n',
     stainlessPath: '(resource) location > (method) list',
     qualified: 'client.location.list',
     params: ['from_number: string;'],
     response:
       "{ from_number?: string; locations?: { location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; }[]; status?: 'OK'; }",
     markdown:
-      "## list\n\n`client.location.list(from_number: string): { from_number?: string; locations?: object[]; status?: 'OK'; }`\n\n**get** `/api/location`\n\nRead the current Find My locations already shared with a supported Sendblue number. For shared-worker-backed lines, results are filtered to verified contacts.\n\n\n### Parameters\n\n- `from_number: string`\n  Your Sendblue number in E.164 format\n\n### Returns\n\n- `{ from_number?: string; locations?: { location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; }[]; status?: 'OK'; }`\n\n  - `from_number?: string`\n  - `locations?: { location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; }[]`\n  - `status?: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst locations = await client.location.list({ from_number: '+18887776666' });\n\nconsole.log(locations);\n```",
+      "## list\n\n`client.location.list(from_number: string): { from_number?: string; locations?: object[]; status?: 'OK'; }`\n\n**get** `/api/location`\n\nRead the current Find My locations already shared with a dedicated Mac-backed Sendblue number. Shared lines cannot use this endpoint.\n\n\n### Parameters\n\n- `from_number: string`\n  Your Sendblue number in E.164 format\n\n### Returns\n\n- `{ from_number?: string; locations?: { location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; }[]; status?: 'OK'; }`\n\n  - `from_number?: string`\n  - `locations?: { location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; }[]`\n  - `status?: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst locations = await client.location.list({ from_number: '+18887776666' });\n\nconsole.log(locations);\n```",
     perLanguage: {
       typescript: {
         method: 'client.location.list',
@@ -1238,14 +1238,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     httpMethod: 'get',
     summary: 'Get one current shared location',
     description:
-      'Read the current Find My location for one contact if that contact already shares with the sending Sendblue number.\n',
+      'Read the current Find My location for one contact if that contact already shares with a dedicated Mac-backed Sendblue number. Shared lines cannot use this endpoint.\n',
     stainlessPath: '(resource) location > (method) retrieve',
     qualified: 'client.location.retrieve',
     params: ['number: string;', 'from_number: string;'],
     response:
       "{ from_number?: string; location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK'; }",
     markdown:
-      "## retrieve\n\n`client.location.retrieve(number: string, from_number: string): { from_number?: string; location?: object; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK'; }`\n\n**get** `/api/location/{number}`\n\nRead the current Find My location for one contact if that contact already shares with the sending Sendblue number.\n\n\n### Parameters\n\n- `number: string`\n\n- `from_number: string`\n  Your Sendblue number in E.164 format\n\n### Returns\n\n- `{ from_number?: string; location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK'; }`\n\n  - `from_number?: string`\n  - `location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }`\n  - `number?: string`\n  - `state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'`\n  - `status?: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst location = await client.location.retrieve('+19998887777', { from_number: '+18887776666' });\n\nconsole.log(location);\n```",
+      "## retrieve\n\n`client.location.retrieve(number: string, from_number: string): { from_number?: string; location?: object; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK'; }`\n\n**get** `/api/location/{number}`\n\nRead the current Find My location for one contact if that contact already shares with a dedicated Mac-backed Sendblue number. Shared lines cannot use this endpoint.\n\n\n### Parameters\n\n- `number: string`\n\n- `from_number: string`\n  Your Sendblue number in E.164 format\n\n### Returns\n\n- `{ from_number?: string; location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; number?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK'; }`\n\n  - `from_number?: string`\n  - `location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }`\n  - `number?: string`\n  - `state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'`\n  - `status?: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst location = await client.location.retrieve('+19998887777', { from_number: '+18887776666' });\n\nconsole.log(location);\n```",
     perLanguage: {
       typescript: {
         method: 'client.location.retrieve',
@@ -1260,6 +1260,37 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.sendblue.co/api/location/$NUMBER \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
+    name: 'watch',
+    endpoint: '/api/location/{number}/watch',
+    httpMethod: 'get',
+    summary: 'Watch one shared location',
+    description:
+      'Open a Server-Sent Events (SSE) stream for live Find My updates from one contact sharing with a dedicated Mac-backed Sendblue number. Shared lines cannot use this endpoint.\n\nThe stream has no client-visible duration. It remains open while the client is connected, authorized, and the worker is available. Comment heartbeats are sent every 15 seconds. Clients should reconnect with their normal credentials after a network interruption or a `worker_disconnected` completion. Location events are live-only and may repeat across internal native-watch renewals.\n\nNamed events and their JSON `data` payloads:\n- `ready`: the native watch is active.\n- `location`: a location state or fix.\n- `complete`: the watch ended normally. Known reasons are `sharing_ended`, `authorization_revoked`, `worker_disconnected`, and `watch_ended`. Clients should tolerate additional completion reasons.\n- `error`: the watch failed after the SSE response started.\n',
+    stainlessPath: '(resource) location > (method) watch',
+    qualified: 'client.location.watch',
+    params: ['number: string;', 'from_number: string;'],
+    response:
+      "{ from_number?: string; location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; message?: string; number?: string; reason?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK' | 'ERROR'; }",
+    markdown:
+      "## watch\n\n`client.location.watch(number: string, from_number: string): { from_number?: string; location?: object; message?: string; number?: string; reason?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK' | 'ERROR'; }`\n\n**get** `/api/location/{number}/watch`\n\nOpen a Server-Sent Events (SSE) stream for live Find My updates from one contact sharing with a dedicated Mac-backed Sendblue number. Shared lines cannot use this endpoint.\n\nThe stream has no client-visible duration. It remains open while the client is connected, authorized, and the worker is available. Comment heartbeats are sent every 15 seconds. Clients should reconnect with their normal credentials after a network interruption or a `worker_disconnected` completion. Location events are live-only and may repeat across internal native-watch renewals.\n\nNamed events and their JSON `data` payloads:\n- `ready`: the native watch is active.\n- `location`: a location state or fix.\n- `complete`: the watch ended normally. Known reasons are `sharing_ended`, `authorization_revoked`, `worker_disconnected`, and `watch_ended`. Clients should tolerate additional completion reasons.\n- `error`: the watch failed after the SSE response started.\n\n\n### Parameters\n\n- `number: string`\n\n- `from_number: string`\n  Your supported Sendblue number in E.164 format\n\n### Returns\n\n- `{ from_number?: string; location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }; message?: string; number?: string; reason?: string; state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'; status?: 'OK' | 'ERROR'; }`\n  JSON data payload from one named event in a live-location SSE stream\n\n  - `from_number?: string`\n  - `location?: { accuracy?: number; address?: string; altitude?: number; expiresAt?: string; latitude?: number; locationType?: 'shallow' | 'live' | 'legacy' | 'unknown'; longitude?: number; refreshError?: string; timestamp?: string; }`\n  - `message?: string`\n  - `number?: string`\n  - `reason?: string`\n  - `state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix'`\n  - `status?: 'OK' | 'ERROR'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst stream = await client.location.watch('+19998887777', { from_number: '+18887776666' });\nfor await (const locationWatchResponse of stream) {\n  console.log(locationWatchResponse);\n}\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.location.watch',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.location.watch('+19998887777', { from_number: '+18887776666' });\n\nconsole.log(response.from_number);",
+      },
+      python: {
+        method: 'location.watch',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nfor location in client.location.watch(\n    number="+19998887777",\n    from_number="+18887776666",\n):\n  print(location)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/location/$NUMBER/watch \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },

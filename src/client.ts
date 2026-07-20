@@ -24,6 +24,8 @@ import {
   LocationListResponse,
   LocationRetrieveParams,
   LocationRetrieveResponse,
+  LocationWatchParams,
+  LocationWatchResponse,
 } from './resources/location';
 import { LookupLookupNumberParams, LookupLookupNumberResponse, Lookups } from './resources/lookups';
 import { MediaObjectUploadParams, MediaObjectUploadResponse, MediaObjects } from './resources/media-objects';
@@ -968,7 +970,9 @@ export declare namespace SendblueAPI {
     Location as Location,
     type LocationRetrieveResponse as LocationRetrieveResponse,
     type LocationListResponse as LocationListResponse,
+    type LocationWatchResponse as LocationWatchResponse,
     type LocationRetrieveParams as LocationRetrieveParams,
     type LocationListParams as LocationListParams,
+    type LocationWatchParams as LocationWatchParams,
   };
 }

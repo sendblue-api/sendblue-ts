@@ -28,8 +28,10 @@ export {
   Location,
   type LocationRetrieveResponse,
   type LocationListResponse,
+  type LocationWatchResponse,
   type LocationRetrieveParams,
   type LocationListParams,
+  type LocationWatchParams,
 } from './location';
 export { Lookups, type LookupLookupNumberResponse, type LookupLookupNumberParams } from './lookups';
 export { MediaObjects, type MediaObjectUploadResponse, type MediaObjectUploadParams } from './media-objects';

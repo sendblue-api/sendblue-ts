@@ -2,6 +2,8 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { Stream } from '../core/streaming';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -11,7 +13,8 @@ import { path } from '../internal/utils/path';
 export class Location extends APIResource {
   /**
    * Read the current Find My location for one contact if that contact already shares
-   * with the sending Sendblue number.
+   * with a dedicated Mac-backed Sendblue number. Shared lines cannot use this
+   * endpoint.
    */
   retrieve(
     number: string,
@@ -22,12 +25,44 @@ export class Location extends APIResource {
   }
 
   /**
-   * Read the current Find My locations already shared with a supported Sendblue
-   * number. For shared-worker-backed lines, results are filtered to verified
-   * contacts.
+   * Read the current Find My locations already shared with a dedicated Mac-backed
+   * Sendblue number. Shared lines cannot use this endpoint.
    */
   list(query: LocationListParams, options?: RequestOptions): APIPromise<LocationListResponse> {
     return this._client.get('/api/location', { query, ...options });
+  }
+
+  /**
+   * Open a Server-Sent Events (SSE) stream for live Find My updates from one contact
+   * sharing with a dedicated Mac-backed Sendblue number. Shared lines cannot use
+   * this endpoint.
+   *
+   * The stream has no client-visible duration. It remains open while the client is
+   * connected, authorized, and the worker is available. Comment heartbeats are sent
+   * every 15 seconds. Clients should reconnect with their normal credentials after a
+   * network interruption or a `worker_disconnected` completion. Location events are
+   * live-only and may repeat across internal native-watch renewals.
+   *
+   * Named events and their JSON `data` payloads:
+   *
+   * - `ready`: the native watch is active.
+   * - `location`: a location state or fix.
+   * - `complete`: the watch ended normally. Known reasons are `sharing_ended`,
+   *   `authorization_revoked`, `worker_disconnected`, and `watch_ended`. Clients
+   *   should tolerate additional completion reasons.
+   * - `error`: the watch failed after the SSE response started.
+   */
+  watch(
+    number: string,
+    query: LocationWatchParams,
+    options?: RequestOptions,
+  ): APIPromise<Stream<LocationWatchResponse>> {
+    return this._client.get(path`/api/location/${number}/watch`, {
+      query,
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/event-stream' }, options?.headers]),
+      stream: true,
+    }) as APIPromise<Stream<LocationWatchResponse>>;
   }
 }
 
@@ -111,6 +146,64 @@ export namespace LocationListResponse {
   }
 }
 
+/**
+ * JSON data payload from one named event in a live-location SSE stream
+ */
+export interface LocationWatchResponse {
+  /**
+   * Sendblue line receiving the shared location
+   */
+  from_number?: string;
+
+  location?: LocationWatchResponse.Location;
+
+  /**
+   * Human-readable watch failure
+   */
+  message?: string;
+
+  /**
+   * Contact whose location is being watched or changed
+   */
+  number?: string;
+
+  /**
+   * Why the stream ended normally. Known values are `sharing_ended`,
+   * `authorization_revoked`, `worker_disconnected`, and `watch_ended`. Clients
+   * should tolerate additional values.
+   */
+  reason?: string;
+
+  state?: 'not_shared' | 'shared_no_fix_yet' | 'shared_with_fix';
+
+  status?: 'OK' | 'ERROR';
+}
+
+export namespace LocationWatchResponse {
+  export interface Location {
+    accuracy?: number;
+
+    address?: string | null;
+
+    altitude?: number;
+
+    expiresAt?: string;
+
+    latitude?: number;
+
+    locationType?: 'shallow' | 'live' | 'legacy' | 'unknown';
+
+    longitude?: number;
+
+    /**
+     * Present when cached data is returned after a refresh error
+     */
+    refreshError?: string;
+
+    timestamp?: string;
+  }
+}
+
 export interface LocationRetrieveParams {
   /**
    * Your Sendblue number in E.164 format
@@ -125,11 +218,20 @@ export interface LocationListParams {
   from_number: string;
 }
 
+export interface LocationWatchParams {
+  /**
+   * Your supported Sendblue number in E.164 format
+   */
+  from_number: string;
+}
+
 export declare namespace Location {
   export {
     type LocationRetrieveResponse as LocationRetrieveResponse,
     type LocationListResponse as LocationListResponse,
+    type LocationWatchResponse as LocationWatchResponse,
     type LocationRetrieveParams as LocationRetrieveParams,
     type LocationListParams as LocationListParams,
+    type LocationWatchParams as LocationWatchParams,
   };
 }

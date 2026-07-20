@@ -232,6 +232,12 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'get',
     httpPath: '/api/location',
   },
+  {
+    clientCallName: 'client.location.watch',
+    fullyQualifiedName: 'location.watch',
+    httpMethod: 'get',
+    httpPath: '/api/location/{number}/watch',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
