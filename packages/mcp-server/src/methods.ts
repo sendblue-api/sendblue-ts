@@ -197,6 +197,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/seats/count',
   },
   {
+    clientCallName: 'client.v2.groups.retrieve',
+    fullyQualifiedName: 'v2.groups.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v2/groups/{group_id}',
+  },
+  {
     clientCallName: 'client.lines.callForwarding.retrieve',
     fullyQualifiedName: 'lines.callForwarding.retrieve',
     httpMethod: 'get',

@@ -1082,6 +1082,36 @@ const EMBEDDED_METHODS: MethodEntry[] = [
   },
   {
     name: 'retrieve',
+    endpoint: '/api/v2/groups/{group_id}',
+    httpMethod: 'get',
+    summary: 'Get group membership',
+    description: 'Retrieve the current complete membership for a group owned by the authenticated account.',
+    stainlessPath: '(resource) v2.groups > (method) retrieve',
+    qualified: 'client.v2.groups.retrieve',
+    params: ['group_id: string;'],
+    response:
+      "{ data?: { created_at?: string; group_id?: string; group_name?: string; latest_comm_at?: string; latest_message_id?: string; participant_numbers?: string[]; participants?: { contact_id?: string; handle?: string; name?: string; participant_id?: string; phone?: string; seat_id?: string; type?: 'contact' | 'seat'; }[]; updated_at?: string; worker_group_id?: string; }; status?: string; }",
+    markdown:
+      "## retrieve\n\n`client.v2.groups.retrieve(group_id: string): { data?: object; status?: string; }`\n\n**get** `/api/v2/groups/{group_id}`\n\nRetrieve the current complete membership for a group owned by the authenticated account.\n\n### Parameters\n\n- `group_id: string`\n  Modern sb_group_* identifiers and legacy *_group_id_* identifiers are supported.\n\n### Returns\n\n- `{ data?: { created_at?: string; group_id?: string; group_name?: string; latest_comm_at?: string; latest_message_id?: string; participant_numbers?: string[]; participants?: { contact_id?: string; handle?: string; name?: string; participant_id?: string; phone?: string; seat_id?: string; type?: 'contact' | 'seat'; }[]; updated_at?: string; worker_group_id?: string; }; status?: string; }`\n\n  - `data?: { created_at?: string; group_id?: string; group_name?: string; latest_comm_at?: string; latest_message_id?: string; participant_numbers?: string[]; participants?: { contact_id?: string; handle?: string; name?: string; participant_id?: string; phone?: string; seat_id?: string; type?: 'contact' | 'seat'; }[]; updated_at?: string; worker_group_id?: string; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst group = await client.v2.groups.retrieve('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455');\n\nconsole.log(group);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.v2.groups.retrieve',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst group = await client.v2.groups.retrieve('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455');\n\nconsole.log(group.data);",
+      },
+      python: {
+        method: 'v2.groups.retrieve',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ngroup = client.v2.groups.retrieve(\n    "sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455",\n)\nprint(group.data)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/groups/$GROUP_ID \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
     endpoint: '/api/lines/{sendblue_number}/call-forwarding',
     httpMethod: 'get',
     summary: 'Get call forwarding for a line',

@@ -139,6 +139,7 @@ const fuse = new Fuse(
     'client.v2.seats.count',
     'client.v2.seats.list',
     'client.v2.seats.retrieve',
+    'client.v2.groups.retrieve',
     'client.lines.callForwarding.delete',
     'client.lines.callForwarding.retrieve',
     'client.lines.callForwarding.update',
