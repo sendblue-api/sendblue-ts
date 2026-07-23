@@ -159,6 +159,16 @@ Methods:
 - <code title="get /api/v2/seats">client.v2.seats.<a href="./src/resources/v2/seats.ts">list</a>({ ...params }) -> SeatListResponse</code>
 - <code title="get /api/v2/seats/count">client.v2.seats.<a href="./src/resources/v2/seats.ts">count</a>({ ...params }) -> SeatCountResponse</code>
 
+## Groups
+
+Types:
+
+- <code><a href="./src/resources/v2/groups.ts">GroupRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/groups/{group_id}">client.v2.groups.<a href="./src/resources/v2/groups.ts">retrieve</a>(groupID) -> GroupRetrieveResponse</code>
+
 # Lines
 
 ## CallForwarding
