@@ -134,6 +134,12 @@ export interface MessageContent {
   message_handle?: string;
 
   /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  reply_to?: MessageContent.ReplyTo;
+
+  /**
    * UUID of the seat that sent the message. Present when `seat_id` was provided on
    * send, or for dashboard-originated group messages.
    */
@@ -163,9 +169,51 @@ export interface MessageContent {
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR' | 'RECEIVED';
 
   /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  thread_originator?: MessageContent.ThreadOriginator;
+
+  /**
    * Recipient phone number
    */
   to_number?: string;
+}
+
+export namespace MessageContent {
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  export interface ReplyTo {
+    /**
+     * Public handle of the immediate parent message
+     */
+    message_handle: string;
+
+    /**
+     * Advanced override for a known part of a multipart target. Omit this in normal
+     * reply requests and never guess it; requests default to 0. When replying to an
+     * attachment represented by its own webhook, use that webhook's `message_handle`
+     * and omit `part_index` so Sendblue can use the stored authoritative part.
+     * Responses omit it when no authoritative immediate-parent part is available.
+     */
+    part_index?: number;
+  }
+
+  /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  export interface ThreadOriginator {
+    /**
+     * Public handle of the thread's root message
+     */
+    message_handle: string;
+
+    /**
+     * Opaque Apple thread-originator part descriptor
+     */
+    part?: string;
+  }
 }
 
 export interface MessageResponse {
@@ -232,6 +280,12 @@ export interface MessageResponse {
   number?: string;
 
   /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  reply_to?: MessageResponse.ReplyTo;
+
+  /**
    * UUID of the seat that sent the message. Present when `seat_id` was provided on
    * send, or for dashboard-originated group messages.
    */
@@ -262,6 +316,11 @@ export interface MessageResponse {
   sender_email?: string | null;
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR';
+
+  /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  thread_originator?: MessageResponse.ThreadOriginator;
 }
 
 export namespace MessageResponse {
@@ -289,6 +348,41 @@ export namespace MessageResponse {
     duration?: string;
 
     timestamp?: string;
+  }
+
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  export interface ReplyTo {
+    /**
+     * Public handle of the immediate parent message
+     */
+    message_handle: string;
+
+    /**
+     * Advanced override for a known part of a multipart target. Omit this in normal
+     * reply requests and never guess it; requests default to 0. When replying to an
+     * attachment represented by its own webhook, use that webhook's `message_handle`
+     * and omit `part_index` so Sendblue can use the stored authoritative part.
+     * Responses omit it when no authoritative immediate-parent part is available.
+     */
+    part_index?: number;
+  }
+
+  /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  export interface ThreadOriginator {
+    /**
+     * Public handle of the thread's root message
+     */
+    message_handle: string;
+
+    /**
+     * Opaque Apple thread-originator part descriptor
+     */
+    part?: string;
   }
 }
 
@@ -398,6 +492,12 @@ export namespace MessageRetrieveResponse {
     plan?: string;
 
     /**
+     * Immediate parent of an iMessage inline reply. The target must belong to the same
+     * account, conversation, and sending line.
+     */
+    reply_to?: Data.ReplyTo;
+
+    /**
      * UUID of the seat that sent the message. Present when `seat_id` was provided on
      * send, or for dashboard-originated group messages.
      */
@@ -450,6 +550,11 @@ export namespace MessageRetrieveResponse {
       | 'SUCCESS';
 
     /**
+     * Message that originated an iMessage inline-reply thread.
+     */
+    thread_originator?: Data.ThreadOriginator;
+
+    /**
      * Recipient phone number
      */
     to_number?: string;
@@ -485,6 +590,41 @@ export namespace MessageRetrieveResponse {
       duration?: string;
 
       timestamp?: string;
+    }
+
+    /**
+     * Immediate parent of an iMessage inline reply. The target must belong to the same
+     * account, conversation, and sending line.
+     */
+    export interface ReplyTo {
+      /**
+       * Public handle of the immediate parent message
+       */
+      message_handle: string;
+
+      /**
+       * Advanced override for a known part of a multipart target. Omit this in normal
+       * reply requests and never guess it; requests default to 0. When replying to an
+       * attachment represented by its own webhook, use that webhook's `message_handle`
+       * and omit `part_index` so Sendblue can use the stored authoritative part.
+       * Responses omit it when no authoritative immediate-parent part is available.
+       */
+      part_index?: number;
+    }
+
+    /**
+     * Message that originated an iMessage inline-reply thread.
+     */
+    export interface ThreadOriginator {
+      /**
+       * Public handle of the thread's root message
+       */
+      message_handle: string;
+
+      /**
+       * Opaque Apple thread-originator part descriptor
+       */
+      part?: string;
     }
   }
 }
@@ -597,6 +737,12 @@ export namespace MessageListResponse {
     plan?: string;
 
     /**
+     * Immediate parent of an iMessage inline reply. The target must belong to the same
+     * account, conversation, and sending line.
+     */
+    reply_to?: Data.ReplyTo;
+
+    /**
      * UUID of the seat that sent the message. Present when `seat_id` was provided on
      * send, or for dashboard-originated group messages.
      */
@@ -649,6 +795,11 @@ export namespace MessageListResponse {
       | 'SUCCESS';
 
     /**
+     * Message that originated an iMessage inline-reply thread.
+     */
+    thread_originator?: Data.ThreadOriginator;
+
+    /**
      * Recipient phone number
      */
     to_number?: string;
@@ -684,6 +835,41 @@ export namespace MessageListResponse {
       duration?: string;
 
       timestamp?: string;
+    }
+
+    /**
+     * Immediate parent of an iMessage inline reply. The target must belong to the same
+     * account, conversation, and sending line.
+     */
+    export interface ReplyTo {
+      /**
+       * Public handle of the immediate parent message
+       */
+      message_handle: string;
+
+      /**
+       * Advanced override for a known part of a multipart target. Omit this in normal
+       * reply requests and never guess it; requests default to 0. When replying to an
+       * attachment represented by its own webhook, use that webhook's `message_handle`
+       * and omit `part_index` so Sendblue can use the stored authoritative part.
+       * Responses omit it when no authoritative immediate-parent part is available.
+       */
+      part_index?: number;
+    }
+
+    /**
+     * Message that originated an iMessage inline-reply thread.
+     */
+    export interface ThreadOriginator {
+      /**
+       * Public handle of the thread's root message
+       */
+      message_handle: string;
+
+      /**
+       * Opaque Apple thread-originator part descriptor
+       */
+      part?: string;
     }
   }
 
@@ -868,6 +1054,12 @@ export interface MessageSendParams {
   media_url?: string;
 
   /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  reply_to?: MessageSendParams.ReplyTo;
+
+  /**
    * Optional. Identifies the seat (user) sending the message so the message is
    * attributed to a specific rep. Accepts either the seat UUID or the Firebase Auth
    * subject. When provided, `sender_email` is auto-populated on the message record
@@ -897,6 +1089,28 @@ export interface MessageSendParams {
    * Webhook URL for message status updates
    */
   status_callback?: string;
+}
+
+export namespace MessageSendParams {
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  export interface ReplyTo {
+    /**
+     * Public handle of the immediate parent message
+     */
+    message_handle: string;
+
+    /**
+     * Advanced override for a known part of a multipart target. Omit this in normal
+     * reply requests and never guess it; requests default to 0. When replying to an
+     * attachment represented by its own webhook, use that webhook's `message_handle`
+     * and omit `part_index` so Sendblue can use the stored authoritative part.
+     * Responses omit it when no authoritative immediate-parent part is available.
+     */
+    part_index?: number;
+  }
 }
 
 export declare namespace Messages {

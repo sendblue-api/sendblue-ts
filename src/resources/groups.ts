@@ -96,12 +96,40 @@ export interface GroupSendMessageParams {
   numbers?: Array<string>;
 
   /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  reply_to?: GroupSendMessageParams.ReplyTo;
+
+  /**
    * Optional. Identifies the seat (user) sending the group message so it is
    * attributed to a specific rep. Accepts either the seat UUID or the Firebase Auth
    * subject. When provided, `sender_email` is auto-populated on the message record
    * and webhook payloads. Returns 400 if the seat is not found.
    */
   seat_id?: string;
+}
+
+export namespace GroupSendMessageParams {
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  export interface ReplyTo {
+    /**
+     * Public handle of the immediate parent message
+     */
+    message_handle: string;
+
+    /**
+     * Advanced override for a known part of a multipart target. Omit this in normal
+     * reply requests and never guess it; requests default to 0. When replying to an
+     * attachment represented by its own webhook, use that webhook's `message_handle`
+     * and omit `part_index` so Sendblue can use the stored authoritative part.
+     * Responses omit it when no authoritative immediate-parent part is available.
+     */
+    part_index?: number;
+  }
 }
 
 export declare namespace Groups {

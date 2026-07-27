@@ -61,7 +61,55 @@ export interface SendCarouselSendResponse {
    */
   number?: string;
 
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  reply_to?: SendCarouselSendResponse.ReplyTo;
+
   status?: string;
+
+  /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  thread_originator?: SendCarouselSendResponse.ThreadOriginator;
+}
+
+export namespace SendCarouselSendResponse {
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  export interface ReplyTo {
+    /**
+     * Public handle of the immediate parent message
+     */
+    message_handle: string;
+
+    /**
+     * Advanced override for a known part of a multipart target. Omit this in normal
+     * reply requests and never guess it; requests default to 0. When replying to an
+     * attachment represented by its own webhook, use that webhook's `message_handle`
+     * and omit `part_index` so Sendblue can use the stored authoritative part.
+     * Responses omit it when no authoritative immediate-parent part is available.
+     */
+    part_index?: number;
+  }
+
+  /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  export interface ThreadOriginator {
+    /**
+     * Public handle of the thread's root message
+     */
+    message_handle: string;
+
+    /**
+     * Opaque Apple thread-originator part descriptor
+     */
+    part?: string;
+  }
 }
 
 export interface SendCarouselSendParams {
@@ -84,6 +132,12 @@ export interface SendCarouselSendParams {
    * Additional metadata to attach to the message
    */
   metadata?: unknown;
+
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  reply_to?: SendCarouselSendParams.ReplyTo;
 
   /**
    * Optional. Identifies the seat (user) sending the carousel so it is attributed to
@@ -115,6 +169,28 @@ export interface SendCarouselSendParams {
    * Webhook URL for message status updates
    */
   status_callback?: string;
+}
+
+export namespace SendCarouselSendParams {
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  export interface ReplyTo {
+    /**
+     * Public handle of the immediate parent message
+     */
+    message_handle: string;
+
+    /**
+     * Advanced override for a known part of a multipart target. Omit this in normal
+     * reply requests and never guess it; requests default to 0. When replying to an
+     * attachment represented by its own webhook, use that webhook's `message_handle`
+     * and omit `part_index` so Sendblue can use the stored authoritative part.
+     * Responses omit it when no authoritative immediate-parent part is available.
+     */
+    part_index?: number;
+  }
 }
 
 export declare namespace SendCarousel {
