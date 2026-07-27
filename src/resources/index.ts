@@ -56,7 +56,7 @@ export {
   type TypingIndicatorSendResponse,
   type TypingIndicatorSendParams,
 } from './typing-indicators';
-export { V2 } from './v2/v2';
+export { V2, type V2RetrieveGroupMembershipResponse } from './v2/v2';
 export {
   Webhooks,
   type WebhookConfiguration,

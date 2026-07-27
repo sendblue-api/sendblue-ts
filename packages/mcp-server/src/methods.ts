@@ -155,6 +155,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/send-carousel',
   },
   {
+    clientCallName: 'client.v2.retrieveGroupMembership',
+    fullyQualifiedName: 'v2.retrieveGroupMembership',
+    httpMethod: 'get',
+    httpPath: '/api/v2/groups/{group_id}',
+  },
+  {
     clientCallName: 'client.v2.totp.getCode',
     fullyQualifiedName: 'v2.totp.getCode',
     httpMethod: 'get',
@@ -195,12 +201,6 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'v2.seats.count',
     httpMethod: 'get',
     httpPath: '/api/v2/seats/count',
-  },
-  {
-    clientCallName: 'client.v2.groups.retrieve',
-    fullyQualifiedName: 'v2.groups.retrieve',
-    httpMethod: 'get',
-    httpPath: '/api/v2/groups/{group_id}',
   },
   {
     clientCallName: 'client.lines.callForwarding.retrieve',
