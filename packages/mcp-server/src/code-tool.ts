@@ -26,9 +26,9 @@ For example:
 \`\`\`
 async function run(client) {
   const messageResponse = await client.messages.send({
-    content: 'REPLACE_ME',
     from_number: 'REPLACE_ME',
     number: 'REPLACE_ME',
+    content: 'REPLACE_ME',
   });
 
   console.log(messageResponse.seat_id);
