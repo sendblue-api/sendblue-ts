@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.11.0 (2026-07-31)
+
+Full Changelog: [v3.10.1...v3.11.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.10.1...v3.11.0)
+
+### Features
+
+* **grayrunner:** expose App Cards ([e3f36e1](https://github.com/sendblue-api/sendblue-ts/commit/e3f36e111ccedda363f157e09bebe4a44aaa5850))
+* **grayrunner:** RD-265 add location-request API and inbound location webhook ([fafffa1](https://github.com/sendblue-api/sendblue-ts/commit/fafffa1fdaeabd0b2d520181fa0b8a778eeab754))
+* **location:** RD-275 add current location endpoints ([f5caa7c](https://github.com/sendblue-api/sendblue-ts/commit/f5caa7c007b681d05d1046b24c689623b874c7f3))
+* **location:** RD-276 stream live location updates ([32cd915](https://github.com/sendblue-api/sendblue-ts/commit/32cd915fc14e573d2ba5b952b855e16e1064cd21))
+* PLAT-5183: relaunch contact-created webhooks ([131a520](https://github.com/sendblue-api/sendblue-ts/commit/131a520ef05b4a12a31e9dd3f24634e673115839))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([c5da881](https://github.com/sendblue-api/sendblue-ts/commit/c5da88163f3995c78ee397de44356db1aabe0a74))
+* Support iMessage inline replies in grayrunner ([2c5811e](https://github.com/sendblue-api/sendblue-ts/commit/2c5811e9f64ed795aa5d0118865a3d932104d269))
+
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([012dc23](https://github.com/sendblue-api/sendblue-ts/commit/012dc23bfa40d2fee6c2d27b8eea85f2c72bc3b5))
+* **grayrunner:** expose group participants in public api ([4a3c944](https://github.com/sendblue-api/sendblue-ts/commit/4a3c9445fbc0a48c8311d7c251211be79f39fef7))
+* **stlc:** stop hand-edited CI workflows from blocking seals and builds ([054ec10](https://github.com/sendblue-api/sendblue-ts/commit/054ec10353fb567b347656985246244c24a28797))
+
+
+### Chores
+
+* **internal:** codegen related update ([1369e98](https://github.com/sendblue-api/sendblue-ts/commit/1369e98dab710a74021b66f0d0d44ddd2f25235a))
+* sync repo ([5c76390](https://github.com/sendblue-api/sendblue-ts/commit/5c763909fe410eba817914f732bfda4fa6f5c860))
+
 ## 3.10.1 (2026-06-17)
 
 Full Changelog: [v3.10.0...v3.10.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.10.0...v3.10.1)
