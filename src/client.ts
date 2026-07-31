@@ -37,6 +37,7 @@ import {
   MessageResponse,
   MessageRetrieveResponse,
   MessageSendParams,
+  MessageUpdateAppCardParams,
   Messages,
 } from './resources/messages';
 import {
@@ -79,7 +80,7 @@ import {
   Contacts,
 } from './resources/contacts/contacts';
 import { Lines } from './resources/lines/lines';
-import { V2, V2RetrieveGroupMembershipResponse } from './resources/v2/v2';
+import { V2 } from './resources/v2/v2';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -856,9 +857,6 @@ export class SendblueAPI {
    * Operations for sending and managing messages
    */
   sendCarousel: API.SendCarousel = new API.SendCarousel(this);
-  /**
-   * Operations for group messaging (beta)
-   */
   v2: API.V2 = new API.V2(this);
   lines: API.Lines = new API.Lines(this);
   /**
@@ -896,6 +894,7 @@ export declare namespace SendblueAPI {
     type MessageListParams as MessageListParams,
     type MessageGetStatusParams as MessageGetStatusParams,
     type MessageSendParams as MessageSendParams,
+    type MessageUpdateAppCardParams as MessageUpdateAppCardParams,
   };
 
   export {
@@ -959,7 +958,7 @@ export declare namespace SendblueAPI {
     type SendCarouselSendParams as SendCarouselSendParams,
   };
 
-  export { V2 as V2, type V2RetrieveGroupMembershipResponse as V2RetrieveGroupMembershipResponse };
+  export { V2 as V2 };
 
   export { Lines as Lines };
 

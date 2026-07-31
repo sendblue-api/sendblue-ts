@@ -13,6 +13,7 @@ Methods:
 - <code title="get /api/v2/messages">client.messages.<a href="./src/resources/messages.ts">list</a>({ ...params }) -> MessageListResponse</code>
 - <code title="get /api/status">client.messages.<a href="./src/resources/messages.ts">getStatus</a>({ ...params }) -> MessageResponse</code>
 - <code title="post /api/send-message">client.messages.<a href="./src/resources/messages.ts">send</a>({ ...params }) -> MessageResponse</code>
+- <code title="post /api/messages/{message_handle}/update-app-card">client.messages.<a href="./src/resources/messages.ts">updateAppCard</a>(messageHandle, { ...params }) -> MessageResponse</code>
 
 # Groups
 
@@ -121,14 +122,6 @@ Methods:
 
 # V2
 
-Types:
-
-- <code><a href="./src/resources/v2/v2.ts">V2RetrieveGroupMembershipResponse</a></code>
-
-Methods:
-
-- <code title="get /api/v2/groups/{group_id}">client.v2.<a href="./src/resources/v2/v2.ts">retrieveGroupMembership</a>(groupID) -> V2RetrieveGroupMembershipResponse</code>
-
 ## Totp
 
 Types:
@@ -166,6 +159,16 @@ Methods:
 - <code title="get /api/v2/seats/{seat_id}">client.v2.seats.<a href="./src/resources/v2/seats.ts">retrieve</a>(seatID) -> SeatRetrieveResponse</code>
 - <code title="get /api/v2/seats">client.v2.seats.<a href="./src/resources/v2/seats.ts">list</a>({ ...params }) -> SeatListResponse</code>
 - <code title="get /api/v2/seats/count">client.v2.seats.<a href="./src/resources/v2/seats.ts">count</a>({ ...params }) -> SeatCountResponse</code>
+
+## Groups
+
+Types:
+
+- <code><a href="./src/resources/v2/groups.ts">GroupRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/groups/{group_id}">client.v2.groups.<a href="./src/resources/v2/groups.ts">retrieve</a>(groupID) -> GroupRetrieveResponse</code>
 
 # Lines
 

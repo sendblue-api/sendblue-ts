@@ -85,11 +85,7 @@ describe('resource messages', () => {
 
   // Mock server tests are disabled
   test.skip('send: only required params', async () => {
-    const responsePromise = client.messages.send({
-      content: 'Hello, World!',
-      from_number: '+19998887777',
-      number: '+19998887777',
-    });
+    const responsePromise = client.messages.send({ from_number: '+19998887777', number: '+19998887777' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -102,14 +98,46 @@ describe('resource messages', () => {
   // Mock server tests are disabled
   test.skip('send: required and optional params', async () => {
     const response = await client.messages.send({
-      content: 'Hello, World!',
       from_number: '+19998887777',
       number: '+19998887777',
+      app_card: {
+        appName: 'My App',
+        extensionBundleId: 'com.example.myapp.MessagesExtension',
+        layout: {
+          caption: 'Check this out',
+          imageSubtitle: 'imageSubtitle',
+          imageTitle: 'imageTitle',
+          imageUrl: 'https://example.com',
+          subcaption: 'Tap to open',
+          summary: 'summary',
+          trailingCaption: 'trailingCaption',
+          trailingSubcaption: 'trailingSubcaption',
+        },
+        teamId: 'ABCDE12345',
+        url: 'https://example.com/deep-link',
+        appStoreId: 1234567890,
+        fallbackText: 'fallbackText',
+        interactive: true,
+        sessionIdentifier: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      },
+      content: 'Hello, World!',
       media_url: 'https://example.com/image.jpg',
       reply_to: { message_handle: 'msg_parent123', part_index: 0 },
       seat_id: '550e8400-e29b-41d4-a716-446655440000',
       send_style: 'celebration',
       status_callback: 'https://example.com/webhook',
     });
+  });
+
+  // Mock server tests are disabled
+  test.skip('updateAppCard', async () => {
+    const responsePromise = client.messages.updateAppCard('message_handle', {});
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 });
