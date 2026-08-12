@@ -148,6 +148,9 @@ const fuse = new Fuse(
     'client.location.list',
     'client.location.retrieve',
     'client.location.watch',
+    'client.verifiedContacts.create',
+    'client.verifiedContacts.list',
+    'client.verifiedContacts.retrieve',
   ],
   { threshold: 1, shouldSort: true },
 );

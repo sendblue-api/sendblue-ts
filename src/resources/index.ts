@@ -59,6 +59,13 @@ export {
 } from './typing-indicators';
 export { V2 } from './v2/v2';
 export {
+  VerifiedContacts,
+  type VerifiedContactCreateResponse,
+  type VerifiedContactRetrieveResponse,
+  type VerifiedContactListResponse,
+  type VerifiedContactCreateParams,
+} from './verified-contacts';
+export {
   Webhooks,
   type WebhookConfiguration,
   type WebhookCreateResponse,

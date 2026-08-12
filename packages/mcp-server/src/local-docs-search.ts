@@ -1367,6 +1367,97 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       },
     },
   },
+  {
+    name: 'list',
+    endpoint: '/v3/verified-contacts',
+    httpMethod: 'get',
+    summary: 'List verified contacts',
+    description:
+      "Lists the contacts attached to the authenticated account's shared iMessage line.\nContacts start as `pending`; they become `verified` after the recipient sends an\ninbound iMessage or SMS to the shared line.\n",
+    stainlessPath: '(resource) verified_contacts > (method) list',
+    qualified: 'client.verifiedContacts.list',
+    response:
+      "{ data?: { contacts: { id: number; created_at: string; phone_number: string; updated_at: string; verification_status: 'pending' | 'verified'; verified: boolean; }[]; line: { phone_number: string; type: 'shared'; }; }; }",
+    markdown:
+      "## list\n\n`client.verifiedContacts.list(): { data?: object; }`\n\n**get** `/v3/verified-contacts`\n\nLists the contacts attached to the authenticated account's shared iMessage line.\nContacts start as `pending`; they become `verified` after the recipient sends an\ninbound iMessage or SMS to the shared line.\n\n\n### Returns\n\n- `{ data?: { contacts: { id: number; created_at: string; phone_number: string; updated_at: string; verification_status: 'pending' | 'verified'; verified: boolean; }[]; line: { phone_number: string; type: 'shared'; }; }; }`\n\n  - `data?: { contacts: { id: number; created_at: string; phone_number: string; updated_at: string; verification_status: 'pending' | 'verified'; verified: boolean; }[]; line: { phone_number: string; type: 'shared'; }; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst verifiedContacts = await client.verifiedContacts.list();\n\nconsole.log(verifiedContacts);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.verifiedContacts.list',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst verifiedContacts = await client.verifiedContacts.list();\n\nconsole.log(verifiedContacts.data);",
+      },
+      python: {
+        method: 'verified_contacts.list',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nverified_contacts = client.verified_contacts.list()\nprint(verified_contacts.data)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/v3/verified-contacts \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/v3/verified-contacts',
+    httpMethod: 'post',
+    summary: 'Create a pending verified contact',
+    description:
+      "Creates or returns a pending verified-contact route for the authenticated account's\nshared iMessage line. The recipient must send any iMessage or SMS to the returned\nline phone number to complete verification.\n",
+    stainlessPath: '(resource) verified_contacts > (method) create',
+    qualified: 'client.verifiedContacts.create',
+    params: ['phone_number: string;'],
+    response:
+      "{ data?: { contact: { id: number; created_at: string; phone_number: string; updated_at: string; verification_status: 'pending' | 'verified'; verified: boolean; }; line: { phone_number: string; type: 'shared'; }; verification_instructions: string; }; }",
+    markdown:
+      "## create\n\n`client.verifiedContacts.create(phone_number: string): { data?: object; }`\n\n**post** `/v3/verified-contacts`\n\nCreates or returns a pending verified-contact route for the authenticated account's\nshared iMessage line. The recipient must send any iMessage or SMS to the returned\nline phone number to complete verification.\n\n\n### Parameters\n\n- `phone_number: string`\n  Contact phone number in E.164 format\n\n### Returns\n\n- `{ data?: { contact: { id: number; created_at: string; phone_number: string; updated_at: string; verification_status: 'pending' | 'verified'; verified: boolean; }; line: { phone_number: string; type: 'shared'; }; verification_instructions: string; }; }`\n\n  - `data?: { contact: { id: number; created_at: string; phone_number: string; updated_at: string; verification_status: 'pending' | 'verified'; verified: boolean; }; line: { phone_number: string; type: 'shared'; }; verification_instructions: string; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst verifiedContact = await client.verifiedContacts.create({ phone_number: '+12125550199' });\n\nconsole.log(verifiedContact);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.verifiedContacts.create',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst verifiedContact = await client.verifiedContacts.create({ phone_number: '+12125550199' });\n\nconsole.log(verifiedContact.data);",
+      },
+      python: {
+        method: 'verified_contacts.create',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nverified_contact = client.verified_contacts.create(\n    phone_number="+12125550199",\n)\nprint(verified_contact.data)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/v3/verified-contacts \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "phone_number": "+12125550199"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/v3/verified-contacts/{phone_number}',
+    httpMethod: 'get',
+    summary: 'Get a verified contact',
+    description: 'Retrieve one verified-contact route by phone number for the authenticated account.',
+    stainlessPath: '(resource) verified_contacts > (method) retrieve',
+    qualified: 'client.verifiedContacts.retrieve',
+    params: ['phone_number: string;'],
+    response:
+      "{ data?: { contact: { id: number; created_at: string; phone_number: string; updated_at: string; verification_status: 'pending' | 'verified'; verified: boolean; }; line: { phone_number: string; type: 'shared'; }; }; }",
+    markdown:
+      "## retrieve\n\n`client.verifiedContacts.retrieve(phone_number: string): { data?: object; }`\n\n**get** `/v3/verified-contacts/{phone_number}`\n\nRetrieve one verified-contact route by phone number for the authenticated account.\n\n### Parameters\n\n- `phone_number: string`\n\n### Returns\n\n- `{ data?: { contact: { id: number; created_at: string; phone_number: string; updated_at: string; verification_status: 'pending' | 'verified'; verified: boolean; }; line: { phone_number: string; type: 'shared'; }; }; }`\n\n  - `data?: { contact: { id: number; created_at: string; phone_number: string; updated_at: string; verification_status: 'pending' | 'verified'; verified: boolean; }; line: { phone_number: string; type: 'shared'; }; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst verifiedContact = await client.verifiedContacts.retrieve('+12125550199');\n\nconsole.log(verifiedContact);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.verifiedContacts.retrieve',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst verifiedContact = await client.verifiedContacts.retrieve('+12125550199');\n\nconsole.log(verifiedContact.data);",
+      },
+      python: {
+        method: 'verified_contacts.retrieve',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nverified_contact = client.verified_contacts.retrieve(\n    "+12125550199",\n)\nprint(verified_contact.data)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/v3/verified-contacts/$PHONE_NUMBER \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
 ];
 
 const EMBEDDED_READMES: { language: string; content: string }[] = [

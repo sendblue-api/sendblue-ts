@@ -250,6 +250,24 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'get',
     httpPath: '/api/location/{number}/watch',
   },
+  {
+    clientCallName: 'client.verifiedContacts.create',
+    fullyQualifiedName: 'verifiedContacts.create',
+    httpMethod: 'post',
+    httpPath: '/v3/verified-contacts',
+  },
+  {
+    clientCallName: 'client.verifiedContacts.retrieve',
+    fullyQualifiedName: 'verifiedContacts.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v3/verified-contacts/{phone_number}',
+  },
+  {
+    clientCallName: 'client.verifiedContacts.list',
+    fullyQualifiedName: 'verifiedContacts.list',
+    httpMethod: 'get',
+    httpPath: '/v3/verified-contacts',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {
