@@ -875,7 +875,7 @@ export class SendblueAPI {
    */
   location: API.Location = new API.Location(this);
   /**
-   * Operations for managing verified contacts on shared iMessage lines
+   * Operations for managing verified-contact access to shared iMessage lines
    */
   verifiedContacts: API.VerifiedContacts = new API.VerifiedContacts(this);
 }
