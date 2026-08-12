@@ -6,13 +6,13 @@ import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
 /**
- * Operations for managing verified contacts on shared iMessage lines
+ * Operations for managing verified-contact access to shared iMessage lines
  */
 export class VerifiedContacts extends APIResource {
   /**
-   * Creates or returns a pending verified-contact route for the authenticated
-   * account's shared iMessage line. The recipient must send any iMessage or SMS to
-   * the returned line phone number to complete verification.
+   * Creates or returns a verified-contact route for the authenticated account's
+   * shared iMessage line. Pending contacts become verified after the recipient sends
+   * an inbound iMessage or SMS to the returned line phone number.
    *
    * @example
    * ```ts
@@ -44,7 +44,7 @@ export class VerifiedContacts extends APIResource {
   }
 
   /**
-   * Lists the contacts attached to the authenticated account's shared iMessage line.
+   * Lists contacts attached to the authenticated account's shared iMessage line.
    * Contacts start as `pending`; they become `verified` after the recipient sends an
    * inbound iMessage or SMS to the shared line.
    *
@@ -67,22 +67,20 @@ export namespace VerifiedContactCreateResponse {
   export interface Data {
     contact: Data.Contact;
 
-    line: Data.Line;
+    line: Data.Line | null;
 
+    /**
+     * Null when the contact is already verified
+     */
     verification_instructions: string | null;
   }
 
   export namespace Data {
     export interface Contact {
-      /**
-       * Internal WorkerRoute identifier.
-       */
-      id: number;
-
       created_at: string;
 
       /**
-       * Contact phone number in E.164 format.
+       * Contact phone number in E.164 format
        */
       phone_number: string;
 
@@ -90,12 +88,15 @@ export namespace VerifiedContactCreateResponse {
 
       verification_status: 'pending' | 'verified';
 
+      /**
+       * Whether this contact has completed verification by messaging the shared line
+       */
       verified: boolean;
     }
 
     export interface Line {
       /**
-       * Assigned Sendblue line in E.164 format.
+       * Shared Sendblue line the contact must message to complete verification
        */
       phone_number: string | null;
 
@@ -110,22 +111,17 @@ export interface VerifiedContactRetrieveResponse {
 
 export namespace VerifiedContactRetrieveResponse {
   export interface Data {
-    contact: Data.Contact;
+    contact: Data.Contact | null;
 
     line: Data.Line | null;
   }
 
   export namespace Data {
     export interface Contact {
-      /**
-       * Internal WorkerRoute identifier.
-       */
-      id: number;
-
       created_at: string;
 
       /**
-       * Contact phone number in E.164 format.
+       * Contact phone number in E.164 format
        */
       phone_number: string;
 
@@ -133,12 +129,15 @@ export namespace VerifiedContactRetrieveResponse {
 
       verification_status: 'pending' | 'verified';
 
+      /**
+       * Whether this contact has completed verification by messaging the shared line
+       */
       verified: boolean;
     }
 
     export interface Line {
       /**
-       * Assigned Sendblue line in E.164 format.
+       * Shared Sendblue line the contact must message to complete verification
        */
       phone_number: string | null;
 
@@ -160,15 +159,10 @@ export namespace VerifiedContactListResponse {
 
   export namespace Data {
     export interface Contact {
-      /**
-       * Internal WorkerRoute identifier.
-       */
-      id: number;
-
       created_at: string;
 
       /**
-       * Contact phone number in E.164 format.
+       * Contact phone number in E.164 format
        */
       phone_number: string;
 
@@ -176,12 +170,15 @@ export namespace VerifiedContactListResponse {
 
       verification_status: 'pending' | 'verified';
 
+      /**
+       * Whether this contact has completed verification by messaging the shared line
+       */
       verified: boolean;
     }
 
     export interface Line {
       /**
-       * Assigned Sendblue line in E.164 format.
+       * Shared Sendblue line the contact must message to complete verification
        */
       phone_number: string | null;
 
@@ -192,7 +189,7 @@ export namespace VerifiedContactListResponse {
 
 export interface VerifiedContactCreateParams {
   /**
-   * Contact phone number in E.164 format
+   * Contact phone number. E.164 is recommended; US local numbers are accepted.
    */
   phone_number: string;
 }
