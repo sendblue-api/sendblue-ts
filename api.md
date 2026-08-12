@@ -209,3 +209,17 @@ Methods:
 - <code title="get /api/location/{number}">client.location.<a href="./src/resources/location.ts">retrieve</a>(number, { ...params }) -> LocationRetrieveResponse</code>
 - <code title="get /api/location">client.location.<a href="./src/resources/location.ts">list</a>({ ...params }) -> LocationListResponse</code>
 - <code title="get /api/location/{number}/watch">client.location.<a href="./src/resources/location.ts">watch</a>(number, { ...params }) -> LocationWatchResponse</code>
+
+# VerifiedContacts
+
+Types:
+
+- <code><a href="./src/resources/verified-contacts.ts">VerifiedContactCreateResponse</a></code>
+- <code><a href="./src/resources/verified-contacts.ts">VerifiedContactRetrieveResponse</a></code>
+- <code><a href="./src/resources/verified-contacts.ts">VerifiedContactListResponse</a></code>
+
+Methods:
+
+- <code title="post /v3/verified-contacts">client.verifiedContacts.<a href="./src/resources/verified-contacts.ts">create</a>({ ...params }) -> VerifiedContactCreateResponse</code>
+- <code title="get /v3/verified-contacts/{phone_number}">client.verifiedContacts.<a href="./src/resources/verified-contacts.ts">retrieve</a>(phoneNumber) -> VerifiedContactRetrieveResponse</code>
+- <code title="get /v3/verified-contacts">client.verifiedContacts.<a href="./src/resources/verified-contacts.ts">list</a>() -> VerifiedContactListResponse</code>

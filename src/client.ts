@@ -52,6 +52,13 @@ import {
   TypingIndicators,
 } from './resources/typing-indicators';
 import {
+  VerifiedContactCreateParams,
+  VerifiedContactCreateResponse,
+  VerifiedContactListResponse,
+  VerifiedContactRetrieveResponse,
+  VerifiedContacts,
+} from './resources/verified-contacts';
+import {
   WebhookConfiguration,
   WebhookCreateParams,
   WebhookCreateResponse,
@@ -867,6 +874,10 @@ export class SendblueAPI {
    * Operations for sending and managing messages
    */
   location: API.Location = new API.Location(this);
+  /**
+   * Operations for managing verified contacts on shared iMessage lines
+   */
+  verifiedContacts: API.VerifiedContacts = new API.VerifiedContacts(this);
 }
 
 SendblueAPI.Messages = Messages;
@@ -881,6 +892,7 @@ SendblueAPI.V2 = V2;
 SendblueAPI.Lines = Lines;
 SendblueAPI.RequestLocation = RequestLocation;
 SendblueAPI.Location = Location;
+SendblueAPI.VerifiedContacts = VerifiedContacts;
 
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -976,5 +988,13 @@ export declare namespace SendblueAPI {
     type LocationRetrieveParams as LocationRetrieveParams,
     type LocationListParams as LocationListParams,
     type LocationWatchParams as LocationWatchParams,
+  };
+
+  export {
+    VerifiedContacts as VerifiedContacts,
+    type VerifiedContactCreateResponse as VerifiedContactCreateResponse,
+    type VerifiedContactRetrieveResponse as VerifiedContactRetrieveResponse,
+    type VerifiedContactListResponse as VerifiedContactListResponse,
+    type VerifiedContactCreateParams as VerifiedContactCreateParams,
   };
 }
