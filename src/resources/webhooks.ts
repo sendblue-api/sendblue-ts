@@ -48,6 +48,12 @@ export interface WebhookConfiguration {
    * Secret for webhook signature verification
    */
   secret?: string;
+
+  /**
+   * Receive webhooks only. When present, only inbound messages received by these
+   * Sendblue line numbers are delivered to this webhook.
+   */
+  sendblue_numbers?: Array<string>;
 }
 
 export interface WebhookCreateResponse {
