@@ -745,13 +745,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/account/webhooks',
     httpMethod: 'get',
     summary: 'Get webhooks',
-    description: 'Get all webhooks configured for the authenticated account',
+    description:
+      "Get webhooks configured for the authenticated account.\n\nWith a line-scoped temporary bearer token, this returns receive webhooks for the token's phone numbers.\n",
     stainlessPath: '(resource) webhooks > (method) list',
     qualified: 'client.webhooks.list',
     response:
       '{ status?: string; webhooks?: { call_log?: string | object[]; contact_created?: string | object[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }; }',
     markdown:
-      "## list\n\n`client.webhooks.list(): { status?: string; webhooks?: object; }`\n\n**get** `/api/account/webhooks`\n\nGet all webhooks configured for the authenticated account\n\n### Returns\n\n- `{ status?: string; webhooks?: { call_log?: string | object[]; contact_created?: string | object[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }; }`\n\n  - `status?: string`\n  - `webhooks?: { call_log?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; contact_created?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; globalSecret?: string; line_assigned?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; line_blocked?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; outbound?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; receive?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; typing_indicator?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhooks = await client.webhooks.list();\n\nconsole.log(webhooks);\n```",
+      "## list\n\n`client.webhooks.list(): { status?: string; webhooks?: object; }`\n\n**get** `/api/account/webhooks`\n\nGet webhooks configured for the authenticated account.\n\nWith a line-scoped temporary bearer token, this returns receive webhooks for the token's phone numbers.\n\n\n### Returns\n\n- `{ status?: string; webhooks?: { call_log?: string | object[]; contact_created?: string | object[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }; }`\n\n  - `status?: string`\n  - `webhooks?: { call_log?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; contact_created?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; globalSecret?: string; line_assigned?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; line_blocked?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; outbound?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; receive?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; typing_indicator?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhooks = await client.webhooks.list();\n\nconsole.log(webhooks);\n```",
     perLanguage: {
       typescript: {
         method: 'client.webhooks.list',
@@ -774,7 +775,8 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/account/webhooks',
     httpMethod: 'post',
     summary: 'Add webhooks',
-    description: 'Add new webhooks to the account. Webhooks are appended to existing ones.',
+    description:
+      "Add new webhooks to the account. Webhooks are appended to existing ones.\n\nWith a line-scoped temporary bearer token, only receive webhooks can be added. String webhook URLs are\nautomatically scoped to the token's phone numbers; webhook objects must use `sendblue_numbers` within\nthe token's allowed phone numbers.\n",
     stainlessPath: '(resource) webhooks > (method) create',
     qualified: 'client.webhooks.create',
     params: [
@@ -785,7 +787,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     response:
       '{ message?: string; status?: string; webhooks?: { call_log?: string | object[]; contact_created?: string | object[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }; }',
     markdown:
-      "## create\n\n`client.webhooks.create(webhooks: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[], globalSecret?: string, type?: string): { message?: string; status?: string; webhooks?: object; }`\n\n**post** `/api/account/webhooks`\n\nAdd new webhooks to the account. Webhooks are appended to existing ones.\n\n### Parameters\n\n- `webhooks: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]`\n  Array of webhook URLs or webhook objects\n\n- `globalSecret?: string`\n  Global secret for webhook signature verification\n\n- `type?: string`\n  Type of webhook to add\n\n### Returns\n\n- `{ message?: string; status?: string; webhooks?: { call_log?: string | object[]; contact_created?: string | object[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }; }`\n\n  - `message?: string`\n  - `status?: string`\n  - `webhooks?: { call_log?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; contact_created?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; globalSecret?: string; line_assigned?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; line_blocked?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; outbound?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; receive?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; typing_indicator?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhook = await client.webhooks.create({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook);\n```",
+      "## create\n\n`client.webhooks.create(webhooks: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[], globalSecret?: string, type?: string): { message?: string; status?: string; webhooks?: object; }`\n\n**post** `/api/account/webhooks`\n\nAdd new webhooks to the account. Webhooks are appended to existing ones.\n\nWith a line-scoped temporary bearer token, only receive webhooks can be added. String webhook URLs are\nautomatically scoped to the token's phone numbers; webhook objects must use `sendblue_numbers` within\nthe token's allowed phone numbers.\n\n\n### Parameters\n\n- `webhooks: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]`\n  Array of webhook URLs or webhook objects\n\n- `globalSecret?: string`\n  Global secret for webhook signature verification\n\n- `type?: string`\n  Type of webhook to add\n\n### Returns\n\n- `{ message?: string; status?: string; webhooks?: { call_log?: string | object[]; contact_created?: string | object[]; globalSecret?: string; line_assigned?: string | object[]; line_blocked?: string | object[]; outbound?: string | object[]; receive?: string | object[]; typing_indicator?: string | object[]; }; }`\n\n  - `message?: string`\n  - `status?: string`\n  - `webhooks?: { call_log?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; contact_created?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; globalSecret?: string; line_assigned?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; line_blocked?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; outbound?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; receive?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; typing_indicator?: string | { url: string; secret?: string; sendblue_numbers?: string[]; }[]; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhook = await client.webhooks.create({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook);\n```",
     perLanguage: {
       typescript: {
         method: 'client.webhooks.create',
@@ -840,13 +842,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/account/webhooks',
     httpMethod: 'delete',
     summary: 'Delete webhooks',
-    description: 'Delete specific webhooks from the account',
+    description:
+      "Delete specific webhooks from the account.\n\nWith a line-scoped temporary bearer token, this can only remove receive webhooks for the token's phone\nnumbers.\n",
     stainlessPath: '(resource) webhooks > (method) delete',
     qualified: 'client.webhooks.delete',
     params: ['webhooks: string[];', 'type?: string;'],
     response: '{ message?: string; status?: string; }',
     markdown:
-      "## delete\n\n`client.webhooks.delete(webhooks: string[], type?: string): { message?: string; status?: string; }`\n\n**delete** `/api/account/webhooks`\n\nDelete specific webhooks from the account\n\n### Parameters\n\n- `webhooks: string[]`\n  Array of webhook URLs to delete\n\n- `type?: string`\n  Type of webhook to delete from\n\n### Returns\n\n- `{ message?: string; status?: string; }`\n\n  - `message?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhook = await client.webhooks.delete({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook);\n```",
+      "## delete\n\n`client.webhooks.delete(webhooks: string[], type?: string): { message?: string; status?: string; }`\n\n**delete** `/api/account/webhooks`\n\nDelete specific webhooks from the account.\n\nWith a line-scoped temporary bearer token, this can only remove receive webhooks for the token's phone\nnumbers.\n\n\n### Parameters\n\n- `webhooks: string[]`\n  Array of webhook URLs to delete\n\n- `type?: string`\n  Type of webhook to delete from\n\n### Returns\n\n- `{ message?: string; status?: string; }`\n\n  - `message?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst webhook = await client.webhooks.delete({ webhooks: ['https://example.com'] });\n\nconsole.log(webhook);\n```",
     perLanguage: {
       typescript: {
         method: 'client.webhooks.delete',
@@ -1455,6 +1458,66 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.sendblue.co/v3/verified-contacts/$PHONE_NUMBER \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
+    name: 'create',
+    endpoint: '/v3/auth/tokens',
+    httpMethod: 'post',
+    summary: 'Mint a temporary API token',
+    description:
+      'Creates a short-lived bearer token for the authenticated account. This endpoint must be called with live\naccount API keys; temporary bearer tokens and test API keys cannot mint additional tokens.\n\nWhen `phone_number` or `phone_numbers` is supplied, the token is scoped to those Sendblue phone numbers.\nWhen no phone selector is supplied, the token is an account-scoped temporary token.\n\nThe plaintext token is returned only once.\n',
+    stainlessPath: '(resource) auth.tokens > (method) create',
+    qualified: 'client.auth.tokens.create',
+    params: ['expires_in_seconds?: number;', 'phone_number?: string;', 'phone_numbers?: string[];'],
+    response:
+      "{ token: string; expires_at: string; phone_numbers: string[]; token_id: string; token_type: 'Bearer'; }",
+    markdown:
+      "## create\n\n`client.auth.tokens.create(expires_in_seconds?: number, phone_number?: string, phone_numbers?: string[]): { token: string; expires_at: string; phone_numbers: string[]; token_id: string; token_type: 'Bearer'; }`\n\n**post** `/v3/auth/tokens`\n\nCreates a short-lived bearer token for the authenticated account. This endpoint must be called with live\naccount API keys; temporary bearer tokens and test API keys cannot mint additional tokens.\n\nWhen `phone_number` or `phone_numbers` is supplied, the token is scoped to those Sendblue phone numbers.\nWhen no phone selector is supplied, the token is an account-scoped temporary token.\n\nThe plaintext token is returned only once.\n\n\n### Parameters\n\n- `expires_in_seconds?: number`\n  Token lifetime in seconds. Defaults to 900 seconds when omitted.\n\n- `phone_number?: string`\n  Single Sendblue phone number to scope the token to. Cannot be combined with `phone_numbers`.\n\n- `phone_numbers?: string[]`\n  Sendblue phone numbers to scope the token to. Cannot be combined with `phone_number`.\n\n### Returns\n\n- `{ token: string; expires_at: string; phone_numbers: string[]; token_id: string; token_type: 'Bearer'; }`\n\n  - `token: string`\n  - `expires_at: string`\n  - `phone_numbers: string[]`\n  - `token_id: string`\n  - `token_type: 'Bearer'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst token = await client.auth.tokens.create();\n\nconsole.log(token);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.auth.tokens.create',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst token = await client.auth.tokens.create();\n\nconsole.log(token.token_id);",
+      },
+      python: {
+        method: 'auth.tokens.create',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ntoken = client.auth.tokens.create()\nprint(token.token_id)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/v3/auth/tokens \\\n    -X POST \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
+    name: 'revoke',
+    endpoint: '/v3/auth/tokens/{token_id}',
+    httpMethod: 'delete',
+    summary: 'Revoke a temporary API token',
+    description:
+      'Revokes a temporary bearer token owned by the authenticated account. This endpoint must be called with\nlive account API keys; temporary bearer tokens and test API keys cannot revoke tokens.\n',
+    stainlessPath: '(resource) auth.tokens > (method) revoke',
+    qualified: 'client.auth.tokens.revoke',
+    params: ['token_id: string;'],
+    markdown:
+      "## revoke\n\n`client.auth.tokens.revoke(token_id: string): void`\n\n**delete** `/v3/auth/tokens/{token_id}`\n\nRevokes a temporary bearer token owned by the authenticated account. This endpoint must be called with\nlive account API keys; temporary bearer tokens and test API keys cannot revoke tokens.\n\n\n### Parameters\n\n- `token_id: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nawait client.auth.tokens.revoke('11111111-1111-4111-8111-111111111111')\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.auth.tokens.revoke',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nawait client.auth.tokens.revoke('11111111-1111-4111-8111-111111111111');",
+      },
+      python: {
+        method: 'auth.tokens.revoke',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nclient.auth.tokens.revoke(\n    "11111111-1111-4111-8111-111111111111",\n)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/v3/auth/tokens/$TOKEN_ID \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },

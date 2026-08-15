@@ -223,3 +223,16 @@ Methods:
 - <code title="post /v3/verified-contacts">client.verifiedContacts.<a href="./src/resources/verified-contacts.ts">create</a>({ ...params }) -> VerifiedContactCreateResponse</code>
 - <code title="get /v3/verified-contacts/{phone_number}">client.verifiedContacts.<a href="./src/resources/verified-contacts.ts">retrieve</a>(phoneNumber) -> VerifiedContactRetrieveResponse</code>
 - <code title="get /v3/verified-contacts">client.verifiedContacts.<a href="./src/resources/verified-contacts.ts">list</a>() -> VerifiedContactListResponse</code>
+
+# Auth
+
+## Tokens
+
+Types:
+
+- <code><a href="./src/resources/auth/tokens.ts">TokenCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /v3/auth/tokens">client.auth.tokens.<a href="./src/resources/auth/tokens.ts">create</a>({ ...params }) -> TokenCreateResponse</code>
+- <code title="delete /v3/auth/tokens/{token_id}">client.auth.tokens.<a href="./src/resources/auth/tokens.ts">revoke</a>(tokenID) -> void</code>
