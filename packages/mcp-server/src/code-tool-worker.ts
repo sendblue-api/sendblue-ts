@@ -151,6 +151,8 @@ const fuse = new Fuse(
     'client.verifiedContacts.create',
     'client.verifiedContacts.list',
     'client.verifiedContacts.retrieve',
+    'client.auth.tokens.create',
+    'client.auth.tokens.revoke',
   ],
   { threshold: 1, shouldSort: true },
 );

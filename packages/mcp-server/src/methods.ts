@@ -268,6 +268,18 @@ export const sdkMethods: SdkMethod[] = [
     httpMethod: 'get',
     httpPath: '/v3/verified-contacts',
   },
+  {
+    clientCallName: 'client.auth.tokens.create',
+    fullyQualifiedName: 'auth.tokens.create',
+    httpMethod: 'post',
+    httpPath: '/v3/auth/tokens',
+  },
+  {
+    clientCallName: 'client.auth.tokens.revoke',
+    fullyQualifiedName: 'auth.tokens.revoke',
+    httpMethod: 'delete',
+    httpPath: '/v3/auth/tokens/{token_id}',
+  },
 ];
 
 function allowedMethodsForCodeTool(options: McpOptions | undefined): SdkMethod[] | undefined {

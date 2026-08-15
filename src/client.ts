@@ -69,6 +69,7 @@ import {
   WebhookUpdateResponse,
   Webhooks,
 } from './resources/webhooks';
+import { Auth } from './resources/auth/auth';
 import {
   Contact,
   ContactCountResponse,
@@ -878,6 +879,7 @@ export class SendblueAPI {
    * Operations for managing verified-contact access to shared iMessage lines
    */
   verifiedContacts: API.VerifiedContacts = new API.VerifiedContacts(this);
+  auth: API.Auth = new API.Auth(this);
 }
 
 SendblueAPI.Messages = Messages;
@@ -893,6 +895,7 @@ SendblueAPI.Lines = Lines;
 SendblueAPI.RequestLocation = RequestLocation;
 SendblueAPI.Location = Location;
 SendblueAPI.VerifiedContacts = VerifiedContacts;
+SendblueAPI.Auth = Auth;
 
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -997,4 +1000,6 @@ export declare namespace SendblueAPI {
     type VerifiedContactListResponse as VerifiedContactListResponse,
     type VerifiedContactCreateParams as VerifiedContactCreateParams,
   };
+
+  export { Auth as Auth };
 }
