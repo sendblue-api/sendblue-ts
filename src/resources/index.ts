@@ -18,13 +18,14 @@ export {
   type ContactOptOutParams,
   type ContactVerifyParams,
 } from './contacts/contacts';
+export { Events, type AccountEvent, type EventStreamParams } from './events';
 export {
   Groups,
   type GroupModifyResponse,
   type GroupModifyParams,
   type GroupSendMessageParams,
 } from './groups';
-export { Lines } from './lines/lines';
+export { Lines, type LineState, type LineGetStateResponse } from './lines/lines';
 export {
   Location,
   type LocationRetrieveResponse,
@@ -66,6 +67,7 @@ export {
   type VerifiedContactListResponse,
   type VerifiedContactCreateParams,
 } from './verified-contacts';
+export { Verify } from './verify/verify';
 export {
   Webhooks,
   type WebhookConfiguration,

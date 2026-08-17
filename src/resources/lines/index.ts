@@ -7,4 +7,4 @@ export {
   type CallForwardingDeleteResponse,
   type CallForwardingUpdateParams,
 } from './call-forwarding';
-export { Lines } from './lines';
+export { Lines, type LineState, type LineGetStateResponse } from './lines';

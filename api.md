@@ -172,6 +172,15 @@ Methods:
 
 # Lines
 
+Types:
+
+- <code><a href="./src/resources/lines/lines.ts">LineState</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineGetStateResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/lines/state">client.lines.<a href="./src/resources/lines/lines.ts">getState</a>() -> LineGetStateResponse</code>
+
 ## CallForwarding
 
 Types:
@@ -236,3 +245,26 @@ Methods:
 
 - <code title="post /v3/auth/tokens">client.auth.tokens.<a href="./src/resources/auth/tokens.ts">create</a>({ ...params }) -> TokenCreateResponse</code>
 - <code title="delete /v3/auth/tokens/{token_id}">client.auth.tokens.<a href="./src/resources/auth/tokens.ts">revoke</a>(tokenID) -> void</code>
+
+# Events
+
+Types:
+
+- <code><a href="./src/resources/events.ts">AccountEvent</a></code>
+
+Methods:
+
+- <code title="get /api/v2/events">client.events.<a href="./src/resources/events.ts">stream</a>({ ...params }) -> AccountEvent</code>
+
+# Verify
+
+## Verifications
+
+Types:
+
+- <code><a href="./src/resources/verify/verifications.ts">VerificationState</a></code>
+- <code><a href="./src/resources/verify/verifications.ts">VerificationListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/verify/verifications">client.verify.verifications.<a href="./src/resources/verify/verifications.ts">list</a>({ ...params }) -> VerificationListResponse</code>

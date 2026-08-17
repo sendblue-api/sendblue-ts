@@ -141,6 +141,7 @@ const fuse = new Fuse(
     'client.v2.seats.list',
     'client.v2.seats.retrieve',
     'client.v2.groups.retrieve',
+    'client.lines.getState',
     'client.lines.callForwarding.delete',
     'client.lines.callForwarding.retrieve',
     'client.lines.callForwarding.update',
@@ -153,6 +154,8 @@ const fuse = new Fuse(
     'client.verifiedContacts.retrieve',
     'client.auth.tokens.create',
     'client.auth.tokens.revoke',
+    'client.events.stream',
+    'client.verify.verifications.list',
   ],
   { threshold: 1, shouldSort: true },
 );
