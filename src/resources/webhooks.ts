@@ -11,6 +11,11 @@ import { RequestOptions } from '../internal/request-options';
 export class Webhooks extends APIResource {
   /**
    * Add new webhooks to the account. Webhooks are appended to existing ones.
+   *
+   * With a line-scoped temporary bearer token, only receive webhooks can be added.
+   * String webhook URLs are automatically scoped to the token's phone numbers;
+   * webhook objects must use `sendblue_numbers` within the token's allowed phone
+   * numbers.
    */
   create(body: WebhookCreateParams, options?: RequestOptions): APIPromise<WebhookCreateResponse> {
     return this._client.post('/api/account/webhooks', { body, ...options });
@@ -24,14 +29,20 @@ export class Webhooks extends APIResource {
   }
 
   /**
-   * Get all webhooks configured for the authenticated account
+   * Get webhooks configured for the authenticated account.
+   *
+   * With a line-scoped temporary bearer token, this returns receive webhooks for the
+   * token's phone numbers.
    */
   list(options?: RequestOptions): APIPromise<WebhookListResponse> {
     return this._client.get('/api/account/webhooks', options);
   }
 
   /**
-   * Delete specific webhooks from the account
+   * Delete specific webhooks from the account.
+   *
+   * With a line-scoped temporary bearer token, this can only remove receive webhooks
+   * for the token's phone numbers.
    */
   delete(body: WebhookDeleteParams, options?: RequestOptions): APIPromise<WebhookDeleteResponse> {
     return this._client.delete('/api/account/webhooks', { body, ...options });
@@ -48,6 +59,12 @@ export interface WebhookConfiguration {
    * Secret for webhook signature verification
    */
   secret?: string;
+
+  /**
+   * Receive webhooks only. When present, only inbound messages received by these
+   * Sendblue line numbers are delivered to this webhook.
+   */
+  sendblue_numbers?: Array<string>;
 }
 
 export interface WebhookCreateResponse {
@@ -66,9 +83,9 @@ export namespace WebhookCreateResponse {
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for contact created events (URL strings only)
+     * Webhooks for contact created events
      */
-    contact_created?: Array<string>;
+    contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Global secret applied to all webhooks
@@ -118,9 +135,9 @@ export namespace WebhookUpdateResponse {
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for contact created events (URL strings only)
+     * Webhooks for contact created events
      */
-    contact_created?: Array<string>;
+    contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Global secret applied to all webhooks
@@ -168,9 +185,9 @@ export namespace WebhookListResponse {
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for contact created events (URL strings only)
+     * Webhooks for contact created events
      */
-    contact_created?: Array<string>;
+    contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Global secret applied to all webhooks
@@ -246,9 +263,9 @@ export namespace WebhookUpdateParams {
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
-     * Webhooks for contact created events (URL strings only)
+     * Webhooks for contact created events
      */
-    contact_created?: Array<string>;
+    contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Global secret applied to all webhooks

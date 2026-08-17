@@ -35,6 +35,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/send-message',
   },
   {
+    clientCallName: 'client.messages.updateAppCard',
+    fullyQualifiedName: 'messages.updateAppCard',
+    httpMethod: 'post',
+    httpPath: '/api/messages/{message_handle}/update-app-card',
+  },
+  {
     clientCallName: 'client.groups.modify',
     fullyQualifiedName: 'groups.modify',
     httpMethod: 'post',
@@ -197,6 +203,18 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/seats/count',
   },
   {
+    clientCallName: 'client.v2.groups.retrieve',
+    fullyQualifiedName: 'v2.groups.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v2/groups/{group_id}',
+  },
+  {
+    clientCallName: 'client.lines.getState',
+    fullyQualifiedName: 'lines.getState',
+    httpMethod: 'get',
+    httpPath: '/api/v2/lines/state',
+  },
+  {
     clientCallName: 'client.lines.callForwarding.retrieve',
     fullyQualifiedName: 'lines.callForwarding.retrieve',
     httpMethod: 'get',
@@ -213,6 +231,72 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'lines.callForwarding.delete',
     httpMethod: 'delete',
     httpPath: '/api/lines/{sendblue_number}/call-forwarding',
+  },
+  {
+    clientCallName: 'client.requestLocation.create',
+    fullyQualifiedName: 'requestLocation.create',
+    httpMethod: 'post',
+    httpPath: '/api/request-location',
+  },
+  {
+    clientCallName: 'client.location.retrieve',
+    fullyQualifiedName: 'location.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/location/{number}',
+  },
+  {
+    clientCallName: 'client.location.list',
+    fullyQualifiedName: 'location.list',
+    httpMethod: 'get',
+    httpPath: '/api/location',
+  },
+  {
+    clientCallName: 'client.location.watch',
+    fullyQualifiedName: 'location.watch',
+    httpMethod: 'get',
+    httpPath: '/api/location/{number}/watch',
+  },
+  {
+    clientCallName: 'client.verifiedContacts.create',
+    fullyQualifiedName: 'verifiedContacts.create',
+    httpMethod: 'post',
+    httpPath: '/v3/verified-contacts',
+  },
+  {
+    clientCallName: 'client.verifiedContacts.retrieve',
+    fullyQualifiedName: 'verifiedContacts.retrieve',
+    httpMethod: 'get',
+    httpPath: '/v3/verified-contacts/{phone_number}',
+  },
+  {
+    clientCallName: 'client.verifiedContacts.list',
+    fullyQualifiedName: 'verifiedContacts.list',
+    httpMethod: 'get',
+    httpPath: '/v3/verified-contacts',
+  },
+  {
+    clientCallName: 'client.auth.tokens.create',
+    fullyQualifiedName: 'auth.tokens.create',
+    httpMethod: 'post',
+    httpPath: '/v3/auth/tokens',
+  },
+  {
+    clientCallName: 'client.auth.tokens.revoke',
+    fullyQualifiedName: 'auth.tokens.revoke',
+    httpMethod: 'delete',
+    httpPath: '/v3/auth/tokens/{token_id}',
+  },
+  {
+    clientCallName: 'client.events.stream',
+    fullyQualifiedName: 'events.stream',
+    httpMethod: 'get',
+    httpPath: '/api/v2/events',
+  },
+  {
+    clientCallName: 'client.verify.verifications.list',
+    fullyQualifiedName: 'verify.verifications.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/verify/verifications',
   },
 ];
 

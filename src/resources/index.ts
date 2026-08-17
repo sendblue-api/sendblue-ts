@@ -1,5 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+export { Auth } from './auth/auth';
 export {
   Contacts,
   type Contact,
@@ -17,13 +18,23 @@ export {
   type ContactOptOutParams,
   type ContactVerifyParams,
 } from './contacts/contacts';
+export { Events, type AccountEvent, type EventStreamParams } from './events';
 export {
   Groups,
   type GroupModifyResponse,
   type GroupModifyParams,
   type GroupSendMessageParams,
 } from './groups';
-export { Lines } from './lines/lines';
+export { Lines, type LineState, type LineGetStateResponse } from './lines/lines';
+export {
+  Location,
+  type LocationRetrieveResponse,
+  type LocationListResponse,
+  type LocationWatchResponse,
+  type LocationRetrieveParams,
+  type LocationListParams,
+  type LocationWatchParams,
+} from './location';
 export { Lookups, type LookupLookupNumberResponse, type LookupLookupNumberParams } from './lookups';
 export { MediaObjects, type MediaObjectUploadResponse, type MediaObjectUploadParams } from './media-objects';
 export {
@@ -35,7 +46,13 @@ export {
   type MessageListParams,
   type MessageGetStatusParams,
   type MessageSendParams,
+  type MessageUpdateAppCardParams,
 } from './messages';
+export {
+  RequestLocation,
+  type RequestLocationCreateResponse,
+  type RequestLocationCreateParams,
+} from './request-location';
 export { SendCarousel, type SendCarouselSendResponse, type SendCarouselSendParams } from './send-carousel';
 export {
   TypingIndicators,
@@ -43,6 +60,14 @@ export {
   type TypingIndicatorSendParams,
 } from './typing-indicators';
 export { V2 } from './v2/v2';
+export {
+  VerifiedContacts,
+  type VerifiedContactCreateResponse,
+  type VerifiedContactRetrieveResponse,
+  type VerifiedContactListResponse,
+  type VerifiedContactCreateParams,
+} from './verified-contacts';
+export { Verify } from './verify/verify';
 export {
   Webhooks,
   type WebhookConfiguration,

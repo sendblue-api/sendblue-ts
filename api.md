@@ -13,6 +13,7 @@ Methods:
 - <code title="get /api/v2/messages">client.messages.<a href="./src/resources/messages.ts">list</a>({ ...params }) -> MessageListResponse</code>
 - <code title="get /api/status">client.messages.<a href="./src/resources/messages.ts">getStatus</a>({ ...params }) -> MessageResponse</code>
 - <code title="post /api/send-message">client.messages.<a href="./src/resources/messages.ts">send</a>({ ...params }) -> MessageResponse</code>
+- <code title="post /api/messages/{message_handle}/update-app-card">client.messages.<a href="./src/resources/messages.ts">updateAppCard</a>(messageHandle, { ...params }) -> MessageResponse</code>
 
 # Groups
 
@@ -159,7 +160,26 @@ Methods:
 - <code title="get /api/v2/seats">client.v2.seats.<a href="./src/resources/v2/seats.ts">list</a>({ ...params }) -> SeatListResponse</code>
 - <code title="get /api/v2/seats/count">client.v2.seats.<a href="./src/resources/v2/seats.ts">count</a>({ ...params }) -> SeatCountResponse</code>
 
+## Groups
+
+Types:
+
+- <code><a href="./src/resources/v2/groups.ts">GroupRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/groups/{group_id}">client.v2.groups.<a href="./src/resources/v2/groups.ts">retrieve</a>(groupID) -> GroupRetrieveResponse</code>
+
 # Lines
+
+Types:
+
+- <code><a href="./src/resources/lines/lines.ts">LineState</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineGetStateResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/lines/state">client.lines.<a href="./src/resources/lines/lines.ts">getState</a>() -> LineGetStateResponse</code>
 
 ## CallForwarding
 
@@ -174,3 +194,77 @@ Methods:
 - <code title="get /api/lines/{sendblue_number}/call-forwarding">client.lines.callForwarding.<a href="./src/resources/lines/call-forwarding.ts">retrieve</a>(sendblueNumber) -> CallForwardingRetrieveResponse</code>
 - <code title="put /api/lines/{sendblue_number}/call-forwarding">client.lines.callForwarding.<a href="./src/resources/lines/call-forwarding.ts">update</a>(sendblueNumber, { ...params }) -> CallForwardingUpdateResponse</code>
 - <code title="delete /api/lines/{sendblue_number}/call-forwarding">client.lines.callForwarding.<a href="./src/resources/lines/call-forwarding.ts">delete</a>(sendblueNumber) -> CallForwardingDeleteResponse</code>
+
+# RequestLocation
+
+Types:
+
+- <code><a href="./src/resources/request-location.ts">RequestLocationCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /api/request-location">client.requestLocation.<a href="./src/resources/request-location.ts">create</a>({ ...params }) -> RequestLocationCreateResponse</code>
+
+# Location
+
+Types:
+
+- <code><a href="./src/resources/location.ts">LocationRetrieveResponse</a></code>
+- <code><a href="./src/resources/location.ts">LocationListResponse</a></code>
+- <code><a href="./src/resources/location.ts">LocationWatchResponse</a></code>
+
+Methods:
+
+- <code title="get /api/location/{number}">client.location.<a href="./src/resources/location.ts">retrieve</a>(number, { ...params }) -> LocationRetrieveResponse</code>
+- <code title="get /api/location">client.location.<a href="./src/resources/location.ts">list</a>({ ...params }) -> LocationListResponse</code>
+- <code title="get /api/location/{number}/watch">client.location.<a href="./src/resources/location.ts">watch</a>(number, { ...params }) -> LocationWatchResponse</code>
+
+# VerifiedContacts
+
+Types:
+
+- <code><a href="./src/resources/verified-contacts.ts">VerifiedContactCreateResponse</a></code>
+- <code><a href="./src/resources/verified-contacts.ts">VerifiedContactRetrieveResponse</a></code>
+- <code><a href="./src/resources/verified-contacts.ts">VerifiedContactListResponse</a></code>
+
+Methods:
+
+- <code title="post /v3/verified-contacts">client.verifiedContacts.<a href="./src/resources/verified-contacts.ts">create</a>({ ...params }) -> VerifiedContactCreateResponse</code>
+- <code title="get /v3/verified-contacts/{phone_number}">client.verifiedContacts.<a href="./src/resources/verified-contacts.ts">retrieve</a>(phoneNumber) -> VerifiedContactRetrieveResponse</code>
+- <code title="get /v3/verified-contacts">client.verifiedContacts.<a href="./src/resources/verified-contacts.ts">list</a>() -> VerifiedContactListResponse</code>
+
+# Auth
+
+## Tokens
+
+Types:
+
+- <code><a href="./src/resources/auth/tokens.ts">TokenCreateResponse</a></code>
+
+Methods:
+
+- <code title="post /v3/auth/tokens">client.auth.tokens.<a href="./src/resources/auth/tokens.ts">create</a>({ ...params }) -> TokenCreateResponse</code>
+- <code title="delete /v3/auth/tokens/{token_id}">client.auth.tokens.<a href="./src/resources/auth/tokens.ts">revoke</a>(tokenID) -> void</code>
+
+# Events
+
+Types:
+
+- <code><a href="./src/resources/events.ts">AccountEvent</a></code>
+
+Methods:
+
+- <code title="get /api/v2/events">client.events.<a href="./src/resources/events.ts">stream</a>({ ...params }) -> AccountEvent</code>
+
+# Verify
+
+## Verifications
+
+Types:
+
+- <code><a href="./src/resources/verify/verifications.ts">VerificationState</a></code>
+- <code><a href="./src/resources/verify/verifications.ts">VerificationListResponse</a></code>
+
+Methods:
+
+- <code title="get /api/v2/verify/verifications">client.verify.verifications.<a href="./src/resources/verify/verifications.ts">list</a>({ ...params }) -> VerificationListResponse</code>

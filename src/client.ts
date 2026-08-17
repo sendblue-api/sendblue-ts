@@ -17,7 +17,17 @@ import * as Errors from './core/error';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
+import { AccountEvent, EventStreamParams, Events } from './resources/events';
 import { GroupModifyParams, GroupModifyResponse, GroupSendMessageParams, Groups } from './resources/groups';
+import {
+  Location,
+  LocationListParams,
+  LocationListResponse,
+  LocationRetrieveParams,
+  LocationRetrieveResponse,
+  LocationWatchParams,
+  LocationWatchResponse,
+} from './resources/location';
 import { LookupLookupNumberParams, LookupLookupNumberResponse, Lookups } from './resources/lookups';
 import { MediaObjectUploadParams, MediaObjectUploadResponse, MediaObjects } from './resources/media-objects';
 import {
@@ -28,14 +38,27 @@ import {
   MessageResponse,
   MessageRetrieveResponse,
   MessageSendParams,
+  MessageUpdateAppCardParams,
   Messages,
 } from './resources/messages';
+import {
+  RequestLocation,
+  RequestLocationCreateParams,
+  RequestLocationCreateResponse,
+} from './resources/request-location';
 import { SendCarousel, SendCarouselSendParams, SendCarouselSendResponse } from './resources/send-carousel';
 import {
   TypingIndicatorSendParams,
   TypingIndicatorSendResponse,
   TypingIndicators,
 } from './resources/typing-indicators';
+import {
+  VerifiedContactCreateParams,
+  VerifiedContactCreateResponse,
+  VerifiedContactListResponse,
+  VerifiedContactRetrieveResponse,
+  VerifiedContacts,
+} from './resources/verified-contacts';
 import {
   WebhookConfiguration,
   WebhookCreateParams,
@@ -47,6 +70,7 @@ import {
   WebhookUpdateResponse,
   Webhooks,
 } from './resources/webhooks';
+import { Auth } from './resources/auth/auth';
 import {
   Contact,
   ContactCountResponse,
@@ -64,8 +88,9 @@ import {
   ContactVerifyResponse,
   Contacts,
 } from './resources/contacts/contacts';
-import { Lines } from './resources/lines/lines';
+import { LineGetStateResponse, LineState, Lines } from './resources/lines/lines';
 import { V2 } from './resources/v2/v2';
+import { Verify } from './resources/verify/verify';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -843,7 +868,28 @@ export class SendblueAPI {
    */
   sendCarousel: API.SendCarousel = new API.SendCarousel(this);
   v2: API.V2 = new API.V2(this);
+  /**
+   * Sendblue line configuration and health state
+   */
   lines: API.Lines = new API.Lines(this);
+  /**
+   * Operations for sending and managing messages
+   */
+  requestLocation: API.RequestLocation = new API.RequestLocation(this);
+  /**
+   * Operations for sending and managing messages
+   */
+  location: API.Location = new API.Location(this);
+  /**
+   * Operations for managing verified-contact access to shared iMessage lines
+   */
+  verifiedContacts: API.VerifiedContacts = new API.VerifiedContacts(this);
+  auth: API.Auth = new API.Auth(this);
+  /**
+   * Authenticated live account events and recovery contracts
+   */
+  events: API.Events = new API.Events(this);
+  verify: API.Verify = new API.Verify(this);
 }
 
 SendblueAPI.Messages = Messages;
@@ -856,6 +902,12 @@ SendblueAPI.Webhooks = Webhooks;
 SendblueAPI.SendCarousel = SendCarousel;
 SendblueAPI.V2 = V2;
 SendblueAPI.Lines = Lines;
+SendblueAPI.RequestLocation = RequestLocation;
+SendblueAPI.Location = Location;
+SendblueAPI.VerifiedContacts = VerifiedContacts;
+SendblueAPI.Auth = Auth;
+SendblueAPI.Events = Events;
+SendblueAPI.Verify = Verify;
 
 export declare namespace SendblueAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -869,6 +921,7 @@ export declare namespace SendblueAPI {
     type MessageListParams as MessageListParams,
     type MessageGetStatusParams as MessageGetStatusParams,
     type MessageSendParams as MessageSendParams,
+    type MessageUpdateAppCardParams as MessageUpdateAppCardParams,
   };
 
   export {
@@ -934,5 +987,35 @@ export declare namespace SendblueAPI {
 
   export { V2 as V2 };
 
-  export { Lines as Lines };
+  export { Lines as Lines, type LineState as LineState, type LineGetStateResponse as LineGetStateResponse };
+
+  export {
+    RequestLocation as RequestLocation,
+    type RequestLocationCreateResponse as RequestLocationCreateResponse,
+    type RequestLocationCreateParams as RequestLocationCreateParams,
+  };
+
+  export {
+    Location as Location,
+    type LocationRetrieveResponse as LocationRetrieveResponse,
+    type LocationListResponse as LocationListResponse,
+    type LocationWatchResponse as LocationWatchResponse,
+    type LocationRetrieveParams as LocationRetrieveParams,
+    type LocationListParams as LocationListParams,
+    type LocationWatchParams as LocationWatchParams,
+  };
+
+  export {
+    VerifiedContacts as VerifiedContacts,
+    type VerifiedContactCreateResponse as VerifiedContactCreateResponse,
+    type VerifiedContactRetrieveResponse as VerifiedContactRetrieveResponse,
+    type VerifiedContactListResponse as VerifiedContactListResponse,
+    type VerifiedContactCreateParams as VerifiedContactCreateParams,
+  };
+
+  export { Auth as Auth };
+
+  export { Events as Events, type AccountEvent as AccountEvent, type EventStreamParams as EventStreamParams };
+
+  export { Verify as Verify };
 }

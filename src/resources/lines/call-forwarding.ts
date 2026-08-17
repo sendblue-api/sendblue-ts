@@ -5,6 +5,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Sendblue line configuration and health state
+ */
 export class CallForwarding extends APIResource {
   /**
    * Returns the current call forwarding number for a dedicated phone line.

@@ -37,9 +37,9 @@ const client = new SendblueAPI({
 });
 
 const messageResponse = await client.messages.send({
-  content: 'REPLACE_ME',
   from_number: 'REPLACE_ME',
   number: 'REPLACE_ME',
+  content: 'REPLACE_ME',
 });
 
 console.log(messageResponse.seat_id);
@@ -59,9 +59,9 @@ const client = new SendblueAPI({
 });
 
 const params: SendblueAPI.MessageSendParams = {
-  content: 'REPLACE_ME',
   from_number: 'REPLACE_ME',
   number: 'REPLACE_ME',
+  content: 'REPLACE_ME',
 };
 const messageResponse: SendblueAPI.MessageResponse = await client.messages.send(params);
 ```
@@ -78,9 +78,9 @@ a subclass of `APIError` will be thrown:
 ```ts
 const messageResponse = await client.messages
   .send({
-    content: 'REPLACE_ME',
     from_number: 'REPLACE_ME',
     number: 'REPLACE_ME',
+    content: 'REPLACE_ME',
   })
   .catch(async (err) => {
     if (err instanceof SendblueAPI.APIError) {
@@ -123,9 +123,9 @@ const client = new SendblueAPI({
 
 // Or, configure per-request:
 await client.messages.send({
-  content: 'REPLACE_ME',
   from_number: 'REPLACE_ME',
   number: 'REPLACE_ME',
+  content: 'REPLACE_ME',
 }, {
   maxRetries: 5,
 });
@@ -144,9 +144,9 @@ const client = new SendblueAPI({
 
 // Override per-request:
 await client.messages.send({
-  content: 'REPLACE_ME',
   from_number: 'REPLACE_ME',
   number: 'REPLACE_ME',
+  content: 'REPLACE_ME',
 }, {
   timeout: 5 * 1000,
 });
@@ -172,9 +172,9 @@ const client = new SendblueAPI();
 
 const response = await client.messages
   .send({
-    content: 'REPLACE_ME',
     from_number: 'REPLACE_ME',
     number: 'REPLACE_ME',
+    content: 'REPLACE_ME',
   })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
@@ -182,9 +182,9 @@ console.log(response.statusText); // access the underlying Response object
 
 const { data: messageResponse, response: raw } = await client.messages
   .send({
-    content: 'REPLACE_ME',
     from_number: 'REPLACE_ME',
     number: 'REPLACE_ME',
+    content: 'REPLACE_ME',
   })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));

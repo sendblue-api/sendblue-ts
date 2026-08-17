@@ -71,12 +71,11 @@ export class Messages extends APIResource {
   }
 
   /**
-   * Send an iMessage, SMS, or MMS to a single recipient
+   * Send an iMessage, SMS, MMS, or Sendblue App Card to a single recipient
    *
    * @example
    * ```ts
    * const messageResponse = await client.messages.send({
-   *   content: 'Hello, World!',
    *   from_number: '+19998887777',
    *   number: '+19998887777',
    * });
@@ -84,6 +83,26 @@ export class Messages extends APIResource {
    */
   send(body: MessageSendParams, options?: RequestOptions): APIPromise<MessageResponse> {
     return this._client.post('/api/send-message', { body, ...options });
+  }
+
+  /**
+   * Continues an existing App Card by sending a new Apple message in the same
+   * iMessage session, from the same sender line and inline-reply context. The
+   * continuation receives its own message handle and delivery/read status updates.
+   *
+   * @example
+   * ```ts
+   * const messageResponse = await client.messages.updateAppCard(
+   *   'message_handle',
+   * );
+   * ```
+   */
+  updateAppCard(
+    messageHandle: string,
+    body: MessageUpdateAppCardParams,
+    options?: RequestOptions,
+  ): APIPromise<MessageResponse> {
+    return this._client.post(path`/api/messages/${messageHandle}/update-app-card`, { body, ...options });
   }
 }
 
@@ -134,6 +153,12 @@ export interface MessageContent {
   message_handle?: string;
 
   /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  reply_to?: MessageContent.ReplyTo;
+
+  /**
    * UUID of the seat that sent the message. Present when `seat_id` was provided on
    * send, or for dashboard-originated group messages.
    */
@@ -163,9 +188,51 @@ export interface MessageContent {
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR' | 'RECEIVED';
 
   /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  thread_originator?: MessageContent.ThreadOriginator;
+
+  /**
    * Recipient phone number
    */
   to_number?: string;
+}
+
+export namespace MessageContent {
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  export interface ReplyTo {
+    /**
+     * Public handle of the immediate parent message
+     */
+    message_handle: string;
+
+    /**
+     * Advanced override for a known part of a multipart target. Omit this in normal
+     * reply requests and never guess it; requests default to 0. When replying to an
+     * attachment represented by its own webhook, use that webhook's `message_handle`
+     * and omit `part_index` so Sendblue can use the stored authoritative part.
+     * Responses omit it when no authoritative immediate-parent part is available.
+     */
+    part_index?: number;
+  }
+
+  /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  export interface ThreadOriginator {
+    /**
+     * Public handle of the thread's root message
+     */
+    message_handle: string;
+
+    /**
+     * Opaque Apple thread-originator part descriptor
+     */
+    part?: string;
+  }
 }
 
 export interface MessageResponse {
@@ -173,6 +240,11 @@ export interface MessageResponse {
    * Email of the account that sent the message
    */
   account_email?: string;
+
+  /**
+   * App Card data sent or received with this message.
+   */
+  app_card?: MessageResponse.AppCard | MessageResponse.InboundAppCard;
 
   /**
    * Message content
@@ -210,6 +282,11 @@ export interface MessageResponse {
   is_outbound?: boolean;
 
   /**
+   * Decoded Find My location share coordinates.
+   */
+  location?: MessageResponse.Location;
+
+  /**
    * URL of attached media
    */
   media_url?: string;
@@ -219,10 +296,18 @@ export interface MessageResponse {
    */
   message_handle?: string;
 
+  message_type?: 'message' | 'group' | 'location';
+
   /**
    * Recipient phone number
    */
   number?: string;
+
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  reply_to?: MessageResponse.ReplyTo;
 
   /**
    * UUID of the seat that sent the message. Present when `seat_id` was provided on
@@ -255,6 +340,186 @@ export interface MessageResponse {
   sender_email?: string | null;
 
   status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR';
+
+  /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  thread_originator?: MessageResponse.ThreadOriginator;
+}
+
+export namespace MessageResponse {
+  /**
+   * A Sendblue App Card rendered with Apple's Messages framework. App Cards require
+   * a V2 Mac line and an iMessage-capable recipient; they never fall back to SMS.
+   * The URL is delivered to the identified Messages extension when the recipient
+   * taps the card. An initial App Card may include `reply_to` to create an inline
+   * reply. Later state changes use the update endpoint, which sends a new Apple
+   * message in the same App Card session. The feature is unavailable on the free
+   * plan.
+   */
+  export interface AppCard {
+    appName: string;
+
+    extensionBundleId: string;
+
+    /**
+     * Visible card fields mirroring Apple's MSMessageTemplateLayout.
+     */
+    layout: AppCard.Layout;
+
+    teamId: string;
+
+    /**
+     * URL delivered to the iMessage extension on tap. HTTPS URLs are limited to 2048
+     * characters; data URLs carrying inline app state are limited to 16384.
+     */
+    url: string;
+
+    /**
+     * Optional numeric App Store ID for recipients without the extension.
+     */
+    appStoreId?: number;
+
+    /**
+     * Fallback text for notifications and surfaces that cannot render the card.
+     */
+    fallbackText?: string;
+
+    /**
+     * Use Apple's live layout when the extension is installed; false always sends the
+     * static template layout.
+     */
+    interactive?: boolean;
+
+    /**
+     * Optional caller-supplied App Card session UUID. Generated automatically when
+     * omitted.
+     */
+    sessionIdentifier?: string;
+
+    /**
+     * Original message handle for an App Card continuation returned by the update
+     * endpoint.
+     */
+    updateMessageHandle?: string;
+  }
+
+  export namespace AppCard {
+    /**
+     * Visible card fields mirroring Apple's MSMessageTemplateLayout.
+     */
+    export interface Layout {
+      caption?: string;
+
+      /**
+       * Secondary text overlaid on the preview image. Requires imageUrl.
+       */
+      imageSubtitle?: string;
+
+      /**
+       * Text overlaid on the preview image. Requires imageUrl.
+       */
+      imageTitle?: string;
+
+      /**
+       * HTTPS preview image fetched by the worker and sent as a hidden card attachment.
+       * JPEG, PNG, HEIC, HEIF, and WebP are supported up to 10 MB.
+       */
+      imageUrl?: string;
+
+      subcaption?: string;
+
+      /**
+       * Fallback text used in notifications and non-rendering surfaces.
+       */
+      summary?: string;
+
+      trailingCaption?: string;
+
+      trailingSubcaption?: string;
+    }
+  }
+
+  /**
+   * App Card session metadata received from an iMessage contact.
+   */
+  export interface InboundAppCard {
+    balloonBundleId: string;
+
+    extensionBundleId: string;
+
+    /**
+     * Retry-stable occurrence revision assigned to this inbound App Card state.
+     */
+    revision: number;
+
+    sessionIdentifier: string;
+
+    teamId: string;
+
+    url: string;
+  }
+
+  /**
+   * Decoded Find My location share coordinates.
+   */
+  export interface Location {
+    latitude: number;
+
+    longitude: number;
+
+    /**
+     * Horizontal accuracy in meters
+     */
+    accuracy?: number;
+
+    /**
+     * Altitude in meters
+     */
+    altitude?: number;
+
+    /**
+     * Share duration selected by the recipient
+     */
+    duration?: string;
+
+    timestamp?: string;
+  }
+
+  /**
+   * Immediate parent of an iMessage inline reply. The target must belong to the same
+   * account, conversation, and sending line.
+   */
+  export interface ReplyTo {
+    /**
+     * Public handle of the immediate parent message
+     */
+    message_handle: string;
+
+    /**
+     * Advanced override for a known part of a multipart target. Omit this in normal
+     * reply requests and never guess it; requests default to 0. When replying to an
+     * attachment represented by its own webhook, use that webhook's `message_handle`
+     * and omit `part_index` so Sendblue can use the stored authoritative part.
+     * Responses omit it when no authoritative immediate-parent part is available.
+     */
+    part_index?: number;
+  }
+
+  /**
+   * Message that originated an iMessage inline-reply thread.
+   */
+  export interface ThreadOriginator {
+    /**
+     * Public handle of the thread's root message
+     */
+    message_handle: string;
+
+    /**
+     * Opaque Apple thread-originator part descriptor
+     */
+    part?: string;
+  }
 }
 
 export interface MessageRetrieveResponse {
@@ -326,6 +591,11 @@ export namespace MessageRetrieveResponse {
     is_outbound?: boolean;
 
     /**
+     * Decoded Find My location share coordinates.
+     */
+    location?: Data.Location;
+
+    /**
      * URL of attached media
      */
     media_url?: string | null;
@@ -335,7 +605,7 @@ export namespace MessageRetrieveResponse {
      */
     message_handle?: string;
 
-    message_type?: 'message' | 'group';
+    message_type?: 'message' | 'group' | 'location';
 
     /**
      * Primary phone number (to_number for outbound, from_number for inbound)
@@ -356,6 +626,12 @@ export namespace MessageRetrieveResponse {
      * Account plan used for this message
      */
     plan?: string;
+
+    /**
+     * Immediate parent of an iMessage inline reply. The target must belong to the same
+     * account, conversation, and sending line.
+     */
+    reply_to?: Data.ReplyTo;
 
     /**
      * UUID of the seat that sent the message. Present when `seat_id` was provided on
@@ -410,6 +686,11 @@ export namespace MessageRetrieveResponse {
       | 'SUCCESS';
 
     /**
+     * Message that originated an iMessage inline-reply thread.
+     */
+    thread_originator?: Data.ThreadOriginator;
+
+    /**
      * Recipient phone number
      */
     to_number?: string;
@@ -418,6 +699,69 @@ export namespace MessageRetrieveResponse {
      * Whether the message was downgraded from iMessage to SMS
      */
     was_downgraded?: boolean;
+  }
+
+  export namespace Data {
+    /**
+     * Decoded Find My location share coordinates.
+     */
+    export interface Location {
+      latitude: number;
+
+      longitude: number;
+
+      /**
+       * Horizontal accuracy in meters
+       */
+      accuracy?: number;
+
+      /**
+       * Altitude in meters
+       */
+      altitude?: number;
+
+      /**
+       * Share duration selected by the recipient
+       */
+      duration?: string;
+
+      timestamp?: string;
+    }
+
+    /**
+     * Immediate parent of an iMessage inline reply. The target must belong to the same
+     * account, conversation, and sending line.
+     */
+    export interface ReplyTo {
+      /**
+       * Public handle of the immediate parent message
+       */
+      message_handle: string;
+
+      /**
+       * Advanced override for a known part of a multipart target. Omit this in normal
+       * reply requests and never guess it; requests default to 0. When replying to an
+       * attachment represented by its own webhook, use that webhook's `message_handle`
+       * and omit `part_index` so Sendblue can use the stored authoritative part.
+       * Responses omit it when no authoritative immediate-parent part is available.
+       */
+      part_index?: number;
+    }
+
+    /**
+     * Message that originated an iMessage inline-reply thread.
+     */
+    export interface ThreadOriginator {
+      /**
+       * Public handle of the thread's root message
+       */
+      message_handle: string;
+
+      /**
+       * Opaque Apple thread-originator part descriptor
+       */
+      part?: string;
+    }
   }
 }
 
@@ -492,6 +836,11 @@ export namespace MessageListResponse {
     is_outbound?: boolean;
 
     /**
+     * Decoded Find My location share coordinates.
+     */
+    location?: Data.Location;
+
+    /**
      * URL of attached media
      */
     media_url?: string | null;
@@ -501,7 +850,7 @@ export namespace MessageListResponse {
      */
     message_handle?: string;
 
-    message_type?: 'message' | 'group';
+    message_type?: 'message' | 'group' | 'location';
 
     /**
      * Primary phone number (to_number for outbound, from_number for inbound)
@@ -522,6 +871,12 @@ export namespace MessageListResponse {
      * Account plan used for this message
      */
     plan?: string;
+
+    /**
+     * Immediate parent of an iMessage inline reply. The target must belong to the same
+     * account, conversation, and sending line.
+     */
+    reply_to?: Data.ReplyTo;
 
     /**
      * UUID of the seat that sent the message. Present when `seat_id` was provided on
@@ -576,6 +931,11 @@ export namespace MessageListResponse {
       | 'SUCCESS';
 
     /**
+     * Message that originated an iMessage inline-reply thread.
+     */
+    thread_originator?: Data.ThreadOriginator;
+
+    /**
      * Recipient phone number
      */
     to_number?: string;
@@ -584,6 +944,69 @@ export namespace MessageListResponse {
      * Whether the message was downgraded from iMessage to SMS
      */
     was_downgraded?: boolean;
+  }
+
+  export namespace Data {
+    /**
+     * Decoded Find My location share coordinates.
+     */
+    export interface Location {
+      latitude: number;
+
+      longitude: number;
+
+      /**
+       * Horizontal accuracy in meters
+       */
+      accuracy?: number;
+
+      /**
+       * Altitude in meters
+       */
+      altitude?: number;
+
+      /**
+       * Share duration selected by the recipient
+       */
+      duration?: string;
+
+      timestamp?: string;
+    }
+
+    /**
+     * Immediate parent of an iMessage inline reply. The target must belong to the same
+     * account, conversation, and sending line.
+     */
+    export interface ReplyTo {
+      /**
+       * Public handle of the immediate parent message
+       */
+      message_handle: string;
+
+      /**
+       * Advanced override for a known part of a multipart target. Omit this in normal
+       * reply requests and never guess it; requests default to 0. When replying to an
+       * attachment represented by its own webhook, use that webhook's `message_handle`
+       * and omit `part_index` so Sendblue can use the stored authoritative part.
+       * Responses omit it when no authoritative immediate-parent part is available.
+       */
+      part_index?: number;
+    }
+
+    /**
+     * Message that originated an iMessage inline-reply thread.
+     */
+    export interface ThreadOriginator {
+      /**
+       * Public handle of the thread's root message
+       */
+      message_handle: string;
+
+      /**
+       * Opaque Apple thread-originator part descriptor
+       */
+      part?: string;
+    }
   }
 
   export interface Pagination {
@@ -745,11 +1168,6 @@ export interface MessageGetStatusParams {
 
 export interface MessageSendParams {
   /**
-   * Message text content
-   */
-  content: string;
-
-  /**
    * **REQUIRED** - The phone number to send from. Must be one of your registered
    * Sendblue phone numbers in E.164 format. Without this parameter, the message will
    * fail to send.
@@ -762,9 +1180,31 @@ export interface MessageSendParams {
   number: string;
 
   /**
+   * A Sendblue App Card rendered with Apple's Messages framework. App Cards require
+   * a V2 Mac line and an iMessage-capable recipient; they never fall back to SMS.
+   * The URL is delivered to the identified Messages extension when the recipient
+   * taps the card. An initial App Card may include `reply_to` to create an inline
+   * reply. Later state changes use the update endpoint, which sends a new Apple
+   * message in the same App Card session. The feature is unavailable on the free
+   * plan.
+   */
+  app_card?: MessageSendParams.AppCard;
+
+  /**
+   * Message text content. Optional when `media_url` or `app_card` is provided.
+   */
+  content?: string;
+
+  /**
    * URL of media file to send (images, videos, etc.)
    */
   media_url?: string;
+
+  /**
+   * Optional inline-reply target. This may be combined with `app_card`; the
+   * resulting App Card is sent as an inline reply to the target.
+   */
+  reply_to?: MessageSendParams.ReplyTo;
 
   /**
    * Optional. Identifies the seat (user) sending the message so the message is
@@ -798,6 +1238,190 @@ export interface MessageSendParams {
   status_callback?: string;
 }
 
+export namespace MessageSendParams {
+  /**
+   * A Sendblue App Card rendered with Apple's Messages framework. App Cards require
+   * a V2 Mac line and an iMessage-capable recipient; they never fall back to SMS.
+   * The URL is delivered to the identified Messages extension when the recipient
+   * taps the card. An initial App Card may include `reply_to` to create an inline
+   * reply. Later state changes use the update endpoint, which sends a new Apple
+   * message in the same App Card session. The feature is unavailable on the free
+   * plan.
+   */
+  export interface AppCard {
+    appName: string;
+
+    extensionBundleId: string;
+
+    /**
+     * Visible card fields mirroring Apple's MSMessageTemplateLayout.
+     */
+    layout: AppCard.Layout;
+
+    teamId: string;
+
+    /**
+     * URL delivered to the iMessage extension on tap. HTTPS URLs are limited to 2048
+     * characters; data URLs carrying inline app state are limited to 16384.
+     */
+    url: string;
+
+    /**
+     * Optional numeric App Store ID for recipients without the extension.
+     */
+    appStoreId?: number;
+
+    /**
+     * Fallback text for notifications and surfaces that cannot render the card.
+     */
+    fallbackText?: string;
+
+    /**
+     * Use Apple's live layout when the extension is installed; false always sends the
+     * static template layout.
+     */
+    interactive?: boolean;
+
+    /**
+     * Optional caller-supplied App Card session UUID. Generated automatically when
+     * omitted.
+     */
+    sessionIdentifier?: string;
+  }
+
+  export namespace AppCard {
+    /**
+     * Visible card fields mirroring Apple's MSMessageTemplateLayout.
+     */
+    export interface Layout {
+      caption?: string;
+
+      /**
+       * Secondary text overlaid on the preview image. Requires imageUrl.
+       */
+      imageSubtitle?: string;
+
+      /**
+       * Text overlaid on the preview image. Requires imageUrl.
+       */
+      imageTitle?: string;
+
+      /**
+       * HTTPS preview image fetched by the worker and sent as a hidden card attachment.
+       * JPEG, PNG, HEIC, HEIF, and WebP are supported up to 10 MB.
+       */
+      imageUrl?: string;
+
+      subcaption?: string;
+
+      /**
+       * Fallback text used in notifications and non-rendering surfaces.
+       */
+      summary?: string;
+
+      trailingCaption?: string;
+
+      trailingSubcaption?: string;
+    }
+  }
+
+  /**
+   * Optional inline-reply target. This may be combined with `app_card`; the
+   * resulting App Card is sent as an inline reply to the target.
+   */
+  export interface ReplyTo {
+    /**
+     * Public handle of the immediate parent message
+     */
+    message_handle: string;
+
+    /**
+     * Advanced override for a known part of a multipart target. Omit this in normal
+     * reply requests and never guess it; requests default to 0. When replying to an
+     * attachment represented by its own webhook, use that webhook's `message_handle`
+     * and omit `part_index` so Sendblue can use the stored authoritative part.
+     * Responses omit it when no authoritative immediate-parent part is available.
+     */
+    part_index?: number;
+  }
+}
+
+export interface MessageUpdateAppCardParams {
+  /**
+   * Replacement fallback text for notifications and non-rendering surfaces.
+   */
+  fallback_text?: string;
+
+  /**
+   * Reusing this key for the same App Card target returns the original update
+   * instead of sending again.
+   */
+  idempotency_key?: string;
+
+  interactive?: boolean;
+
+  /**
+   * Visible card fields mirroring Apple's MSMessageTemplateLayout.
+   */
+  layout?: MessageUpdateAppCardParams.Layout;
+
+  /**
+   * The iMessage expressive message style for this update.
+   */
+  send_style?:
+    | 'celebration'
+    | 'shooting_star'
+    | 'fireworks'
+    | 'lasers'
+    | 'love'
+    | 'confetti'
+    | 'balloons'
+    | 'spotlight'
+    | 'echo'
+    | 'invisible'
+    | 'gentle'
+    | 'loud'
+    | 'slam';
+
+  url?: string;
+}
+
+export namespace MessageUpdateAppCardParams {
+  /**
+   * Visible card fields mirroring Apple's MSMessageTemplateLayout.
+   */
+  export interface Layout {
+    caption?: string;
+
+    /**
+     * Secondary text overlaid on the preview image. Requires imageUrl.
+     */
+    imageSubtitle?: string;
+
+    /**
+     * Text overlaid on the preview image. Requires imageUrl.
+     */
+    imageTitle?: string;
+
+    /**
+     * HTTPS preview image fetched by the worker and sent as a hidden card attachment.
+     * JPEG, PNG, HEIC, HEIF, and WebP are supported up to 10 MB.
+     */
+    imageUrl?: string;
+
+    subcaption?: string;
+
+    /**
+     * Fallback text used in notifications and non-rendering surfaces.
+     */
+    summary?: string;
+
+    trailingCaption?: string;
+
+    trailingSubcaption?: string;
+  }
+}
+
 export declare namespace Messages {
   export {
     type MessageContent as MessageContent,
@@ -807,5 +1431,6 @@ export declare namespace Messages {
     type MessageListParams as MessageListParams,
     type MessageGetStatusParams as MessageGetStatusParams,
     type MessageSendParams as MessageSendParams,
+    type MessageUpdateAppCardParams as MessageUpdateAppCardParams,
   };
 }
