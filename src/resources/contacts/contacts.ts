@@ -141,6 +141,11 @@ export interface Contact {
   company_name?: string;
 
   /**
+   * Immutable contact identity (included by list responses for event recovery)
+   */
+  contact_id?: string;
+
+  /**
    * When the contact was created
    */
   created_at?: string;
@@ -383,6 +388,11 @@ export interface ContactListParams {
    * Filter by contact ID
    */
   cid?: string;
+
+  /**
+   * Filter contacts created at or after this ISO 8601 timestamp (event recovery)
+   */
+  created_at_gte?: string;
 
   /**
    * Maximum number of contacts to return. Defaults to 100, capped at 1000.

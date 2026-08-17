@@ -84,6 +84,7 @@ describe('resource contacts', () => {
       client.contacts.list(
         {
           cid: 'cid',
+          created_at_gte: '2019-12-27T18:11:19.117Z',
           limit: 1,
           offset: 0,
           order_by: 'order_by',

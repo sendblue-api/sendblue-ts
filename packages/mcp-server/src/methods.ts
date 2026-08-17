@@ -209,6 +209,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/groups/{group_id}',
   },
   {
+    clientCallName: 'client.lines.getState',
+    fullyQualifiedName: 'lines.getState',
+    httpMethod: 'get',
+    httpPath: '/api/v2/lines/state',
+  },
+  {
     clientCallName: 'client.lines.callForwarding.retrieve',
     fullyQualifiedName: 'lines.callForwarding.retrieve',
     httpMethod: 'get',
@@ -279,6 +285,18 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'auth.tokens.revoke',
     httpMethod: 'delete',
     httpPath: '/v3/auth/tokens/{token_id}',
+  },
+  {
+    clientCallName: 'client.events.stream',
+    fullyQualifiedName: 'events.stream',
+    httpMethod: 'get',
+    httpPath: '/api/v2/events',
+  },
+  {
+    clientCallName: 'client.verify.verifications.list',
+    fullyQualifiedName: 'verify.verifications.list',
+    httpMethod: 'get',
+    httpPath: '/api/v2/verify/verifications',
   },
 ];
 

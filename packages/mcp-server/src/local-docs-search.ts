@@ -414,6 +414,7 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.contacts.list',
     params: [
       'cid?: string;',
+      'created_at_gte?: string;',
       'limit?: number;',
       'offset?: number;',
       'order_by?: string;',
@@ -421,9 +422,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'phone_number?: string;',
     ],
     response:
-      '{ assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]',
+      '{ assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]',
     markdown:
-      "## list\n\n`client.contacts.list(cid?: string, limit?: number, offset?: number, order_by?: string, order_direction?: 'asc' | 'desc', phone_number?: string): object[]`\n\n**get** `/api/v2/contacts`\n\nRetrieve a list of contacts for the authenticated account\n\n### Parameters\n\n- `cid?: string`\n  Filter by contact ID\n\n- `limit?: number`\n  Maximum number of contacts to return. Defaults to 100, capped at 1000.\n\n- `offset?: number`\n  Number of contacts to skip. Capped at 10000.\n\n- `order_by?: string`\n  Field to sort by\n\n- `order_direction?: 'asc' | 'desc'`\n  Sort direction\n\n- `phone_number?: string`\n  Filter by phone number\n\n### Returns\n\n- `{ assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contacts = await client.contacts.list();\n\nconsole.log(contacts);\n```",
+      "## list\n\n`client.contacts.list(cid?: string, created_at_gte?: string, limit?: number, offset?: number, order_by?: string, order_direction?: 'asc' | 'desc', phone_number?: string): object[]`\n\n**get** `/api/v2/contacts`\n\nRetrieve a list of contacts for the authenticated account\n\n### Parameters\n\n- `cid?: string`\n  Filter by contact ID\n\n- `created_at_gte?: string`\n  Filter contacts created at or after this ISO 8601 timestamp (event recovery)\n\n- `limit?: number`\n  Maximum number of contacts to return. Defaults to 100, capped at 1000.\n\n- `offset?: number`\n  Number of contacts to skip. Capped at 10000.\n\n- `order_by?: string`\n  Field to sort by\n\n- `order_direction?: 'asc' | 'desc'`\n  Sort direction\n\n- `phone_number?: string`\n  Filter by phone number\n\n### Returns\n\n- `{ assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contacts = await client.contacts.list();\n\nconsole.log(contacts);\n```",
     perLanguage: {
       typescript: {
         method: 'client.contacts.list',
@@ -466,9 +467,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'update_if_exists?: boolean;',
     ],
     response:
-      '{ contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }',
+      '{ contact?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }',
     markdown:
-      "## create\n\n`client.contacts.create(number: string, assigned_to_email?: string, assignedToEmail?: string, custom_variables?: object, first_name?: string, firstName?: string, last_name?: string, lastName?: string, phone_number?: string, phoneNumber?: string, sendblue_number?: string, sendblueNumber?: string, tags?: string[], update_if_exists?: boolean): { contact?: contact; status?: string; }`\n\n**post** `/api/v2/contacts`\n\nCreate a new contact or update existing if update_if_exists is true\n\n### Parameters\n\n- `number: string`\n  Contact's phone number in E.164 format (preferred)\n\n- `assigned_to_email?: string`\n  Email of assigned user (preferred)\n\n- `assignedToEmail?: string`\n  Email of assigned user (deprecated, use assigned_to_email)\n\n- `custom_variables?: object`\n  Custom key-value pairs. Keys are human-readable labels; new labels are auto-created.\n\n- `first_name?: string`\n  Contact's first name (preferred)\n\n- `firstName?: string`\n  Contact's first name (deprecated, use first_name)\n\n- `last_name?: string`\n  Contact's last name (preferred)\n\n- `lastName?: string`\n  Contact's last name (deprecated, use last_name)\n\n- `phone_number?: string`\n  Contact's phone number (deprecated, use number)\n\n- `phoneNumber?: string`\n  Contact's phone number (deprecated, use number)\n\n- `sendblue_number?: string`\n  Associated Sendblue phone number to send with (preferred)\n\n- `sendblueNumber?: string`\n  Associated Sendblue phone number (deprecated, use sendblue_number)\n\n- `tags?: string[]`\n  Tags for the contact\n\n- `update_if_exists?: boolean`\n  If true, updates the contact if it already exists\n\n### Returns\n\n- `{ contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }`\n\n  - `contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.create({ number: 'number' });\n\nconsole.log(contact);\n```",
+      "## create\n\n`client.contacts.create(number: string, assigned_to_email?: string, assignedToEmail?: string, custom_variables?: object, first_name?: string, firstName?: string, last_name?: string, lastName?: string, phone_number?: string, phoneNumber?: string, sendblue_number?: string, sendblueNumber?: string, tags?: string[], update_if_exists?: boolean): { contact?: contact; status?: string; }`\n\n**post** `/api/v2/contacts`\n\nCreate a new contact or update existing if update_if_exists is true\n\n### Parameters\n\n- `number: string`\n  Contact's phone number in E.164 format (preferred)\n\n- `assigned_to_email?: string`\n  Email of assigned user (preferred)\n\n- `assignedToEmail?: string`\n  Email of assigned user (deprecated, use assigned_to_email)\n\n- `custom_variables?: object`\n  Custom key-value pairs. Keys are human-readable labels; new labels are auto-created.\n\n- `first_name?: string`\n  Contact's first name (preferred)\n\n- `firstName?: string`\n  Contact's first name (deprecated, use first_name)\n\n- `last_name?: string`\n  Contact's last name (preferred)\n\n- `lastName?: string`\n  Contact's last name (deprecated, use last_name)\n\n- `phone_number?: string`\n  Contact's phone number (deprecated, use number)\n\n- `phoneNumber?: string`\n  Contact's phone number (deprecated, use number)\n\n- `sendblue_number?: string`\n  Associated Sendblue phone number to send with (preferred)\n\n- `sendblueNumber?: string`\n  Associated Sendblue phone number (deprecated, use sendblue_number)\n\n- `tags?: string[]`\n  Tags for the contact\n\n- `update_if_exists?: boolean`\n  If true, updates the contact if it already exists\n\n### Returns\n\n- `{ contact?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }`\n\n  - `contact?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.create({ number: 'number' });\n\nconsole.log(contact);\n```",
     perLanguage: {
       typescript: {
         method: 'client.contacts.create',
@@ -553,9 +554,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     qualified: 'client.contacts.retrieve',
     params: ['phone_number: string;'],
     response:
-      '{ contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }',
+      '{ contact?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }',
     markdown:
-      "## retrieve\n\n`client.contacts.retrieve(phone_number: string): { contact?: contact; status?: string; }`\n\n**get** `/api/v2/contacts/{phone_number}`\n\nRetrieve a specific contact by phone number\n\n### Parameters\n\n- `phone_number: string`\n\n### Returns\n\n- `{ contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }`\n\n  - `contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.retrieve('+1234567890');\n\nconsole.log(contact);\n```",
+      "## retrieve\n\n`client.contacts.retrieve(phone_number: string): { contact?: contact; status?: string; }`\n\n**get** `/api/v2/contacts/{phone_number}`\n\nRetrieve a specific contact by phone number\n\n### Parameters\n\n- `phone_number: string`\n\n### Returns\n\n- `{ contact?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }`\n\n  - `contact?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.retrieve('+1234567890');\n\nconsole.log(contact);\n```",
     perLanguage: {
       typescript: {
         method: 'client.contacts.retrieve',
@@ -600,9 +601,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'tags?: string[];',
     ],
     response:
-      '{ contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }',
+      '{ contact?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }',
     markdown:
-      "## update\n\n`client.contacts.update(phone_number: string, assigned_to_email?: string, assignedToEmail?: string, company_name?: string, companyName?: string, custom_variables?: object, first_name?: string, firstName?: string, last_name?: string, lastName?: string, opt_out?: boolean, optOut?: boolean, sendblue_number?: string, sendblueNumber?: string, tags?: string[]): { contact?: contact; status?: string; }`\n\n**put** `/api/v2/contacts/{phone_number}`\n\nUpdate an existing contact. You may set SMS opt-out with `opt_out` (boolean); it updates the same recipient record used for inbound keyword opt-outs.\n\n### Parameters\n\n- `phone_number: string`\n\n- `assigned_to_email?: string`\n  Email of assigned user (preferred)\n\n- `assignedToEmail?: string`\n  Deprecated, use assigned_to_email\n\n- `company_name?: string`\n  Company name (preferred)\n\n- `companyName?: string`\n  Deprecated, use company_name\n\n- `custom_variables?: object`\n  Custom key-value pairs. Merged with existing variables (not replaced).\n\n- `first_name?: string`\n  Contact's first name (preferred)\n\n- `firstName?: string`\n  Deprecated, use first_name\n\n- `last_name?: string`\n  Contact's last name (preferred)\n\n- `lastName?: string`\n  Deprecated, use last_name\n\n- `opt_out?: boolean`\n  Whether the contact has opted out of SMS (updates the same recipient record used for inbound keyword opt-outs)\n\n- `optOut?: boolean`\n  Deprecated, use opt_out\n\n- `sendblue_number?: string`\n  Associated Sendblue phone number (preferred)\n\n- `sendblueNumber?: string`\n  Deprecated, use sendblue_number\n\n- `tags?: string[]`\n\n### Returns\n\n- `{ contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }`\n\n  - `contact?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.update('+1234567890');\n\nconsole.log(contact);\n```",
+      "## update\n\n`client.contacts.update(phone_number: string, assigned_to_email?: string, assignedToEmail?: string, company_name?: string, companyName?: string, custom_variables?: object, first_name?: string, firstName?: string, last_name?: string, lastName?: string, opt_out?: boolean, optOut?: boolean, sendblue_number?: string, sendblueNumber?: string, tags?: string[]): { contact?: contact; status?: string; }`\n\n**put** `/api/v2/contacts/{phone_number}`\n\nUpdate an existing contact. You may set SMS opt-out with `opt_out` (boolean); it updates the same recipient record used for inbound keyword opt-outs.\n\n### Parameters\n\n- `phone_number: string`\n\n- `assigned_to_email?: string`\n  Email of assigned user (preferred)\n\n- `assignedToEmail?: string`\n  Deprecated, use assigned_to_email\n\n- `company_name?: string`\n  Company name (preferred)\n\n- `companyName?: string`\n  Deprecated, use company_name\n\n- `custom_variables?: object`\n  Custom key-value pairs. Merged with existing variables (not replaced).\n\n- `first_name?: string`\n  Contact's first name (preferred)\n\n- `firstName?: string`\n  Deprecated, use first_name\n\n- `last_name?: string`\n  Contact's last name (preferred)\n\n- `lastName?: string`\n  Deprecated, use last_name\n\n- `opt_out?: boolean`\n  Whether the contact has opted out of SMS (updates the same recipient record used for inbound keyword opt-outs)\n\n- `optOut?: boolean`\n  Deprecated, use opt_out\n\n- `sendblue_number?: string`\n  Associated Sendblue phone number (preferred)\n\n- `sendblueNumber?: string`\n  Deprecated, use sendblue_number\n\n- `tags?: string[]`\n\n### Returns\n\n- `{ contact?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }; status?: string; }`\n\n  - `contact?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.update('+1234567890');\n\nconsole.log(contact);\n```",
     perLanguage: {
       typescript: {
         method: 'client.contacts.update',
@@ -720,9 +721,9 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       'contacts: { phone: string; company_name?: string; custom_variables?: object; first_name?: string; last_name?: string; tags?: string[]; }[];',
     ],
     response:
-      '{ contacts?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]; status?: string; }',
+      '{ contacts?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]; status?: string; }',
     markdown:
-      "## create\n\n`client.contacts.bulk.create(contacts: { phone: string; company_name?: string; custom_variables?: object; first_name?: string; last_name?: string; tags?: string[]; }[]): { contacts?: contact[]; status?: string; }`\n\n**post** `/api/v2/contacts/bulk`\n\nCreate multiple contacts in bulk\n\n### Parameters\n\n- `contacts: { phone: string; company_name?: string; custom_variables?: object; first_name?: string; last_name?: string; tags?: string[]; }[]`\n\n### Returns\n\n- `{ contacts?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]; status?: string; }`\n\n  - `contacts?: { assigned_to_email?: string; company_name?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst bulk = await client.contacts.bulk.create({ contacts: [{ phone: 'phone' }] });\n\nconsole.log(bulk);\n```",
+      "## create\n\n`client.contacts.bulk.create(contacts: { phone: string; company_name?: string; custom_variables?: object; first_name?: string; last_name?: string; tags?: string[]; }[]): { contacts?: contact[]; status?: string; }`\n\n**post** `/api/v2/contacts/bulk`\n\nCreate multiple contacts in bulk\n\n### Parameters\n\n- `contacts: { phone: string; company_name?: string; custom_variables?: object; first_name?: string; last_name?: string; tags?: string[]; }[]`\n\n### Returns\n\n- `{ contacts?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]; status?: string; }`\n\n  - `contacts?: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst bulk = await client.contacts.bulk.create({ contacts: [{ phone: 'phone' }] });\n\nconsole.log(bulk);\n```",
     perLanguage: {
       typescript: {
         method: 'client.contacts.bulk.create',
@@ -1157,6 +1158,36 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'get_state',
+    endpoint: '/api/v2/lines/state',
+    httpMethod: 'get',
+    summary: 'Get line state snapshot',
+    description:
+      "Returns the authenticated account's current line membership and latest persisted health transition.",
+    stainlessPath: '(resource) lines > (method) get_state',
+    qualified: 'client.lines.getState',
+    response:
+      "{ data: { assignment: 'assigned' | 'shared' | 'grace_period'; sendblue_number: string; status: 'ONLINE' | 'OFFLINE' | 'DEGRADED' | 'UNKNOWN'; worker_id: string; degraded_since?: string; effective_until?: string; status_changed_at?: string; }[]; snapshot_at: string; status: 'OK'; }",
+    markdown:
+      "## get_state\n\n`client.lines.getState(): { data: line_state[]; snapshot_at: string; status: 'OK'; }`\n\n**get** `/api/v2/lines/state`\n\nReturns the authenticated account's current line membership and latest persisted health transition.\n\n### Returns\n\n- `{ data: { assignment: 'assigned' | 'shared' | 'grace_period'; sendblue_number: string; status: 'ONLINE' | 'OFFLINE' | 'DEGRADED' | 'UNKNOWN'; worker_id: string; degraded_since?: string; effective_until?: string; status_changed_at?: string; }[]; snapshot_at: string; status: 'OK'; }`\n\n  - `data: { assignment: 'assigned' | 'shared' | 'grace_period'; sendblue_number: string; status: 'ONLINE' | 'OFFLINE' | 'DEGRADED' | 'UNKNOWN'; worker_id: string; degraded_since?: string; effective_until?: string; status_changed_at?: string; }[]`\n  - `snapshot_at: string`\n  - `status: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.lines.getState();\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.lines.getState',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.lines.getState();\n\nconsole.log(response.data);",
+      },
+      python: {
+        method: 'lines.get_state',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.lines.get_state()\nprint(response.data)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/lines/state \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
     name: 'retrieve',
     endpoint: '/api/lines/{sendblue_number}/call-forwarding',
     httpMethod: 'get',
@@ -1518,6 +1549,66 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.sendblue.co/v3/auth/tokens/$TOKEN_ID \\\n    -X DELETE \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
+    name: 'stream',
+    endpoint: '/api/v2/events',
+    httpMethod: 'get',
+    summary: 'Stream account events',
+    description:
+      "Opens an authenticated Server-Sent Events stream scoped exclusively to the account resolved by the\nsupplied credentials. The stream is live and intentionally not a durable replay log. It sends a\nheartbeat every 15 seconds and rotates after at most 15 minutes. A temporary-token stream closes no\nlater than that token's `expires_at`; clients should reconnect and repair gaps via:\n\n- `GET /api/v2/messages?updated_at_gte=...&order_by=updated_at&order_direction=asc`\n- `GET /api/v2/contacts?created_at_gte=...&order_by=created_at&order_direction=asc`\n- `GET /api/v2/lines/state`\n- `GET /api/v2/verify/verifications?updated_at_gte=...`\n\nEach event contains a stable `id`, a `type`, `occurred_at`, and a minimal `data` object. Consumers\nmust deduplicate by ID. Typing indicators are ephemeral and cannot be recovered.\n",
+    stainlessPath: '(resource) events > (method) stream',
+    qualified: 'client.events.stream',
+    params: ['types?: string;'],
+    response: '{ id: string; data: object; occurred_at: string; type: string; version: 1; }',
+    markdown:
+      "## stream\n\n`client.events.stream(types?: string): { id: string; data: object; occurred_at: string; type: string; version: 1; }`\n\n**get** `/api/v2/events`\n\nOpens an authenticated Server-Sent Events stream scoped exclusively to the account resolved by the\nsupplied credentials. The stream is live and intentionally not a durable replay log. It sends a\nheartbeat every 15 seconds and rotates after at most 15 minutes. A temporary-token stream closes no\nlater than that token's `expires_at`; clients should reconnect and repair gaps via:\n\n- `GET /api/v2/messages?updated_at_gte=...&order_by=updated_at&order_direction=asc`\n- `GET /api/v2/contacts?created_at_gte=...&order_by=created_at&order_direction=asc`\n- `GET /api/v2/lines/state`\n- `GET /api/v2/verify/verifications?updated_at_gte=...`\n\nEach event contains a stable `id`, a `type`, `occurred_at`, and a minimal `data` object. Consumers\nmust deduplicate by ID. Typing indicators are ephemeral and cannot be recovered.\n\n\n### Parameters\n\n- `types?: string`\n  Optional comma-separated allowlist of event types\n\n### Returns\n\n- `{ id: string; data: object; occurred_at: string; type: string; version: 1; }`\n\n  - `id: string`\n  - `data: object`\n  - `occurred_at: string`\n  - `type: string`\n  - `version: 1`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst stream = await client.events.stream();\nfor await (const accountEvent of stream) {\n  console.log(accountEvent);\n}\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.events.stream',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst accountEvent = await client.events.stream();\n\nconsole.log(accountEvent.id);",
+      },
+      python: {
+        method: 'events.stream',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nfor event in client.events.stream():\n  print(event)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/events \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
+    name: 'list',
+    endpoint: '/api/v2/verify/verifications',
+    httpMethod: 'get',
+    summary: 'List account verifications',
+    description: 'Account-scoped verification state used to recover terminal Verify events after an SSE gap.',
+    stainlessPath: '(resource) verify.verifications > (method) list',
+    qualified: 'client.verify.verifications.list',
+    params: ['limit?: number;', 'offset?: number;', 'updated_at_gte?: string;'],
+    response:
+      "{ data: { channel: string; date_created: string; date_updated: string; service_sid: string; sid: string; status: string; date_completed?: string; to?: string; }[]; pagination: { count?: number; has_more?: boolean; limit?: number; offset?: number; }; status: 'OK'; }",
+    markdown:
+      "## list\n\n`client.verify.verifications.list(limit?: number, offset?: number, updated_at_gte?: string): { data: verification_state[]; pagination: object; status: 'OK'; }`\n\n**get** `/api/v2/verify/verifications`\n\nAccount-scoped verification state used to recover terminal Verify events after an SSE gap.\n\n### Parameters\n\n- `limit?: number`\n\n- `offset?: number`\n\n- `updated_at_gte?: string`\n\n### Returns\n\n- `{ data: { channel: string; date_created: string; date_updated: string; service_sid: string; sid: string; status: string; date_completed?: string; to?: string; }[]; pagination: { count?: number; has_more?: boolean; limit?: number; offset?: number; }; status: 'OK'; }`\n\n  - `data: { channel: string; date_created: string; date_updated: string; service_sid: string; sid: string; status: string; date_completed?: string; to?: string; }[]`\n  - `pagination: { count?: number; has_more?: boolean; limit?: number; offset?: number; }`\n  - `status: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst verifications = await client.verify.verifications.list();\n\nconsole.log(verifications);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.verify.verifications.list',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst verifications = await client.verify.verifications.list();\n\nconsole.log(verifications.data);",
+      },
+      python: {
+        method: 'verify.verifications.list',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nverifications = client.verify.verifications.list()\nprint(verifications.data)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/verify/verifications \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },
