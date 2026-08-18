@@ -50,6 +50,43 @@ describe('instantiate client', () => {
       expect(req.headers.has('x-my-default-header')).toBe(false);
     });
   });
+  describe('accessToken', () => {
+    test('uses bearer authentication instead of permanent key-pair headers', async () => {
+      const client = new SendblueAPI({
+        baseURL: 'http://localhost:5000/',
+        accessToken: 'short-lived-token',
+      });
+
+      const { req } = await client.buildRequest({ path: '/foo', method: 'post' });
+
+      expect(req.headers.get('authorization')).toBe('Bearer short-lived-token');
+      expect(req.headers.has('sb-api-key-id')).toBe(false);
+      expect(req.headers.has('sb-api-secret-key')).toBe(false);
+    });
+
+    test('rejects mixing bearer and permanent credentials', () => {
+      expect(
+        () =>
+          new SendblueAPI({
+            accessToken: 'short-lived-token',
+            apiKey: 'My API Key',
+          }),
+      ).toThrow('accessToken cannot be combined with apiKey or apiSecret.');
+    });
+
+    test('preserves bearer authentication in withOptions', async () => {
+      const client = new SendblueAPI({
+        baseURL: 'http://localhost:5000/',
+        accessToken: 'short-lived-token',
+      }).withOptions({ timeout: 1_000 });
+
+      const { req } = await client.buildRequest({ path: '/foo', method: 'post' });
+      expect(req.headers.get('authorization')).toBe('Bearer short-lived-token');
+      expect(req.headers.has('sb-api-key-id')).toBe(false);
+      expect(req.headers.has('sb-api-secret-key')).toBe(false);
+    });
+  });
+
   describe('logging', () => {
     const env = process.env;
 
