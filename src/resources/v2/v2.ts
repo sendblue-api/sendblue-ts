@@ -1,8 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as GroupsAPI from './groups';
-import { GroupRetrieveResponse, Groups } from './groups';
 import * as SeatsAPI from './seats';
 import {
   SeatCountParams,
@@ -12,6 +10,8 @@ import {
   SeatRetrieveResponse,
   Seats,
 } from './seats';
+import * as GroupsAPI from './groups/groups';
+import { GroupRetrieveResponse, Groups } from './groups/groups';
 import * as TotpAPI from './totp/totp';
 import { Totp, TotpGetCodeResponse } from './totp/totp';
 

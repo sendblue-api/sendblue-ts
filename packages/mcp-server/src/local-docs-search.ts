@@ -1158,6 +1158,72 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'create',
+    endpoint: '/api/v2/verify/services/{service_sid}/verifications',
+    httpMethod: 'post',
+    summary: 'Create a verification',
+    description:
+      "Creates an inverted-OTP verification for the supplied E.164 phone number. The user must send the\nreturned code from that exact phone number to the returned Sendblue destination number.\n\nInclude `hosted` to create an origin-bound Hosted Verify widget session. Sendblue API credentials\nmust remain on the customer's backend; only the returned `hosted` values may be sent to the browser.\nTwilio-compatible clients may alternatively send the API Key ID and API Secret Key with HTTP Basic\nauthentication. Temporary bearer authentication is supported for account-scoped tokens; line-scoped\ntemporary tokens cannot create account-wide Verifications.\n",
+    stainlessPath: '(resource) v2.groups.verify.services.verifications > (method) create',
+    qualified: 'client.v2.groups.verify.services.verifications.create',
+    params: [
+      'service_sid: string;',
+      'to: string;',
+      "hosted?: { parent_origin: string; accent_color?: string; brand_name?: string; theme?: 'light' | 'dark' | 'auto'; };",
+    ],
+    response:
+      "{ account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }; hosted?: { component_script: string; expires_at: string; session_id: string; url: string; }; }",
+    markdown:
+      "## create\n\n`client.v2.groups.verify.services.verifications.create(service_sid: string, to: string, hosted?: { parent_origin: string; accent_color?: string; brand_name?: string; theme?: 'light' | 'dark' | 'auto'; }): { account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: delivery_target; hosted?: hosted_verification; }`\n\n**post** `/api/v2/verify/services/{service_sid}/verifications`\n\nCreates an inverted-OTP verification for the supplied E.164 phone number. The user must send the\nreturned code from that exact phone number to the returned Sendblue destination number.\n\nInclude `hosted` to create an origin-bound Hosted Verify widget session. Sendblue API credentials\nmust remain on the customer's backend; only the returned `hosted` values may be sent to the browser.\nTwilio-compatible clients may alternatively send the API Key ID and API Secret Key with HTTP Basic\nauthentication. Temporary bearer authentication is supported for account-scoped tokens; line-scoped\ntemporary tokens cannot create account-wide Verifications.\n\n\n### Parameters\n\n- `service_sid: string`\n\n- `to: string`\n  E.164 phone number that must send the verification message.\n\n- `hosted?: { parent_origin: string; accent_color?: string; brand_name?: string; theme?: 'light' | 'dark' | 'auto'; }`\n  Options for an origin-bound Hosted Verify widget session. Nested keys are strict snake_case.\n`parent_origin` must be an exact HTTPS origin with a DNS hostname. `127.0.0.1` is also accepted,\nand HTTP is allowed only for `localhost` or `127.0.0.1` development origins. Wildcards and other\nIP literals are rejected because browsers cannot enforce them as exact CSP `frame-ancestors` sources.\n\n  - `parent_origin: string`\n    Exact website origin allowed to embed the widget, with no path, query, or fragment.\n  - `accent_color?: string`\n    Six-digit hexadecimal accent color.\n  - `brand_name?: string`\n    Brand name displayed by the widget. Defaults to Sendblue.\n  - `theme?: 'light' | 'dark' | 'auto'`\n\n### Returns\n\n- `{ account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }; hosted?: { component_script: string; expires_at: string; session_id: string; url: string; }; }`\n\n  - `account_sid: string`\n  - `channel: 'imessage'`\n  - `date_created: string`\n  - `date_updated: string`\n  - `expires_at: string`\n  - `service_sid: string`\n  - `sid: string`\n  - `status: 'pending' | 'approved' | 'expired' | 'canceled'`\n  - `to: string`\n  - `url: string`\n  - `delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }`\n  - `hosted?: { component_script: string; expires_at: string; session_id: string; url: string; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst verification = await client.v2.groups.verify.services.verifications.create('SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD', { to: '+14155551212' });\n\nconsole.log(verification);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.v2.groups.verify.services.verifications.create',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst verification = await client.v2.groups.verify.services.verifications.create(\n  'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',\n  { to: '+14155551212' },\n);\n\nconsole.log(verification.account_sid);",
+      },
+      python: {
+        method: 'v2.groups.verify.services.verifications.create',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nverification = client.v2.groups.verify.services.verifications.create(\n    service_sid="SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD",\n    to="+14155551212",\n)\nprint(verification.account_sid)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/verify/services/$SERVICE_SID/verifications \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "to": "+14155551212"\n        }\'',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/v2/verify/services/{service_sid}/verifications/{verification_sid}',
+    httpMethod: 'get',
+    summary: 'Retrieve a verification',
+    description:
+      'Returns the authoritative status for one Verification owned by the authenticated account.\nTwilio-compatible clients may send the API Key ID and API Secret Key with HTTP Basic authentication.\nTemporary bearer authentication is supported for account-scoped tokens; line-scoped temporary tokens\ncannot retrieve account-wide Verification state.\n',
+    stainlessPath: '(resource) v2.groups.verify.services.verifications > (method) retrieve',
+    qualified: 'client.v2.groups.verify.services.verifications.retrieve',
+    params: ['service_sid: string;', 'verification_sid: string;'],
+    response:
+      "{ account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }; }",
+    markdown:
+      "## retrieve\n\n`client.v2.groups.verify.services.verifications.retrieve(service_sid: string, verification_sid: string): { account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: delivery_target; }`\n\n**get** `/api/v2/verify/services/{service_sid}/verifications/{verification_sid}`\n\nReturns the authoritative status for one Verification owned by the authenticated account.\nTwilio-compatible clients may send the API Key ID and API Secret Key with HTTP Basic authentication.\nTemporary bearer authentication is supported for account-scoped tokens; line-scoped temporary tokens\ncannot retrieve account-wide Verification state.\n\n\n### Parameters\n\n- `service_sid: string`\n\n- `verification_sid: string`\n\n### Returns\n\n- `{ account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }; }`\n\n  - `account_sid: string`\n  - `channel: 'imessage'`\n  - `date_created: string`\n  - `date_updated: string`\n  - `expires_at: string`\n  - `service_sid: string`\n  - `sid: string`\n  - `status: 'pending' | 'approved' | 'expired' | 'canceled'`\n  - `to: string`\n  - `url: string`\n  - `delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst verification = await client.v2.groups.verify.services.verifications.retrieve('VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD', { service_sid: 'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD' });\n\nconsole.log(verification);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.v2.groups.verify.services.verifications.retrieve',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst verification = await client.v2.groups.verify.services.verifications.retrieve(\n  'VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',\n  { service_sid: 'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD' },\n);\n\nconsole.log(verification.account_sid);",
+      },
+      python: {
+        method: 'v2.groups.verify.services.verifications.retrieve',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nverification = client.v2.groups.verify.services.verifications.retrieve(\n    verification_sid="VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD",\n    service_sid="SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD",\n)\nprint(verification.account_sid)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/verify/services/$SERVICE_SID/verifications/$VERIFICATION_SID \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
     name: 'get_state',
     endpoint: '/api/v2/lines/state',
     httpMethod: 'get',
@@ -1583,6 +1649,41 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'create',
+    endpoint: '/api/v2/verify/services/{service_sid}/verifications',
+    httpMethod: 'post',
+    summary: 'Create a verification',
+    description:
+      "Creates an inverted-OTP verification for the supplied E.164 phone number. The user must send the\nreturned code from that exact phone number to the returned Sendblue destination number.\n\nInclude `hosted` to create an origin-bound Hosted Verify widget session. Sendblue API credentials\nmust remain on the customer's backend; only the returned `hosted` values may be sent to the browser.\nTwilio-compatible clients may alternatively send the API Key ID and API Secret Key with HTTP Basic\nauthentication. Temporary bearer authentication is supported for account-scoped tokens; line-scoped\ntemporary tokens cannot create account-wide Verifications.\n",
+    stainlessPath: '(resource) verify.verifications > (method) create',
+    qualified: 'client.verify.verifications.create',
+    params: [
+      'service_sid: string;',
+      'to: string;',
+      "hosted?: { parent_origin: string; accent_color?: string; brand_name?: string; theme?: 'light' | 'dark' | 'auto'; };",
+    ],
+    response:
+      "{ account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }; hosted?: { component_script: string; expires_at: string; session_id: string; url: string; }; }",
+    markdown:
+      "## create\n\n`client.verify.verifications.create(service_sid: string, to: string, hosted?: { parent_origin: string; accent_color?: string; brand_name?: string; theme?: 'light' | 'dark' | 'auto'; }): { account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: delivery_target; hosted?: hosted_verification; }`\n\n**post** `/api/v2/verify/services/{service_sid}/verifications`\n\nCreates an inverted-OTP verification for the supplied E.164 phone number. The user must send the\nreturned code from that exact phone number to the returned Sendblue destination number.\n\nInclude `hosted` to create an origin-bound Hosted Verify widget session. Sendblue API credentials\nmust remain on the customer's backend; only the returned `hosted` values may be sent to the browser.\nTwilio-compatible clients may alternatively send the API Key ID and API Secret Key with HTTP Basic\nauthentication. Temporary bearer authentication is supported for account-scoped tokens; line-scoped\ntemporary tokens cannot create account-wide Verifications.\n\n\n### Parameters\n\n- `service_sid: string`\n\n- `to: string`\n  E.164 phone number that must send the verification message.\n\n- `hosted?: { parent_origin: string; accent_color?: string; brand_name?: string; theme?: 'light' | 'dark' | 'auto'; }`\n  Options for an origin-bound Hosted Verify widget session. Nested keys are strict snake_case.\n`parent_origin` must be an exact HTTPS origin with a DNS hostname. `127.0.0.1` is also accepted,\nand HTTP is allowed only for `localhost` or `127.0.0.1` development origins. Wildcards and other\nIP literals are rejected because browsers cannot enforce them as exact CSP `frame-ancestors` sources.\n\n  - `parent_origin: string`\n    Exact website origin allowed to embed the widget, with no path, query, or fragment.\n  - `accent_color?: string`\n    Six-digit hexadecimal accent color.\n  - `brand_name?: string`\n    Brand name displayed by the widget. Defaults to Sendblue.\n  - `theme?: 'light' | 'dark' | 'auto'`\n\n### Returns\n\n- `{ account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }; hosted?: { component_script: string; expires_at: string; session_id: string; url: string; }; }`\n\n  - `account_sid: string`\n  - `channel: 'imessage'`\n  - `date_created: string`\n  - `date_updated: string`\n  - `expires_at: string`\n  - `service_sid: string`\n  - `sid: string`\n  - `status: 'pending' | 'approved' | 'expired' | 'canceled'`\n  - `to: string`\n  - `url: string`\n  - `delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }`\n  - `hosted?: { component_script: string; expires_at: string; session_id: string; url: string; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst verification = await client.verify.verifications.create('SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD', { to: '+14155551212' });\n\nconsole.log(verification);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.verify.verifications.create',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst verification = await client.verify.verifications.create(\n  'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',\n  { to: '+14155551212' },\n);\n\nconsole.log(verification.account_sid);",
+      },
+      python: {
+        method: 'verify.verifications.create',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nverification = client.verify.verifications.create(\n    service_sid="SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD",\n    to="+14155551212",\n)\nprint(verification.account_sid)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/verify/services/$SERVICE_SID/verifications \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "to": "+14155551212"\n        }\'',
+      },
+    },
+  },
+  {
     name: 'list',
     endpoint: '/api/v2/verify/verifications',
     httpMethod: 'get',
@@ -1609,6 +1710,37 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       http: {
         example:
           'curl https://api.sendblue.co/api/v2/verify/verifications \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+    },
+  },
+  {
+    name: 'retrieve',
+    endpoint: '/api/v2/verify/services/{service_sid}/verifications/{verification_sid}',
+    httpMethod: 'get',
+    summary: 'Retrieve a verification',
+    description:
+      'Returns the authoritative status for one Verification owned by the authenticated account.\nTwilio-compatible clients may send the API Key ID and API Secret Key with HTTP Basic authentication.\nTemporary bearer authentication is supported for account-scoped tokens; line-scoped temporary tokens\ncannot retrieve account-wide Verification state.\n',
+    stainlessPath: '(resource) verify.verifications > (method) retrieve',
+    qualified: 'client.verify.verifications.retrieve',
+    params: ['service_sid: string;', 'verification_sid: string;'],
+    response:
+      "{ account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }; }",
+    markdown:
+      "## retrieve\n\n`client.verify.verifications.retrieve(service_sid: string, verification_sid: string): { account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: delivery_target; }`\n\n**get** `/api/v2/verify/services/{service_sid}/verifications/{verification_sid}`\n\nReturns the authoritative status for one Verification owned by the authenticated account.\nTwilio-compatible clients may send the API Key ID and API Secret Key with HTTP Basic authentication.\nTemporary bearer authentication is supported for account-scoped tokens; line-scoped temporary tokens\ncannot retrieve account-wide Verification state.\n\n\n### Parameters\n\n- `service_sid: string`\n\n- `verification_sid: string`\n\n### Returns\n\n- `{ account_sid: string; channel: 'imessage'; date_created: string; date_updated: string; expires_at: string; service_sid: string; sid: string; status: 'pending' | 'approved' | 'expired' | 'canceled'; to: string; url: string; delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }; }`\n\n  - `account_sid: string`\n  - `channel: 'imessage'`\n  - `date_created: string`\n  - `date_updated: string`\n  - `expires_at: string`\n  - `service_sid: string`\n  - `sid: string`\n  - `status: 'pending' | 'approved' | 'expired' | 'canceled'`\n  - `to: string`\n  - `url: string`\n  - `delivery_target?: { code: string; pool_number: string; sms_deep_link: string; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst verification = await client.verify.verifications.retrieve('VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD', { service_sid: 'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD' });\n\nconsole.log(verification);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.verify.verifications.retrieve',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst verification = await client.verify.verifications.retrieve(\n  'VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',\n  { service_sid: 'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD' },\n);\n\nconsole.log(verification.account_sid);",
+      },
+      python: {
+        method: 'verify.verifications.retrieve',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nverification = client.verify.verifications.retrieve(\n    verification_sid="VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD",\n    service_sid="SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD",\n)\nprint(verification.account_sid)',
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/verify/services/$SERVICE_SID/verifications/$VERIFICATION_SID \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
       },
     },
   },

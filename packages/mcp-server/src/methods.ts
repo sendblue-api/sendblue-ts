@@ -209,6 +209,18 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/groups/{group_id}',
   },
   {
+    clientCallName: 'client.v2.groups.verify.services.verifications.create',
+    fullyQualifiedName: 'v2.groups.verify.services.verifications.create',
+    httpMethod: 'post',
+    httpPath: '/api/v2/verify/services/{service_sid}/verifications',
+  },
+  {
+    clientCallName: 'client.v2.groups.verify.services.verifications.retrieve',
+    fullyQualifiedName: 'v2.groups.verify.services.verifications.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v2/verify/services/{service_sid}/verifications/{verification_sid}',
+  },
+  {
     clientCallName: 'client.lines.getState',
     fullyQualifiedName: 'lines.getState',
     httpMethod: 'get',
@@ -291,6 +303,18 @@ export const sdkMethods: SdkMethod[] = [
     fullyQualifiedName: 'events.stream',
     httpMethod: 'get',
     httpPath: '/api/v2/events',
+  },
+  {
+    clientCallName: 'client.verify.verifications.create',
+    fullyQualifiedName: 'verify.verifications.create',
+    httpMethod: 'post',
+    httpPath: '/api/v2/verify/services/{service_sid}/verifications',
+  },
+  {
+    clientCallName: 'client.verify.verifications.retrieve',
+    fullyQualifiedName: 'verify.verifications.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v2/verify/services/{service_sid}/verifications/{verification_sid}',
   },
   {
     clientCallName: 'client.verify.verifications.list',
