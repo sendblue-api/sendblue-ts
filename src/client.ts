@@ -116,6 +116,12 @@ export interface ClientOptions {
   apiSecret?: string | undefined;
 
   /**
+   * Short-lived bearer token. Use this instead of `apiKey` and `apiSecret`
+   * when credentials are issued by a token broker such as Vercel Connect.
+   */
+  accessToken?: string | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['SENDBLUE_API_BASE_URL'].
@@ -188,8 +194,9 @@ export interface ClientOptions {
  * API Client for interfacing with the Sendblue API API.
  */
 export class SendblueAPI {
-  apiKey: string;
-  apiSecret: string;
+  apiKey: string | undefined;
+  apiSecret: string | undefined;
+  accessToken: string | undefined;
 
   baseURL: string;
   maxRetries: number;
@@ -216,27 +223,33 @@ export class SendblueAPI {
    * @param {HeadersLike} opts.defaultHeaders - Default headers to include with every request to the API.
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
-  constructor({
-    baseURL = readEnv('SENDBLUE_API_BASE_URL'),
-    apiKey = readEnv('SENDBLUE_API_API_KEY'),
-    apiSecret = readEnv('SENDBLUE_API_API_SECRET'),
-    ...opts
-  }: ClientOptions = {}) {
-    if (apiKey === undefined) {
+  constructor(input: ClientOptions = {}) {
+    const { baseURL = readEnv('SENDBLUE_API_BASE_URL'), accessToken, ...opts } = input;
+    // An explicitly supplied bearer token takes precedence over ambient
+    // key-pair environment variables. Explicitly combining either auth mode is
+    // still rejected because it is ambiguous and can leak permanent credentials.
+    const apiKey = accessToken === undefined ? input.apiKey ?? readEnv('SENDBLUE_API_API_KEY') : input.apiKey;
+    const apiSecret =
+      accessToken === undefined ? input.apiSecret ?? readEnv('SENDBLUE_API_API_SECRET') : input.apiSecret;
+    if (accessToken !== undefined && (apiKey !== undefined || apiSecret !== undefined)) {
+      throw new Errors.SendblueAPIError('accessToken cannot be combined with apiKey or apiSecret.');
+    }
+    if (accessToken === undefined && apiKey === undefined) {
       throw new Errors.SendblueAPIError(
-        "The SENDBLUE_API_API_KEY environment variable is missing or empty; either provide it, or instantiate the SendblueAPI client with an apiKey option, like new SendblueAPI({ apiKey: 'My API Key' }).",
+        'The SENDBLUE_API_API_KEY environment variable is missing or empty; provide apiKey and apiSecret, or instantiate the client with an accessToken.',
       );
     }
-    if (apiSecret === undefined) {
+    if (accessToken === undefined && apiSecret === undefined) {
       throw new Errors.SendblueAPIError(
-        "The SENDBLUE_API_API_SECRET environment variable is missing or empty; either provide it, or instantiate the SendblueAPI client with an apiSecret option, like new SendblueAPI({ apiSecret: 'My API Secret' }).",
+        'The SENDBLUE_API_API_SECRET environment variable is missing or empty; provide apiKey and apiSecret, or instantiate the client with an accessToken.',
       );
     }
 
     const options: ClientOptions = {
+      ...opts,
       apiKey,
       apiSecret,
-      ...opts,
+      accessToken,
       baseURL: baseURL || `https://api.sendblue.co`,
     };
 
@@ -271,6 +284,7 @@ export class SendblueAPI {
 
     this.apiKey = apiKey;
     this.apiSecret = apiSecret;
+    this.accessToken = accessToken;
   }
 
   /**
@@ -288,6 +302,7 @@ export class SendblueAPI {
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
       apiSecret: this.apiSecret,
+      accessToken: this.accessToken,
       ...options,
     });
     return client;
@@ -309,6 +324,9 @@ export class SendblueAPI {
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
+    if (this.accessToken !== undefined) {
+      return buildHeaders([{ Authorization: `Bearer ${this.accessToken}` }]);
+    }
     return buildHeaders([await this.apiKeyAuth(opts), await this.apiSecretAuth(opts)]);
   }
 
