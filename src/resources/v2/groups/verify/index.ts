@@ -1,3 +1,4 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export * from './groups/index';
+export { Services } from './services/index';
+export { Verify } from './verify';

@@ -164,11 +164,27 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/v2/groups.ts">GroupRetrieveResponse</a></code>
+- <code><a href="./src/resources/v2/groups/groups.ts">GroupRetrieveResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v2/groups/{group_id}">client.v2.groups.<a href="./src/resources/v2/groups.ts">retrieve</a>(groupID) -> GroupRetrieveResponse</code>
+- <code title="get /api/v2/groups/{group_id}">client.v2.groups.<a href="./src/resources/v2/groups/groups.ts">retrieve</a>(groupID) -> GroupRetrieveResponse</code>
+
+### Verify
+
+#### Services
+
+##### Verifications
+
+Types:
+
+- <code><a href="./src/resources/v2/groups/verify/services/verifications.ts">VerificationCreateResponse</a></code>
+- <code><a href="./src/resources/v2/groups/verify/services/verifications.ts">VerificationRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/verify/services/{service_sid}/verifications">client.v2.groups.verify.services.verifications.<a href="./src/resources/v2/groups/verify/services/verifications.ts">create</a>(serviceSid, { ...params }) -> VerificationCreateResponse</code>
+- <code title="get /api/v2/verify/services/{service_sid}/verifications/{verification_sid}">client.v2.groups.verify.services.verifications.<a href="./src/resources/v2/groups/verify/services/verifications.ts">retrieve</a>(verificationSid, { ...params }) -> VerificationRetrieveResponse</code>
 
 # Lines
 
@@ -263,8 +279,14 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/verify/verifications.ts">VerificationState</a></code>
+- <code><a href="./src/resources/verify/verifications.ts">DeliveryTarget</a></code>
+- <code><a href="./src/resources/verify/verifications.ts">HostedVerification</a></code>
+- <code><a href="./src/resources/verify/verifications.ts">VerificationCreateResponse</a></code>
+- <code><a href="./src/resources/verify/verifications.ts">VerificationRetrieveResponse</a></code>
 - <code><a href="./src/resources/verify/verifications.ts">VerificationListResponse</a></code>
 
 Methods:
 
+- <code title="post /api/v2/verify/services/{service_sid}/verifications">client.verify.verifications.<a href="./src/resources/verify/verifications.ts">create</a>(serviceSid, { ...params }) -> VerificationCreateResponse</code>
+- <code title="get /api/v2/verify/services/{service_sid}/verifications/{verification_sid}">client.verify.verifications.<a href="./src/resources/verify/verifications.ts">retrieve</a>(verificationSid, { ...params }) -> VerificationRetrieveResponse</code>
 - <code title="get /api/v2/verify/verifications">client.verify.verifications.<a href="./src/resources/verify/verifications.ts">list</a>({ ...params }) -> VerificationListResponse</code>

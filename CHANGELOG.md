@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.13.0 (2026-08-20)
+
+Full Changelog: [v3.12.0...v3.13.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.12.0...v3.13.0)
+
+### Features
+
+* **verify:** add hosted verification component ([fa764b0](https://github.com/sendblue-api/sendblue-ts/commit/fa764b088918ccdd3d0a07777fc2742268c66484))
+
 ## 3.12.0 (2026-08-20)
 
 Full Changelog: [v3.11.0...v3.12.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.11.0...v3.12.0)
