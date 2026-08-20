@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.12.0 (2026-08-20)
+
+Full Changelog: [v3.11.0...v3.12.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.11.0...v3.12.0)
+
+### Features
+
+* support bearer access tokens ([#31](https://github.com/sendblue-api/sendblue-ts/issues/31)) ([bfaf402](https://github.com/sendblue-api/sendblue-ts/commit/bfaf4028a07c0efaf56bae8d4d218ec1c77e6710))
+
 ## 3.11.0 (2026-08-17)
 
 Full Changelog: [v3.10.1...v3.11.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.10.1...v3.11.0)
