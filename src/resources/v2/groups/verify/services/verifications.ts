@@ -1,9 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../core/resource';
-import { APIPromise } from '../../core/api-promise';
-import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
+import { APIResource } from '../../../../../core/resource';
+import * as VerificationsAPI from '../../../../verify/verifications';
+import { APIPromise } from '../../../../../core/api-promise';
+import { RequestOptions } from '../../../../../internal/request-options';
+import { path } from '../../../../../internal/utils/path';
 
 /**
  * Sendblue Verify issuance and recovery state
@@ -24,7 +25,7 @@ export class Verifications extends APIResource {
    * @example
    * ```ts
    * const verification =
-   *   await client.verify.verifications.create(
+   *   await client.v2.groups.verify.services.verifications.create(
    *     'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',
    *     { to: '+14155551212' },
    *   );
@@ -48,7 +49,7 @@ export class Verifications extends APIResource {
    * @example
    * ```ts
    * const verification =
-   *   await client.verify.verifications.retrieve(
+   *   await client.v2.groups.verify.services.verifications.retrieve(
    *     'VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',
    *     { service_sid: 'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD' },
    *   );
@@ -65,81 +66,6 @@ export class Verifications extends APIResource {
       options,
     );
   }
-
-  /**
-   * Account-scoped verification state used to recover terminal Verify events after
-   * an SSE gap.
-   *
-   * @example
-   * ```ts
-   * const verifications =
-   *   await client.verify.verifications.list();
-   * ```
-   */
-  list(
-    query: VerificationListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<VerificationListResponse> {
-    return this._client.get('/api/v2/verify/verifications', { query, ...options });
-  }
-}
-
-export interface VerificationState {
-  channel: string;
-
-  date_created: string;
-
-  date_updated: string;
-
-  service_sid: string;
-
-  sid: string;
-
-  status: string;
-
-  date_completed?: string | null;
-
-  to?: string | null;
-}
-
-export interface DeliveryTarget {
-  /**
-   * Code the expected sender must text to `pool_number`.
-   */
-  code: string;
-
-  /**
-   * Sendblue phone number that should receive the verification code.
-   */
-  pool_number: string;
-
-  /**
-   * Messages/SMS deep link with the destination and code prefilled.
-   */
-  sms_deep_link: string;
-}
-
-export interface HostedVerification {
-  /**
-   * Web-component script URL. Load this value exactly as returned.
-   */
-  component_script: string;
-
-  /**
-   * ISO timestamp when the Verification expires.
-   */
-  expires_at: string;
-
-  /**
-   * Hosted widget session identifier.
-   */
-  session_id: string;
-
-  /**
-   * Origin-bound widget URL containing a one-session bearer token in its fragment.
-   * Do not log, persist, or move the token into a query parameter.
-   */
-  url: string;
 }
 
 export interface VerificationCreateResponse {
@@ -172,12 +98,12 @@ export interface VerificationCreateResponse {
   /**
    * Present while the Verification is pending.
    */
-  delivery_target?: DeliveryTarget;
+  delivery_target?: VerificationsAPI.DeliveryTarget;
 
   /**
    * Present only when hosted options were supplied during creation.
    */
-  hosted?: HostedVerification;
+  hosted?: VerificationsAPI.HostedVerification;
 }
 
 export interface VerificationRetrieveResponse {
@@ -210,27 +136,7 @@ export interface VerificationRetrieveResponse {
   /**
    * Present while the Verification is pending.
    */
-  delivery_target?: DeliveryTarget;
-}
-
-export interface VerificationListResponse {
-  data: Array<VerificationState>;
-
-  pagination: VerificationListResponse.Pagination;
-
-  status: 'OK';
-}
-
-export namespace VerificationListResponse {
-  export interface Pagination {
-    count?: number;
-
-    has_more?: boolean;
-
-    limit?: number;
-
-    offset?: number;
-  }
+  delivery_target?: VerificationsAPI.DeliveryTarget;
 }
 
 export interface VerificationCreateParams {
@@ -285,24 +191,11 @@ export interface VerificationRetrieveParams {
   service_sid: string;
 }
 
-export interface VerificationListParams {
-  limit?: number;
-
-  offset?: number;
-
-  updated_at_gte?: string;
-}
-
 export declare namespace Verifications {
   export {
-    type VerificationState as VerificationState,
-    type DeliveryTarget as DeliveryTarget,
-    type HostedVerification as HostedVerification,
     type VerificationCreateResponse as VerificationCreateResponse,
     type VerificationRetrieveResponse as VerificationRetrieveResponse,
-    type VerificationListResponse as VerificationListResponse,
     type VerificationCreateParams as VerificationCreateParams,
     type VerificationRetrieveParams as VerificationRetrieveParams,
-    type VerificationListParams as VerificationListParams,
   };
 }

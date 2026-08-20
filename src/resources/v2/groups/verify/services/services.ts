@@ -1,37 +1,27 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../core/resource';
+import { APIResource } from '../../../../../core/resource';
 import * as VerificationsAPI from './verifications';
 import {
-  DeliveryTarget,
-  HostedVerification,
   VerificationCreateParams,
   VerificationCreateResponse,
-  VerificationListParams,
-  VerificationListResponse,
   VerificationRetrieveParams,
   VerificationRetrieveResponse,
-  VerificationState,
   Verifications,
 } from './verifications';
 
-export class Verify extends APIResource {
+export class Services extends APIResource {
   verifications: VerificationsAPI.Verifications = new VerificationsAPI.Verifications(this._client);
 }
 
-Verify.Verifications = Verifications;
+Services.Verifications = Verifications;
 
-export declare namespace Verify {
+export declare namespace Services {
   export {
     Verifications as Verifications,
-    type VerificationState as VerificationState,
-    type DeliveryTarget as DeliveryTarget,
-    type HostedVerification as HostedVerification,
     type VerificationCreateResponse as VerificationCreateResponse,
     type VerificationRetrieveResponse as VerificationRetrieveResponse,
-    type VerificationListResponse as VerificationListResponse,
     type VerificationCreateParams as VerificationCreateParams,
     type VerificationRetrieveParams as VerificationRetrieveParams,
-    type VerificationListParams as VerificationListParams,
   };
 }
