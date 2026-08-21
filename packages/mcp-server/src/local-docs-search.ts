@@ -286,27 +286,34 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/modify-group',
     httpMethod: 'post',
     summary: 'Modify a group',
-    description: 'Add or manage participants in a group chat (beta feature)',
+    description:
+      "Add an external participant to, or remove one from, an existing iMessage group chat (beta feature). Success is reported only after the change is verified on the device: the group's persisted membership changed and Sendblue's participant state matches it. Removal requires the group to have at least four total members before the operation and does not require the group's creator. Only iMessage groups are supported.",
     stainlessPath: '(resource) groups > (method) modify',
     qualified: 'client.groups.modify',
-    params: ['group_id: string;', "modify_type: 'add_recipient';", 'number: string;'],
-    response: '{ message?: string; status?: string; }',
+    params: [
+      'group_id: string;',
+      "modify_type: 'add_recipient' | 'remove_recipient';",
+      'number: string;',
+      'from_number?: string;',
+    ],
+    response:
+      '{ error?: string; error_message?: string; group_id?: string; modify_type?: string; number?: string; status?: string; }',
     markdown:
-      "## modify\n\n`client.groups.modify(group_id: string, modify_type: 'add_recipient', number: string): { message?: string; status?: string; }`\n\n**post** `/api/modify-group`\n\nAdd or manage participants in a group chat (beta feature)\n\n### Parameters\n\n- `group_id: string`\n  Group identifier\n\n- `modify_type: 'add_recipient'`\n  Type of modification to perform\n\n- `number: string`\n  Phone number to add/modify in E.164 format\n\n### Returns\n\n- `{ message?: string; status?: string; }`\n\n  - `message?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.groups.modify({\n  group_id: 'group_123456',\n  modify_type: 'add_recipient',\n  number: '+19998887777',\n});\n\nconsole.log(response);\n```",
+      "## modify\n\n`client.groups.modify(group_id: string, modify_type: 'add_recipient' | 'remove_recipient', number: string, from_number?: string): { error?: string; error_message?: string; group_id?: string; modify_type?: string; number?: string; status?: string; }`\n\n**post** `/api/modify-group`\n\nAdd an external participant to, or remove one from, an existing iMessage group chat (beta feature). Success is reported only after the change is verified on the device: the group's persisted membership changed and Sendblue's participant state matches it. Removal requires the group to have at least four total members before the operation and does not require the group's creator. Only iMessage groups are supported.\n\n### Parameters\n\n- `group_id: string`\n  Group identifier\n\n- `modify_type: 'add_recipient' | 'remove_recipient'`\n  Type of modification to perform\n\n- `number: string`\n  External participant to add or remove, in E.164 format (or an iMessage email address). Company-owned lines cannot be added or removed.\n\n- `from_number?: string`\n  The Sendblue line to act from. It must belong to the account and already be a participant of the group. Free API accounts must provide it. Other accounts may omit it only when exactly one account line participates in the group. With no participating account line the request fails with `line_not_registered`; with multiple lines it fails with `ambiguous_sending_line`. No change is attempted in either case.\n\n### Returns\n\n- `{ error?: string; error_message?: string; group_id?: string; modify_type?: string; number?: string; status?: string; }`\n\n  - `error?: string`\n  - `error_message?: string`\n  - `group_id?: string`\n  - `modify_type?: string`\n  - `number?: string`\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.groups.modify({\n  group_id: 'group_123456',\n  modify_type: 'add_recipient',\n  number: '+19998887777',\n});\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.groups.modify',
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.groups.modify({\n  group_id: 'group_123456',\n  modify_type: 'add_recipient',\n  number: '+19998887777',\n});\n\nconsole.log(response.message);",
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.groups.modify({\n  group_id: 'group_123456',\n  modify_type: 'add_recipient',\n  number: '+19998887777',\n});\n\nconsole.log(response.group_id);",
       },
       python: {
         method: 'groups.modify',
         example:
-          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.groups.modify(\n    group_id="group_123456",\n    modify_type="add_recipient",\n    number="+19998887777",\n)\nprint(response.message)',
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.groups.modify(\n    group_id="group_123456",\n    modify_type="add_recipient",\n    number="+19998887777",\n)\nprint(response.group_id)',
       },
       http: {
         example:
-          'curl https://api.sendblue.co/api/modify-group \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "group_id": "group_123456",\n          "modify_type": "add_recipient",\n          "number": "+19998887777"\n        }\'',
+          'curl https://api.sendblue.co/api/modify-group \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "group_id": "group_123456",\n          "modify_type": "add_recipient",\n          "number": "+19998887777",\n          "from_number": "+15550001111"\n        }\'',
       },
     },
   },

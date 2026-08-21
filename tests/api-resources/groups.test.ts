@@ -31,6 +31,7 @@ describe('resource groups', () => {
       group_id: 'group_123456',
       modify_type: 'add_recipient',
       number: '+19998887777',
+      from_number: '+15550001111',
     });
   });
 
