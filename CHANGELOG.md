@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.14.0 (2026-08-21)
+
+Full Changelog: [v3.13.0...v3.14.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.13.0...v3.14.0)
+
+### Features
+
+* **groups:** RD-456 truthful group member add/remove on v1 and v2 ([9ebcc02](https://github.com/sendblue-api/sendblue-ts/commit/9ebcc029d9cdfb34753e684b09cc3be14065eb12))
+
 ## 3.13.0 (2026-08-20)
 
 Full Changelog: [v3.12.0...v3.13.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.12.0...v3.13.0)
