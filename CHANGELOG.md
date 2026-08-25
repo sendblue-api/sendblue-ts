@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.15.0 (2026-08-25)
+
+Full Changelog: [v3.14.0...v3.15.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.14.0...v3.15.0)
+
+### Features
+
+* **contact-sharing:** explicit sharing and terminal webhooks ([d715213](https://github.com/sendblue-api/sendblue-ts/commit/d715213987544ce186229889a8581e4e93d31436))
+
 ## 3.14.0 (2026-08-21)
 
 Full Changelog: [v3.13.0...v3.14.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.13.0...v3.14.0)
