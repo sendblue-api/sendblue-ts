@@ -88,9 +88,19 @@ export namespace WebhookCreateResponse {
     contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
+     * Webhooks for durable contact-profile publication completion and failure events
+     */
+    contact_profile?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
      * Global secret applied to all webhooks
      */
     globalSecret?: string;
+
+    /**
+     * Webhooks for inbound call events
+     */
+    inbound_call?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Webhooks for line assigned events
@@ -140,9 +150,19 @@ export namespace WebhookUpdateResponse {
     contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
+     * Webhooks for durable contact-profile publication completion and failure events
+     */
+    contact_profile?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
      * Global secret applied to all webhooks
      */
     globalSecret?: string;
+
+    /**
+     * Webhooks for inbound call events
+     */
+    inbound_call?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Webhooks for line assigned events
@@ -190,9 +210,19 @@ export namespace WebhookListResponse {
     contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
+     * Webhooks for durable contact-profile publication completion and failure events
+     */
+    contact_profile?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
      * Global secret applied to all webhooks
      */
     globalSecret?: string;
+
+    /**
+     * Webhooks for inbound call events
+     */
+    inbound_call?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Webhooks for line assigned events
@@ -248,6 +278,8 @@ export interface WebhookCreateParams {
     | 'outbound'
     | 'typing_indicator'
     | 'call_log'
+    | 'inbound_call'
+    | 'contact_profile'
     | 'contact_created';
 }
 
@@ -268,9 +300,19 @@ export namespace WebhookUpdateParams {
     contact_created?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
+     * Webhooks for durable contact-profile publication completion and failure events
+     */
+    contact_profile?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
      * Global secret applied to all webhooks
      */
     globalSecret?: string;
+
+    /**
+     * Webhooks for inbound call events
+     */
+    inbound_call?: Array<string | WebhooksAPI.WebhookConfiguration>;
 
     /**
      * Webhooks for line assigned events
@@ -315,6 +357,8 @@ export interface WebhookDeleteParams {
     | 'outbound'
     | 'typing_indicator'
     | 'call_log'
+    | 'inbound_call'
+    | 'contact_profile'
     | 'contact_created';
 }
 
