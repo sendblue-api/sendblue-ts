@@ -37,7 +37,7 @@ export class Groups extends APIResource {
    * ```ts
    * const response = await client.v2.groups.rename(
    *   'sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455',
-   *   { name: 'Project Falcon' },
+   *   { group_name: 'Project Falcon' },
    * );
    * ```
    */
@@ -140,16 +140,15 @@ export namespace GroupRenameResponse {
      * Device-verified name; empty when cleared
      */
     group_name: string;
-
-    service: 'iMessage';
   }
 }
 
 export interface GroupRenameParams {
   /**
-   * New group name, or null/empty string to clear it
+   * New group name; whitespace-only values are rejected, while null or an empty
+   * string clears it
    */
-  name: string | null;
+  group_name: string | null;
 }
 
 export declare namespace Groups {

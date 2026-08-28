@@ -1239,24 +1239,24 @@ const EMBEDDED_METHODS: MethodEntry[] = [
       "Changes the Apple-visible name of an existing iMessage group and waits for the\nSendblue line to verify the resulting state. Pass `null` or an empty string to\nclear the name. The verified value is persisted as the group's `group_name`.\n\nThe group must already have an iMessage chat, and the Sendblue line serving it\nmust be online and support group name changes. Failed requests are not replayed\nautomatically; retrying the same desired state is safe.\n",
     stainlessPath: '(resource) v2.groups > (method) rename',
     qualified: 'client.v2.groups.rename',
-    params: ['group_id: string;', 'name: string;'],
-    response: "{ data: { group_id: string; group_name: string; service: 'iMessage'; }; status: 'OK'; }",
+    params: ['group_id: string;', 'group_name: string;'],
+    response: "{ data: { group_id: string; group_name: string; }; status: 'OK'; }",
     markdown:
-      "## rename\n\n`client.v2.groups.rename(group_id: string, name: string): { data: object; status: 'OK'; }`\n\n**post** `/api/v2/groups/{group_id}/name`\n\nChanges the Apple-visible name of an existing iMessage group and waits for the\nSendblue line to verify the resulting state. Pass `null` or an empty string to\nclear the name. The verified value is persisted as the group's `group_name`.\n\nThe group must already have an iMessage chat, and the Sendblue line serving it\nmust be online and support group name changes. Failed requests are not replayed\nautomatically; retrying the same desired state is safe.\n\n\n### Parameters\n\n- `group_id: string`\n\n- `name: string`\n  New group name, or null/empty string to clear it\n\n### Returns\n\n- `{ data: { group_id: string; group_name: string; service: 'iMessage'; }; status: 'OK'; }`\n\n  - `data: { group_id: string; group_name: string; service: 'iMessage'; }`\n  - `status: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.v2.groups.rename('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455', { name: 'Project Falcon' });\n\nconsole.log(response);\n```",
+      "## rename\n\n`client.v2.groups.rename(group_id: string, group_name: string): { data: object; status: 'OK'; }`\n\n**post** `/api/v2/groups/{group_id}/name`\n\nChanges the Apple-visible name of an existing iMessage group and waits for the\nSendblue line to verify the resulting state. Pass `null` or an empty string to\nclear the name. The verified value is persisted as the group's `group_name`.\n\nThe group must already have an iMessage chat, and the Sendblue line serving it\nmust be online and support group name changes. Failed requests are not replayed\nautomatically; retrying the same desired state is safe.\n\n\n### Parameters\n\n- `group_id: string`\n\n- `group_name: string`\n  New group name; whitespace-only values are rejected, while null or an empty string clears it\n\n### Returns\n\n- `{ data: { group_id: string; group_name: string; }; status: 'OK'; }`\n\n  - `data: { group_id: string; group_name: string; }`\n  - `status: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.v2.groups.rename('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455', { group_name: 'Project Falcon' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.v2.groups.rename',
         example:
-          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.v2.groups.rename('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455', {\n  name: 'Project Falcon',\n});\n\nconsole.log(response.data);",
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.v2.groups.rename('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455', {\n  group_name: 'Project Falcon',\n});\n\nconsole.log(response.data);",
       },
       python: {
         method: 'v2.groups.rename',
         example:
-          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.v2.groups.rename(\n    group_id="sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455",\n    name="Project Falcon",\n)\nprint(response.data)',
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.v2.groups.rename(\n    group_id="sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455",\n    group_name="Project Falcon",\n)\nprint(response.data)',
       },
       http: {
         example:
-          'curl https://api.sendblue.co/api/v2/groups/$GROUP_ID/name \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "name": "Project Falcon"\n        }\'',
+          'curl https://api.sendblue.co/api/v2/groups/$GROUP_ID/name \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "group_name": "Project Falcon"\n        }\'',
       },
     },
   },

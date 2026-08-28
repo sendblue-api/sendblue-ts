@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.16.1 (2026-08-28)
+
+Full Changelog: [v3.16.0...v3.16.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.16.0...v3.16.1)
+
+### Bug Fixes
+
+* **groups:** RD-451 remove redundant service field ([eccaa12](https://github.com/sendblue-api/sendblue-ts/commit/eccaa125bec60c7ee4832c63643abc6076bbde2b))
+
 ## 3.16.0 (2026-08-28)
 
 Full Changelog: [v3.15.0...v3.16.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.15.0...v3.16.0)
