@@ -2,18 +2,36 @@
 
 Types:
 
-- <code><a href="./src/resources/messages.ts">MessageContent</a></code>
-- <code><a href="./src/resources/messages.ts">MessageResponse</a></code>
-- <code><a href="./src/resources/messages.ts">MessageRetrieveResponse</a></code>
-- <code><a href="./src/resources/messages.ts">MessageListResponse</a></code>
+- <code><a href="./src/resources/messages/messages.ts">MessageContent</a></code>
+- <code><a href="./src/resources/messages/messages.ts">MessageResponse</a></code>
+- <code><a href="./src/resources/messages/messages.ts">MessageRetrieveResponse</a></code>
+- <code><a href="./src/resources/messages/messages.ts">MessageListResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v2/messages/{message_id}">client.messages.<a href="./src/resources/messages.ts">retrieve</a>(messageID) -> MessageRetrieveResponse</code>
-- <code title="get /api/v2/messages">client.messages.<a href="./src/resources/messages.ts">list</a>({ ...params }) -> MessageListResponse</code>
-- <code title="get /api/status">client.messages.<a href="./src/resources/messages.ts">getStatus</a>({ ...params }) -> MessageResponse</code>
-- <code title="post /api/send-message">client.messages.<a href="./src/resources/messages.ts">send</a>({ ...params }) -> MessageResponse</code>
-- <code title="post /api/messages/{message_handle}/update-app-card">client.messages.<a href="./src/resources/messages.ts">updateAppCard</a>(messageHandle, { ...params }) -> MessageResponse</code>
+- <code title="get /api/v2/messages/{message_id}">client.messages.<a href="./src/resources/messages/messages.ts">retrieve</a>(messageID) -> MessageRetrieveResponse</code>
+- <code title="get /api/v2/messages">client.messages.<a href="./src/resources/messages/messages.ts">list</a>({ ...params }) -> MessageListResponse</code>
+- <code title="get /api/status">client.messages.<a href="./src/resources/messages/messages.ts">getStatus</a>({ ...params }) -> MessageResponse</code>
+- <code title="post /api/send-message">client.messages.<a href="./src/resources/messages/messages.ts">send</a>({ ...params }) -> MessageResponse</code>
+- <code title="post /api/messages/{message_handle}/update-app-card">client.messages.<a href="./src/resources/messages/messages.ts">updateAppCard</a>(messageHandle, { ...params }) -> MessageResponse</code>
+
+## V2
+
+### Verify
+
+#### Services
+
+##### Verifications
+
+Types:
+
+- <code><a href="./src/resources/messages/v2/verify/services/verifications.ts">VerificationCreateResponse</a></code>
+- <code><a href="./src/resources/messages/v2/verify/services/verifications.ts">VerificationRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="post /api/v2/verify/services/{service_sid}/verifications">client.messages.v2.verify.services.verifications.<a href="./src/resources/messages/v2/verify/services/verifications.ts">create</a>(serviceSid, { ...params }) -> VerificationCreateResponse</code>
+- <code title="get /api/v2/verify/services/{service_sid}/verifications/{verification_sid}">client.messages.v2.verify.services.verifications.<a href="./src/resources/messages/v2/verify/services/verifications.ts">retrieve</a>(verificationSid, { ...params }) -> VerificationRetrieveResponse</code>
 
 # Groups
 
@@ -164,27 +182,13 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/v2/groups/groups.ts">GroupRetrieveResponse</a></code>
+- <code><a href="./src/resources/v2/groups.ts">GroupRetrieveResponse</a></code>
+- <code><a href="./src/resources/v2/groups.ts">GroupRenameResponse</a></code>
 
 Methods:
 
-- <code title="get /api/v2/groups/{group_id}">client.v2.groups.<a href="./src/resources/v2/groups/groups.ts">retrieve</a>(groupID) -> GroupRetrieveResponse</code>
-
-### Verify
-
-#### Services
-
-##### Verifications
-
-Types:
-
-- <code><a href="./src/resources/v2/groups/verify/services/verifications.ts">VerificationCreateResponse</a></code>
-- <code><a href="./src/resources/v2/groups/verify/services/verifications.ts">VerificationRetrieveResponse</a></code>
-
-Methods:
-
-- <code title="post /api/v2/verify/services/{service_sid}/verifications">client.v2.groups.verify.services.verifications.<a href="./src/resources/v2/groups/verify/services/verifications.ts">create</a>(serviceSid, { ...params }) -> VerificationCreateResponse</code>
-- <code title="get /api/v2/verify/services/{service_sid}/verifications/{verification_sid}">client.v2.groups.verify.services.verifications.<a href="./src/resources/v2/groups/verify/services/verifications.ts">retrieve</a>(verificationSid, { ...params }) -> VerificationRetrieveResponse</code>
+- <code title="get /api/v2/groups/{group_id}">client.v2.groups.<a href="./src/resources/v2/groups.ts">retrieve</a>(groupID) -> GroupRetrieveResponse</code>
+- <code title="post /api/v2/groups/{group_id}/name">client.v2.groups.<a href="./src/resources/v2/groups.ts">rename</a>(groupID, { ...params }) -> GroupRenameResponse</code>
 
 # Lines
 

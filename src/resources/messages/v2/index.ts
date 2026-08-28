@@ -1,4 +1,4 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Groups, type GroupRetrieveResponse } from './groups';
+export { V2 } from './v2';
 export { Verify } from './verify/index';
