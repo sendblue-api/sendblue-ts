@@ -25,7 +25,7 @@ export class Verifications extends APIResource {
    * @example
    * ```ts
    * const verification =
-   *   await client.v2.groups.verify.services.verifications.create(
+   *   await client.messages.v2.verify.services.verifications.create(
    *     'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',
    *     { to: '+14155551212' },
    *   );
@@ -49,7 +49,7 @@ export class Verifications extends APIResource {
    * @example
    * ```ts
    * const verification =
-   *   await client.v2.groups.verify.services.verifications.retrieve(
+   *   await client.messages.v2.verify.services.verifications.retrieve(
    *     'VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',
    *     { service_sid: 'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD' },
    *   );

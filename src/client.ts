@@ -31,17 +31,6 @@ import {
 import { LookupLookupNumberParams, LookupLookupNumberResponse, Lookups } from './resources/lookups';
 import { MediaObjectUploadParams, MediaObjectUploadResponse, MediaObjects } from './resources/media-objects';
 import {
-  MessageContent,
-  MessageGetStatusParams,
-  MessageListParams,
-  MessageListResponse,
-  MessageResponse,
-  MessageRetrieveResponse,
-  MessageSendParams,
-  MessageUpdateAppCardParams,
-  Messages,
-} from './resources/messages';
-import {
   RequestLocation,
   RequestLocationCreateParams,
   RequestLocationCreateResponse,
@@ -89,6 +78,17 @@ import {
   Contacts,
 } from './resources/contacts/contacts';
 import { LineGetStateResponse, LineState, Lines } from './resources/lines/lines';
+import {
+  MessageContent,
+  MessageGetStatusParams,
+  MessageListParams,
+  MessageListResponse,
+  MessageResponse,
+  MessageRetrieveResponse,
+  MessageSendParams,
+  MessageUpdateAppCardParams,
+  Messages,
+} from './resources/messages/messages';
 import { V2 } from './resources/v2/v2';
 import { Verify } from './resources/verify/verify';
 import { type Fetch } from './internal/builtin-types';

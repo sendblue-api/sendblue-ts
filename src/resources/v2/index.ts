@@ -1,6 +1,11 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Groups, type GroupRetrieveResponse } from './groups/index';
+export {
+  Groups,
+  type GroupRetrieveResponse,
+  type GroupRenameResponse,
+  type GroupRenameParams,
+} from './groups';
 export {
   Seats,
   type SeatRetrieveResponse,

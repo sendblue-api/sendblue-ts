@@ -41,6 +41,18 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/messages/{message_handle}/update-app-card',
   },
   {
+    clientCallName: 'client.messages.v2.verify.services.verifications.create',
+    fullyQualifiedName: 'messages.v2.verify.services.verifications.create',
+    httpMethod: 'post',
+    httpPath: '/api/v2/verify/services/{service_sid}/verifications',
+  },
+  {
+    clientCallName: 'client.messages.v2.verify.services.verifications.retrieve',
+    fullyQualifiedName: 'messages.v2.verify.services.verifications.retrieve',
+    httpMethod: 'get',
+    httpPath: '/api/v2/verify/services/{service_sid}/verifications/{verification_sid}',
+  },
+  {
     clientCallName: 'client.groups.modify',
     fullyQualifiedName: 'groups.modify',
     httpMethod: 'post',
@@ -209,16 +221,10 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/groups/{group_id}',
   },
   {
-    clientCallName: 'client.v2.groups.verify.services.verifications.create',
-    fullyQualifiedName: 'v2.groups.verify.services.verifications.create',
+    clientCallName: 'client.v2.groups.rename',
+    fullyQualifiedName: 'v2.groups.rename',
     httpMethod: 'post',
-    httpPath: '/api/v2/verify/services/{service_sid}/verifications',
-  },
-  {
-    clientCallName: 'client.v2.groups.verify.services.verifications.retrieve',
-    fullyQualifiedName: 'v2.groups.verify.services.verifications.retrieve',
-    httpMethod: 'get',
-    httpPath: '/api/v2/verify/services/{service_sid}/verifications/{verification_sid}',
+    httpPath: '/api/v2/groups/{group_id}/name',
   },
   {
     clientCallName: 'client.lines.getState',

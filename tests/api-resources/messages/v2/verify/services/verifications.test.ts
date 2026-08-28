@@ -11,7 +11,7 @@ const client = new SendblueAPI({
 describe('resource verifications', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.v2.groups.verify.services.verifications.create(
+    const responsePromise = client.messages.v2.verify.services.verifications.create(
       'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',
       { to: '+14155551212' },
     );
@@ -26,7 +26,7 @@ describe('resource verifications', () => {
 
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.v2.groups.verify.services.verifications.create(
+    const response = await client.messages.v2.verify.services.verifications.create(
       'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',
       {
         to: '+14155551212',
@@ -42,7 +42,7 @@ describe('resource verifications', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.v2.groups.verify.services.verifications.retrieve(
+    const responsePromise = client.messages.v2.verify.services.verifications.retrieve(
       'VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',
       { service_sid: 'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD' },
     );
@@ -57,7 +57,7 @@ describe('resource verifications', () => {
 
   // Mock server tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.v2.groups.verify.services.verifications.retrieve(
+    const response = await client.messages.v2.verify.services.verifications.retrieve(
       'VRE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD',
       { service_sid: 'SVE1CB97d8EBbDbaAae6d9B1ca0D1cFaAD' },
     );
