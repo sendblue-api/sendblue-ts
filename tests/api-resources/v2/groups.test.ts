@@ -20,4 +20,25 @@ describe('resource groups', () => {
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
   });
+
+  // Mock server tests are disabled
+  test.skip('rename: only required params', async () => {
+    const responsePromise = client.v2.groups.rename('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455', {
+      name: 'Project Falcon',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('rename: required and optional params', async () => {
+    const response = await client.v2.groups.rename('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455', {
+      name: 'Project Falcon',
+    });
+  });
 });

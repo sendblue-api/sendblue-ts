@@ -47,7 +47,7 @@ export {
   type MessageGetStatusParams,
   type MessageSendParams,
   type MessageUpdateAppCardParams,
-} from './messages';
+} from './messages/messages';
 export {
   RequestLocation,
   type RequestLocationCreateResponse,

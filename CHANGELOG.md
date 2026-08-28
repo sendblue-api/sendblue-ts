@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.16.0 (2026-08-28)
+
+Full Changelog: [v3.15.0...v3.16.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.15.0...v3.16.0)
+
+### Features
+
+* **grayrunner:** RD-451 manage imessage group names ([799a1b5](https://github.com/sendblue-api/sendblue-ts/commit/799a1b56adb06710711bf96fc09464a24849a9b6))
+
 ## 3.15.0 (2026-08-25)
 
 Full Changelog: [v3.14.0...v3.15.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.14.0...v3.15.0)
