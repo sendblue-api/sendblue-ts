@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.16.2 (2026-09-01)
+
+Full Changelog: [v3.16.1...v3.16.2](https://github.com/sendblue-api/sendblue-ts/compare/v3.16.1...v3.16.2)
+
+### Documentation
+
+* **mcp:** document code execution modes and the local code runner ([c37a601](https://github.com/sendblue-api/sendblue-ts/commit/c37a601b5c1d430eaf066d1d630bd1a27b8b81e9))
+
 ## 3.16.1 (2026-08-28)
 
 Full Changelog: [v3.16.0...v3.16.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.16.0...v3.16.1)
