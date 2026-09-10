@@ -1,8 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as GroupsAPI from '../groups';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
+import { maybeMultipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 /**
@@ -33,6 +35,12 @@ export class Groups extends APIResource {
    * must be online and support group name changes. Failed requests are not replayed
    * automatically; retrying the same desired state is safe.
    *
+   * By default an eligible Sendblue line in the group is selected automatically.
+   * Pass `from_number` to require a specific Sendblue line: it must have an iMessage
+   * mapping for this group, and if that line cannot act the request fails without
+   * falling back to another line. The success response reports the line that
+   * performed the change as `from_number`.
+   *
    * @example
    * ```ts
    * const response = await client.v2.groups.rename(
@@ -47,6 +55,48 @@ export class Groups extends APIResource {
     options?: RequestOptions,
   ): APIPromise<GroupRenameResponse> {
     return this._client.post(path`/api/v2/groups/${groupID}/name`, { body, ...options });
+  }
+
+  /**
+   * Sets the Apple-visible photo of an existing iMessage group and waits for the
+   * Sendblue line to verify the resulting device state. Pass `null` to clear the
+   * photo. A set is verified only when the device-created photo transfer becomes the
+   * chat's current photo; the verified photo is then persisted with the group and
+   * returned on group retrieval with an image URL.
+   *
+   * Set the photo with either a JSON `photo_url` or raw image bytes in the `file`
+   * field of a multipart form. Images must be JPEG, PNG, or GIF, at most 5 MB, and
+   * no more than 25 million aggregate decoded pixels. URL images must use a direct,
+   * publicly resolvable https URL; redirects are not followed. Replacing or clearing
+   * the photo replaces the current stored reference and attempts to delete the
+   * superseded object; no history is exposed through the API. Supported line types
+   * are checked automatically; ineligible lines return `unsupported_line`. Failed
+   * requests are not replayed automatically; retrying the same desired state is
+   * safe.
+   *
+   * By default an eligible Sendblue line in the group is selected automatically.
+   * Pass `from_number` to require a specific Sendblue line: it must have an iMessage
+   * mapping for this group, and if that line cannot act the request fails without
+   * falling back to another line. The success response reports the line that
+   * performed the change as `from_number`.
+   *
+   * @example
+   * ```ts
+   * const response = await client.v2.groups.setPhoto(
+   *   'sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455',
+   *   { photo_url: 'https://example.com/team-photo.png' },
+   * );
+   * ```
+   */
+  setPhoto(
+    groupID: string,
+    body: GroupSetPhotoParams,
+    options?: RequestOptions,
+  ): APIPromise<GroupSetPhotoResponse> {
+    return this._client.post(
+      path`/api/v2/groups/${groupID}/photo`,
+      maybeMultipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 }
 
@@ -63,6 +113,12 @@ export namespace GroupRetrieveResponse {
     group_id?: string;
 
     group_name?: string;
+
+    /**
+     * Device-verified current group photo metadata; null when the group has no
+     * verified photo
+     */
+    group_photo?: GroupsAPI.GroupPhoto | null;
 
     latest_comm_at?: string | null;
 
@@ -134,6 +190,11 @@ export interface GroupRenameResponse {
 
 export namespace GroupRenameResponse {
   export interface Data {
+    /**
+     * Sendblue line that performed the change
+     */
+    from_number: string | null;
+
     group_id: string;
 
     /**
@@ -143,18 +204,65 @@ export namespace GroupRenameResponse {
   }
 }
 
+export interface GroupSetPhotoResponse {
+  data: GroupSetPhotoResponse.Data;
+
+  status: 'OK';
+}
+
+export namespace GroupSetPhotoResponse {
+  export interface Data {
+    /**
+     * Sendblue line that performed the change
+     */
+    from_number: string | null;
+
+    group_id: string;
+
+    /**
+     * Device-verified current photo; null after a verified clear
+     */
+    group_photo: GroupsAPI.GroupPhoto | null;
+  }
+}
+
 export interface GroupRenameParams {
   /**
    * New group name; whitespace-only values are rejected, while null or an empty
    * string clears it
    */
   group_name: string | null;
+
+  /**
+   * Sendblue line that must perform the change; it must have an iMessage mapping for
+   * this group, and no other line is used if it cannot act. Omit or pass null for
+   * automatic selection
+   */
+  from_number?: string | null;
+}
+
+export interface GroupSetPhotoParams {
+  /**
+   * Direct, publicly resolvable https URL of the image to set (JPEG, PNG, or GIF, at
+   * most 5 MB and 25 million aggregate decoded pixels; redirects are not followed);
+   * null clears the group photo
+   */
+  photo_url: string | null;
+
+  /**
+   * Sendblue line that must perform the change; it must have an iMessage mapping for
+   * this group, and no other line is used if it cannot act. Omit or pass null for
+   * automatic selection
+   */
+  from_number?: string | null;
 }
 
 export declare namespace Groups {
   export {
     type GroupRetrieveResponse as GroupRetrieveResponse,
     type GroupRenameResponse as GroupRenameResponse,
+    type GroupSetPhotoResponse as GroupSetPhotoResponse,
     type GroupRenameParams as GroupRenameParams,
+    type GroupSetPhotoParams as GroupSetPhotoParams,
   };
 }

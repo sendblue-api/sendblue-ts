@@ -21,6 +21,7 @@ export {
 export { Events, type AccountEvent, type EventStreamParams } from './events';
 export {
   Groups,
+  type GroupPhoto,
   type GroupModifyResponse,
   type GroupModifyParams,
   type GroupSendMessageParams,

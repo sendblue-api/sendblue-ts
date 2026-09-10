@@ -37,6 +37,7 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/groups.ts">GroupPhoto</a></code>
 - <code><a href="./src/resources/groups.ts">GroupModifyResponse</a></code>
 
 Methods:
@@ -184,11 +185,13 @@ Types:
 
 - <code><a href="./src/resources/v2/groups.ts">GroupRetrieveResponse</a></code>
 - <code><a href="./src/resources/v2/groups.ts">GroupRenameResponse</a></code>
+- <code><a href="./src/resources/v2/groups.ts">GroupSetPhotoResponse</a></code>
 
 Methods:
 
 - <code title="get /api/v2/groups/{group_id}">client.v2.groups.<a href="./src/resources/v2/groups.ts">retrieve</a>(groupID) -> GroupRetrieveResponse</code>
 - <code title="post /api/v2/groups/{group_id}/name">client.v2.groups.<a href="./src/resources/v2/groups.ts">rename</a>(groupID, { ...params }) -> GroupRenameResponse</code>
+- <code title="post /api/v2/groups/{group_id}/photo">client.v2.groups.<a href="./src/resources/v2/groups.ts">setPhoto</a>(groupID, { ...params }) -> GroupSetPhotoResponse</code>
 
 # Lines
 

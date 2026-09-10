@@ -18,7 +18,13 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { AccountEvent, EventStreamParams, Events } from './resources/events';
-import { GroupModifyParams, GroupModifyResponse, GroupSendMessageParams, Groups } from './resources/groups';
+import {
+  GroupModifyParams,
+  GroupModifyResponse,
+  GroupPhoto,
+  GroupSendMessageParams,
+  Groups,
+} from './resources/groups';
 import {
   Location,
   LocationListParams,
@@ -944,6 +950,7 @@ export declare namespace SendblueAPI {
 
   export {
     Groups as Groups,
+    type GroupPhoto as GroupPhoto,
     type GroupModifyResponse as GroupModifyResponse,
     type GroupModifyParams as GroupModifyParams,
     type GroupSendMessageParams as GroupSendMessageParams,

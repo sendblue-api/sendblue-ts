@@ -144,6 +144,7 @@ const fuse = new Fuse(
     'client.v2.seats.retrieve',
     'client.v2.groups.rename',
     'client.v2.groups.retrieve',
+    'client.v2.groups.setPhoto',
     'client.lines.getState',
     'client.lines.callForwarding.delete',
     'client.lines.callForwarding.retrieve',
