@@ -4,7 +4,9 @@ export {
   Groups,
   type GroupRetrieveResponse,
   type GroupRenameResponse,
+  type GroupSetPhotoResponse,
   type GroupRenameParams,
+  type GroupSetPhotoParams,
 } from './groups';
 export {
   Seats,
