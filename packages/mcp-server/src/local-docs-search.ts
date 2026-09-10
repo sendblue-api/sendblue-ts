@@ -416,15 +416,15 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     name: 'lookup_number',
     endpoint: '/api/evaluate-service',
     httpMethod: 'get',
-    summary: 'Lookup a phone number',
+    summary: 'Lookup iMessage support',
     description:
-      'Determine if a phone number supports iMessage or SMS. Useful for checking if a number is an iPhone, if it is real, or which provider to use.\n',
+      'Check iMessage support for a phone number or email address. A successful result does not guarantee delivery.\nFor email addresses, SMS means iMessage was not detected; it does not mean the address can receive SMS.\nThe from_number query parameter does not select a sending line for this endpoint.\nEmail results indicating no iMessage support are not cached. An inconclusive lookup returns a retryable error.\nLimit retries and use backoff after an inconclusive response. A lookup does not guarantee that upstream availability data was freshly refreshed.\n',
     stainlessPath: '(resource) lookups > (method) lookup_number',
     qualified: 'client.lookups.lookupNumber',
     params: ['number: string;'],
     response: "{ number?: string; service?: 'iMessage' | 'SMS'; }",
     markdown:
-      "## lookup_number\n\n`client.lookups.lookupNumber(number: string): { number?: string; service?: 'iMessage' | 'SMS'; }`\n\n**get** `/api/evaluate-service`\n\nDetermine if a phone number supports iMessage or SMS. Useful for checking if a number is an iPhone, if it is real, or which provider to use.\n\n\n### Parameters\n\n- `number: string`\n  The number you want to evaluate in E.164 format\n\n### Returns\n\n- `{ number?: string; service?: 'iMessage' | 'SMS'; }`\n\n  - `number?: string`\n  - `service?: 'iMessage' | 'SMS'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.lookups.lookupNumber({ number: '+19999999999' });\n\nconsole.log(response);\n```",
+      "## lookup_number\n\n`client.lookups.lookupNumber(number: string): { number?: string; service?: 'iMessage' | 'SMS'; }`\n\n**get** `/api/evaluate-service`\n\nCheck iMessage support for a phone number or email address. A successful result does not guarantee delivery.\nFor email addresses, SMS means iMessage was not detected; it does not mean the address can receive SMS.\nThe from_number query parameter does not select a sending line for this endpoint.\nEmail results indicating no iMessage support are not cached. An inconclusive lookup returns a retryable error.\nLimit retries and use backoff after an inconclusive response. A lookup does not guarantee that upstream availability data was freshly refreshed.\n\n\n### Parameters\n\n- `number: string`\n  The phone number in E.164 format or email address to evaluate\n\n### Returns\n\n- `{ number?: string; service?: 'iMessage' | 'SMS'; }`\n\n  - `number?: string`\n  - `service?: 'iMessage' | 'SMS'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.lookups.lookupNumber({ number: '+19999999999' });\n\nconsole.log(response);\n```",
     perLanguage: {
       typescript: {
         method: 'client.lookups.lookupNumber',
