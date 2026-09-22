@@ -28,7 +28,7 @@ export const newMcpServer = async ({
   new McpServer(
     {
       name: 'sendblue_api',
-      version: '3.16.1',
+      version: '3.17.0',
     },
     {
       instructions: await getInstructions({ stainlessApiKey, customInstructionsPath }),
