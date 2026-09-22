@@ -227,6 +227,12 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/groups/{group_id}/name',
   },
   {
+    clientCallName: 'client.v2.groups.setPhoto',
+    fullyQualifiedName: 'v2.groups.setPhoto',
+    httpMethod: 'post',
+    httpPath: '/api/v2/groups/{group_id}/photo',
+  },
+  {
     clientCallName: 'client.lines.getState',
     fullyQualifiedName: 'lines.getState',
     httpMethod: 'get',

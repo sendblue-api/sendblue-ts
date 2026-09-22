@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.17.0 (2026-09-22)
+
+Full Changelog: [v3.16.1...v3.17.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.16.1...v3.17.0)
+
+### Features
+
+* [PROD-1939] Reject /mark-read for lines that cannot apply a read receipt ([ac047a3](https://github.com/sendblue-api/sendblue-ts/commit/ac047a307ebde2428b4f397c5a4be3c7d91ae694))
+* **grayrunner:** RD-454 verified group photo set/clear and retrieval ([eef6588](https://github.com/sendblue-api/sendblue-ts/commit/eef6588a66d157033412940ce6a85c7a6ae3a660))
+
+
+### Bug Fixes
+
+* **lookup:** RD-528 prevent cached email false negatives ([979d888](https://github.com/sendblue-api/sendblue-ts/commit/979d888d354d703fde6fa7952c399b17ae10c329))
+
+
+### Documentation
+
+* **mcp:** document code execution modes and the local code runner ([c37a601](https://github.com/sendblue-api/sendblue-ts/commit/c37a601b5c1d430eaf066d1d630bd1a27b8b81e9))
+
 ## 3.16.1 (2026-08-28)
 
 Full Changelog: [v3.16.0...v3.16.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.16.0...v3.16.1)

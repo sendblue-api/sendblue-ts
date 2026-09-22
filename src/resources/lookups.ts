@@ -9,8 +9,13 @@ import { RequestOptions } from '../internal/request-options';
  */
 export class Lookups extends APIResource {
   /**
-   * Determine if a phone number supports iMessage or SMS. Useful for checking if a
-   * number is an iPhone, if it is real, or which provider to use.
+   * Check iMessage support for a phone number or email address. A successful result
+   * does not guarantee delivery. For email addresses, SMS means iMessage was not
+   * detected; it does not mean the address can receive SMS. The from_number query
+   * parameter does not select a sending line for this endpoint. Email results
+   * indicating no iMessage support are not cached. An inconclusive lookup returns a
+   * retryable error. Limit retries and use backoff after an inconclusive response. A
+   * lookup does not guarantee that upstream availability data was freshly refreshed.
    */
   lookupNumber(
     query: LookupLookupNumberParams,
@@ -22,19 +27,19 @@ export class Lookups extends APIResource {
 
 export interface LookupLookupNumberResponse {
   /**
-   * The number you evaluated in E.164 format
+   * The normalized phone number or email address evaluated
    */
   number?: string;
 
   /**
-   * The service the number supports
+   * Whether iMessage support was detected
    */
   service?: 'iMessage' | 'SMS';
 }
 
 export interface LookupLookupNumberParams {
   /**
-   * The number you want to evaluate in E.164 format
+   * The phone number in E.164 format or email address to evaluate
    */
   number: string;
 }

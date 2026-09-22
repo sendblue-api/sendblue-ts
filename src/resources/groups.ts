@@ -49,6 +49,19 @@ export class Groups extends APIResource {
   }
 }
 
+export interface GroupPhoto {
+  /**
+   * Device-verified identifier of the current Apple group photo
+   */
+  photo_guid: string;
+
+  /**
+   * Direct URL for downloading the current photo; anyone with the exact URL can
+   * download it while the image exists
+   */
+  url: string;
+}
+
 export interface GroupModifyResponse {
   error?: string | null;
 
@@ -158,6 +171,7 @@ export namespace GroupSendMessageParams {
 
 export declare namespace Groups {
   export {
+    type GroupPhoto as GroupPhoto,
     type GroupModifyResponse as GroupModifyResponse,
     type GroupModifyParams as GroupModifyParams,
     type GroupSendMessageParams as GroupSendMessageParams,

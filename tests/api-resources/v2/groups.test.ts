@@ -39,6 +39,29 @@ describe('resource groups', () => {
   test.skip('rename: required and optional params', async () => {
     const response = await client.v2.groups.rename('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455', {
       group_name: 'Project Falcon',
+      from_number: '+15551234567',
+    });
+  });
+
+  // Mock server tests are disabled
+  test.skip('setPhoto: only required params', async () => {
+    const responsePromise = client.v2.groups.setPhoto('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455', {
+      photo_url: 'https://example.com/team-photo.png',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('setPhoto: required and optional params', async () => {
+    const response = await client.v2.groups.setPhoto('sb_group_608acc54-d0d7-4b41-8092-9ff6e1e70455', {
+      photo_url: 'https://example.com/team-photo.png',
+      from_number: '+15551234567',
     });
   });
 });

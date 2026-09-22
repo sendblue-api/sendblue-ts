@@ -2,7 +2,14 @@
 
 import { APIResource } from '../../core/resource';
 import * as GroupsAPI from './groups';
-import { GroupRenameParams, GroupRenameResponse, GroupRetrieveResponse, Groups } from './groups';
+import {
+  GroupRenameParams,
+  GroupRenameResponse,
+  GroupRetrieveResponse,
+  GroupSetPhotoParams,
+  GroupSetPhotoResponse,
+  Groups,
+} from './groups';
 import * as SeatsAPI from './seats';
 import {
   SeatCountParams,
@@ -41,6 +48,8 @@ export declare namespace V2 {
     Groups as Groups,
     type GroupRetrieveResponse as GroupRetrieveResponse,
     type GroupRenameResponse as GroupRenameResponse,
+    type GroupSetPhotoResponse as GroupSetPhotoResponse,
     type GroupRenameParams as GroupRenameParams,
+    type GroupSetPhotoParams as GroupSetPhotoParams,
   };
 }
