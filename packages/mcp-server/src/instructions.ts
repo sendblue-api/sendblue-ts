@@ -13,6 +13,9 @@ interface InstructionsCacheEntry {
 
 const instructionsCache = new Map<string, InstructionsCacheEntry>();
 
+const DEFAULT_INSTRUCTIONS =
+  '\n  This is the sendblue-api MCP server.\n\n  Available tools:\n  - search_docs: Search SDK documentation to find the right methods and parameters.\n  - execute: Run TypeScript code against a pre-authenticated SDK client. Define an async run(client) function.\n\n  Workflow:\n  - If unsure about the API, call search_docs first.\n  - Write complete solutions in a single execute call when possible. For large datasets, use API filters to narrow results or paginate within a single execute block.\n  - If execute returns an error, read the error and fix your code rather than retrying the same approach.\n  - Variables do not persist between execute calls. Return or log all data you need.\n  - Individual HTTP requests to the API have a 30-second timeout. If a request times out, try a smaller query or add filters.\n  - Code execution has a total timeout of approximately 5 minutes. If your code times out, simplify it or break it into smaller steps.\n  ';
+
 export async function getInstructions({
   stainlessApiKey,
   customInstructionsPath,
@@ -40,7 +43,11 @@ export async function getInstructions({
   if (customInstructionsPath) {
     fetchedInstructions = await fetchLatestInstructionsFromFile(customInstructionsPath);
   } else {
-    fetchedInstructions = await fetchLatestInstructionsFromApi(stainlessApiKey);
+    const instructionsUrl = readEnv('CODE_MODE_INSTRUCTIONS_URL');
+    fetchedInstructions =
+      instructionsUrl ?
+        await fetchLatestInstructionsFromUrl(instructionsUrl, stainlessApiKey)
+      : DEFAULT_INSTRUCTIONS;
   }
 
   instructionsCache.set(cacheKey, { fetchedInstructions, fetchedAt: now });
@@ -56,28 +63,27 @@ async function fetchLatestInstructionsFromFile(path: string): Promise<string> {
   }
 }
 
-async function fetchLatestInstructionsFromApi(stainlessApiKey: string | undefined): Promise<string> {
-  // Setting the stainless API key is optional, but may be required
-  // to authenticate requests to the Stainless API.
-  const response = await fetch(
-    readEnv('CODE_MODE_INSTRUCTIONS_URL') ?? 'https://api.stainless.com/api/ai/instructions/sendblue-api',
-    {
+async function fetchLatestInstructionsFromUrl(
+  url: string,
+  stainlessApiKey: string | undefined,
+): Promise<string> {
+  try {
+    const response = await fetch(url, {
       method: 'GET',
       headers: { ...(stainlessApiKey && { Authorization: stainlessApiKey }) },
-    },
-  );
-
-  let instructions: string | undefined;
-  if (!response.ok) {
+    });
+    if (response.ok) {
+      return ((await response.json()) as { instructions: string }).instructions;
+    }
     getLogger().warn(
+      { status: response.status, url },
       'Warning: failed to retrieve MCP server instructions. Proceeding with default instructions...',
     );
-
-    instructions =
-      '\n  This is the sendblue-api MCP server.\n\n  Available tools:\n  - search_docs: Search SDK documentation to find the right methods and parameters.\n  - execute: Run TypeScript code against a pre-authenticated SDK client. Define an async run(client) function.\n\n  Workflow:\n  - If unsure about the API, call search_docs first.\n  - Write complete solutions in a single execute call when possible. For large datasets, use API filters to narrow results or paginate within a single execute block.\n  - If execute returns an error, read the error and fix your code rather than retrying the same approach.\n  - Variables do not persist between execute calls. Return or log all data you need.\n  - Individual HTTP requests to the API have a 30-second timeout. If a request times out, try a smaller query or add filters.\n  - Code execution has a total timeout of approximately 5 minutes. If your code times out, simplify it or break it into smaller steps.\n  ';
+  } catch (error) {
+    getLogger().warn(
+      { error, url },
+      'Warning: failed to retrieve MCP server instructions. Proceeding with default instructions...',
+    );
   }
-
-  instructions ??= ((await response.json()) as { instructions: string }).instructions;
-
-  return instructions;
+  return DEFAULT_INSTRUCTIONS;
 }

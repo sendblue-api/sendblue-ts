@@ -2,8 +2,7 @@
 
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { Metadata, McpRequestContext, asTextContentResult } from './types';
-import { getLogger } from './logger';
-import type { LocalDocsSearch } from './local-docs-search';
+import { LocalDocsSearch } from './local-docs-search';
 
 export const metadata: Metadata = {
   resource: 'all',
@@ -41,9 +40,6 @@ export const tool: Tool = {
   },
 };
 
-const docsSearchURL =
-  process.env['DOCS_SEARCH_URL'] || 'https://api.stainless.com/api/projects/sendblue-api/docs/search';
-
 let _localSearch: LocalDocsSearch | undefined;
 
 export function setLocalSearch(search: LocalDocsSearch): void {
@@ -51,9 +47,8 @@ export function setLocalSearch(search: LocalDocsSearch): void {
 }
 
 async function searchLocal(args: Record<string, unknown>): Promise<unknown> {
-  if (!_localSearch) {
-    throw new Error('Local search not initialized');
-  }
+  // initMcpServer normally sets the index (with any --docs-dir files); build the embedded one otherwise.
+  _localSearch ??= await LocalDocsSearch.create();
 
   const query = (args['query'] as string) ?? '';
   const language = (args['language'] as string) ?? 'typescript';
@@ -67,72 +62,13 @@ async function searchLocal(args: Record<string, unknown>): Promise<unknown> {
   }).results;
 }
 
-async function searchRemote(args: Record<string, unknown>, reqContext: McpRequestContext): Promise<unknown> {
-  const body = args as any;
-  const query = new URLSearchParams(body).toString();
-
-  const startTime = Date.now();
-  const result = await fetch(`${docsSearchURL}?${query}`, {
-    headers: {
-      ...(reqContext.stainlessApiKey && { Authorization: reqContext.stainlessApiKey }),
-      ...(reqContext.mcpSessionId && { 'x-stainless-mcp-session-id': reqContext.mcpSessionId }),
-      ...(reqContext.mcpClientInfo && {
-        'x-stainless-mcp-client-info': JSON.stringify(reqContext.mcpClientInfo),
-      }),
-    },
-  });
-
-  const logger = getLogger();
-
-  if (!result.ok) {
-    const errorText = await result.text();
-    logger.warn(
-      {
-        durationMs: Date.now() - startTime,
-        query: body.query,
-        status: result.status,
-        statusText: result.statusText,
-        errorText,
-      },
-      'Got error response from docs search tool',
-    );
-
-    if (result.status === 404 && !reqContext.stainlessApiKey) {
-      throw new Error(
-        'Could not find docs for this project. You may need to provide a Stainless API key via the STAINLESS_API_KEY environment variable, the --stainless-api-key flag, or the x-stainless-api-key HTTP header.',
-      );
-    }
-
-    throw new Error(
-      `${result.status}: ${result.statusText} when using doc search tool. Details: ${errorText}`,
-    );
-  }
-
-  const resultBody = await result.json();
-  logger.info(
-    {
-      durationMs: Date.now() - startTime,
-      query: body.query,
-    },
-    'Got docs search result',
-  );
-  return resultBody;
-}
-
 export const handler = async ({
-  reqContext,
   args,
 }: {
   reqContext: McpRequestContext;
   args: Record<string, unknown> | undefined;
 }) => {
-  const body = args ?? {};
-
-  if (_localSearch) {
-    return asTextContentResult(await searchLocal(body));
-  }
-
-  return asTextContentResult(await searchRemote(body, reqContext));
+  return asTextContentResult(await searchLocal(args ?? {}));
 };
 
 export default { metadata, tool, handler };

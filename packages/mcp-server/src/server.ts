@@ -66,11 +66,9 @@ export async function initMcpServer(params: {
     error: logAtLevel('error'),
   };
 
-  if (params.mcpOptions?.docsSearchMode === 'local') {
-    const docsDir = params.mcpOptions?.docsDir;
-    const localSearch = await LocalDocsSearch.create(docsDir ? { docsDir } : undefined);
-    setLocalSearch(localSearch);
-  }
+  const docsDir = params.mcpOptions?.docsDir;
+  const localSearch = await LocalDocsSearch.create(docsDir ? { docsDir } : undefined);
+  setLocalSearch(localSearch);
 
   let _client: SendblueAPI | undefined;
   let _clientError: Error | undefined;
@@ -182,7 +180,7 @@ export function selectTools(options?: McpOptions): McpTool[] {
     includedTools.push(
       codeTool({
         blockedMethods: blockedMethodsForCodeTool(options),
-        codeExecutionMode: options?.codeExecutionMode ?? 'stainless-sandbox',
+        codeExecutionMode: options?.codeExecutionMode ?? 'local',
       }),
     );
   }
