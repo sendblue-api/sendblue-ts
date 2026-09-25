@@ -1,13 +1,18 @@
-# This workflow is triggered when a GitHub release is created.
-# It can also be run manually to re-publish to NPM in case it failed for some reason.
+# This workflow is dispatched by release-please.yml on the new tag after a release PR is merged
+# (a release created with GITHUB_TOKEN does not fire `release: published`).
+# It also runs when a release is published by a user, and it can be run manually to re-publish
+# to NPM in case it failed for some reason. Run it on the release tag (e.g. `v3.18.0`).
 # You can run this workflow by navigating to https://www.github.com/sendblue-api/sendblue-ts/actions/workflows/publish-npm.yml
 name: Publish NPM
 on:
   workflow_dispatch:
     inputs:
       path:
-        description: The path to run the release in, e.g. '.' or 'packages/mcp-server'
-        required: true
+        description: The path to run the release in, e.g. '.' or 'packages/mcp-server'. Leave empty to publish both.
+        required: false
+      tag:
+        description: Release tag to upload the MCP bundle to, e.g. 'v3.18.0'. Defaults to the ref when run on a tag.
+        required: false
 
   release:
     types: [published]
@@ -35,17 +40,28 @@ jobs:
       - name: Publish to NPM
         run: |
           if [ -n "$INPUT_PATH" ]; then
-            PATHS_RELEASED="[\"$INPUT_PATH\"]"
+            PATHS_RELEASED="$(jq -nc --arg p "$INPUT_PATH" '[$p]')"
           else
-            PATHS_RELEASED='[\".\", \"packages/mcp-server\"]'
+            PATHS_RELEASED='[".","packages/mcp-server"]'
           fi
-          yarn tsn scripts/publish-packages.ts "{ \"paths_released\": \"$PATHS_RELEASED\" }"
+          yarn tsn scripts/publish-packages.ts "$(jq -nc --arg p "$PATHS_RELEASED" '{paths_released: $p}')"
         env:
           INPUT_PATH: ${{ github.event.inputs.path }}
 
       - name: Upload MCP Server DXT GitHub release asset
         run: |
-          gh release upload ${{ github.event.release.tag_name }} \
-            packages/mcp-server/sendblue_api.mcpb
+          TAG="${RELEASE_TAG:-${INPUT_TAG:-}}"
+          if [ -z "$TAG" ] && [ "$REF_TYPE" = "tag" ]; then
+            TAG="$REF_NAME"
+          fi
+          if [ -z "$TAG" ]; then
+            echo "No release tag (not a release event, no tag input, not run on a tag): skipping upload"
+            exit 0
+          fi
+          gh release upload "$TAG" packages/mcp-server/sendblue_api.mcpb --clobber
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+          REF_TYPE: ${{ github.ref_type }}
+          REF_NAME: ${{ github.ref_name }}

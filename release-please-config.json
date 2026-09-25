@@ -2,7 +2,7 @@
   "packages": {
     ".": {}
   },
-  "$schema": "https://raw.githubusercontent.com/stainless-api/release-please/main/schemas/config.json",
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "include-v-in-tag": true,
   "include-component-in-tag": false,
   "versioning": "prerelease",
@@ -64,6 +64,7 @@
     "src/version.ts",
     "README.md",
     "packages/mcp-server/yarn.lock",
+    "packages/mcp-server/src/server.ts",
     {
       "type": "json",
       "path": "packages/mcp-server/package.json",

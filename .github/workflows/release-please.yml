@@ -1,0 +1,38 @@
+# Opens and updates the `release: X.Y.Z` PR on every push to main, and tags the
+# GitHub release when that PR is merged.
+#
+# A release created with GITHUB_TOKEN does not trigger `release: published`
+# workflows, so the publish workflow is dispatched explicitly on the new tag.
+name: Release Please
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    name: release-please
+    runs-on: ubuntu-latest
+    if: github.repository == 'sendblue-api/sendblue-ts'
+    steps:
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4.4.1
+        id: release
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - name: Dispatch Publish NPM on the new tag
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        run: gh workflow run publish-npm.yml --repo "$GITHUB_REPOSITORY" --ref "$TAG_NAME" -f tag="$TAG_NAME"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ steps.release.outputs.tag_name }}

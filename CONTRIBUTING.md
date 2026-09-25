@@ -88,12 +88,18 @@ $ yarn fix
 
 ## Publishing and releases
 
-Changes made to this repository via the automated release PR pipeline should publish to npm automatically. If
-the changes aren't made through the automated pipeline, you may want to make releases manually.
+Releases are cut by [release-please](https://github.com/googleapis/release-please) (`.github/workflows/release-please.yml`).
+On every push to `main` it opens or updates a `release: X.Y.Z` PR from the Conventional Commit messages since the last
+release (`feat:` bumps the minor version, `fix:` the patch version). Merging that PR tags `vX.Y.Z`, creates the GitHub
+release, and dispatches [the `Publish NPM` GitHub action](https://www.github.com/sendblue-api/sendblue-ts/actions/workflows/publish-npm.yml)
+on the new tag, which publishes `sendblue` and `sendblue-mcp` to npm and attaches the MCP bundle to the release.
 
 ### Publish with a GitHub workflow
 
-You can release to package managers by using [the `Publish NPM` GitHub action](https://www.github.com/sendblue-api/sendblue-ts/actions/workflows/publish-npm.yml). This requires a setup organization or repository secret to be set up.
+If a publish failed, re-run [the `Publish NPM` GitHub action](https://www.github.com/sendblue-api/sendblue-ts/actions/workflows/publish-npm.yml)
+on the release tag. Leave `path` empty to publish both packages, or set it to `.` or `packages/mcp-server`. Publishing
+uses npm trusted publishing (GitHub OIDC), so no npm token secret is needed, and it is bound to the `publish-npm.yml`
+file name.
 
 ### Publish manually
 
