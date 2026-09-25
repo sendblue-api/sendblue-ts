@@ -14,13 +14,14 @@ This will install all the required dependencies and build output files to `dist/
 
 ## Modifying/Adding code
 
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may
-result in merge conflicts between manual patches and changes from the generator. The generator will never
-modify the contents of the `src/lib/` and `examples/` directories.
+The SDK started as generated code and is now maintained by hand. When the API spec changes, update the types in
+`src/resources/`, the request params in `tests/api-resources/`, `api.md` and the MCP server's bundled docs data
+(`packages/mcp-server/src/local-docs-search.ts`) together, following the existing style: JSDoc taken from the spec
+descriptions, `| null` for nullable fields.
 
 ## Adding and running examples
 
-All files in the `examples/` directory are not modified by the generator and can be freely edited or added to.
+All files in the `examples/` directory can be freely edited or added to.
 
 ```ts
 // add an example to examples/<your-example>.ts
