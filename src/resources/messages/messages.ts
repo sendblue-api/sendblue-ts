@@ -271,6 +271,13 @@ export interface MessageResponse {
   error_code?: number;
 
   /**
+   * Stable identifier of the rule that declined the message, e.g.
+   * `PRE_REPLY_LIMIT_REACHED` or `OPTED_OUT`. Branch on this field. `null` when the
+   * message was not declined by a rule.
+   */
+  error_key?: string | null;
+
+  /**
    * Error message if message failed
    */
   error_message?: string;
@@ -565,6 +572,13 @@ export namespace MessageRetrieveResponse {
     error_detail?: string | null;
 
     /**
+     * Stable identifier of the rule that declined the message, e.g.
+     * `PRE_REPLY_LIMIT_REACHED` or `OPTED_OUT`. Branch on this field. `null` when the
+     * message was not declined by a rule.
+     */
+    error_key?: string | null;
+
+    /**
      * Error message if message failed
      */
     error_message?: string | null;
@@ -808,6 +822,13 @@ export namespace MessageListResponse {
      * Detailed error information
      */
     error_detail?: string | null;
+
+    /**
+     * Stable identifier of the rule that declined the message, e.g.
+     * `PRE_REPLY_LIMIT_REACHED` or `OPTED_OUT`. Branch on this field. `null` when the
+     * message was not declined by a rule.
+     */
+    error_key?: string | null;
 
     /**
      * Error message if message failed
@@ -1203,6 +1224,12 @@ export interface MessageSendParams {
    * URL of media file to send (images, videos, etc.)
    */
   media_url?: string;
+
+  /**
+   * Let one otherwise-blocked message through to a contact who has not replied yet,
+   * once per contact per line per day. Must be the boolean `true`.
+   */
+  pre_reply_override?: boolean;
 
   /**
    * Optional inline-reply target. This may be combined with `app_card`; the
