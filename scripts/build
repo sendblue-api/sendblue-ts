@@ -50,8 +50,10 @@ then
   ./scripts/build-deno
 fi
 # build all sub-packages
-for dir in packages/*; do
-  if [ -d "$dir" ]; then
+if [ "${SKIP_SUBPACKAGES:-0}" != "1" ]; then
+  for dir in packages/*; do
+    if [ -d "$dir" ]; then
       (cd "$dir" && yarn install --pure-lockfile && yarn build)
-  fi
-done
+    fi
+  done
+fi

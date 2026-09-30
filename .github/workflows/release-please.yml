@@ -1,20 +1,52 @@
 name: Release Please
 on:
   push:
-    branches:
-      - main
-
+    branches: [main]
+  workflow_dispatch: {}
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+  queue: max
 permissions:
   contents: write
   pull-requests: write
-
+  actions: write
 jobs:
   release-please:
-    if: github.repository == 'sendblue-api/sendblue-ts'
     runs-on: ubuntu-latest
-
+    timeout-minutes: 30
     steps:
+      - uses: actions/create-github-app-token@v3
+        id: app
+        with:
+          app-id: ${{ vars.STLC_APP_ID }}
+          private-key: ${{ secrets.STLC_APP_PRIVATE_KEY }}
+          owner: sendblue-api
+          repositories: sendblue-ts,sb-api-v2
+      # Trusted merger implementation always comes from reviewed source main,
+      # never from the generated release PR that it is deciding whether to merge.
+      - uses: actions/checkout@v4
+        with:
+          repository: sendblue-api/sb-api-v2
+          ref: main
+          token: ${{ steps.app.outputs.token }}
+          persist-credentials: false
+          sparse-checkout: scripts/stlc
+      - name: Synchronize a reviewed custom library change
+        if: github.event_name == 'push' && github.actor != 'sendblue-stlc[bot]'
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: |
+          gh api --method POST repos/sendblue-api/sb-api-v2/dispatches \
+            -f event_type=seal-custom-code
       - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4.4.1
         id: release
         with:
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          token: ${{ steps.app.outputs.token }}
+      - name: Automatically merge a validated recorded candidate
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          # This token cannot bypass the strict main checks. App token can push
+          # generated candidates, but must NOT be used to bypass their merge gate.
+          MERGE_TOKEN: ${{ github.token }}
+        run: python3 scripts/stlc/release.py
