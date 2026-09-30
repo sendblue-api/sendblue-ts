@@ -41,14 +41,14 @@ For clients with a configuration JSON, it might look something like this:
 If you use Cursor, you can install the MCP server by using the button below. You will need to set your environment variables
 in Cursor's `mcp.json`, which can be found in Cursor Settings > Tools & MCP > New MCP Server.
 
-[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=sendblue-mcp&config=eyJuYW1lIjoic2VuZGJsdWUtbWNwIiwidHJhbnNwb3J0IjoiaHR0cCIsInVybCI6Imh0dHBzOi8vc2VuZGJsdWUtYXBpLnN0bG1jcC5jb20iLCJoZWFkZXJzIjp7InNiLWFwaS1rZXktaWQiOiJNeSBBUEkgS2V5Iiwic2ItYXBpLXNlY3JldC1rZXkiOiJNeSBBUEkgU2VjcmV0In19)
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=sendblue-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsInNlbmRibHVlLW1jcCJdLCJlbnYiOnsiU0VOREJMVUVfQVBJX0FQSV9LRVkiOiJNeSBBUEkgS2V5IiwiU0VOREJMVUVfQVBJX0FQSV9TRUNSRVQiOiJNeSBBUEkgU2VjcmV0In19)
 
 ### VS Code
 
 If you use MCP, you can install the MCP server by clicking the link below. You will need to set your environment variables
 in VS Code's `mcp.json`, which can be found via Command Palette > MCP: Open User Configuration.
 
-[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22sendblue-mcp%22%2C%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fsendblue-api.stlmcp.com%22%2C%22headers%22%3A%7B%22sb-api-key-id%22%3A%22My%20API%20Key%22%2C%22sb-api-secret-key%22%3A%22My%20API%20Secret%22%7D%7D)
+[Open VS Code](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22sendblue-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22sendblue-mcp%22%5D%2C%22env%22%3A%7B%22SENDBLUE_API_API_KEY%22%3A%22My%20API%20Key%22%2C%22SENDBLUE_API_API_SECRET%22%3A%22My%20API%20Secret%22%7D%7D)
 
 ### Claude Code
 
@@ -56,7 +56,7 @@ If you use Claude Code, you can install the MCP server by running the command be
 environment variables in Claude Code's `.claude.json`, which can be found in your home directory.
 
 ```
-claude mcp add sendblue_mcp_api --header "sb-api-key-id: My API Key" --header "sb-api-secret-key: My API Secret" --transport http https://sendblue-api.stlmcp.com
+claude mcp add sendblue_mcp_api --env SENDBLUE_API_API_KEY="My API Key" SENDBLUE_API_API_SECRET="My API Secret" -- npx -y sendblue-mcp
 ```
 
 ## Code Mode
@@ -78,16 +78,12 @@ and repeatably.
 
 ### Where code runs
 
-The `--code-execution-mode` flag controls where the code tool runs your agent's code:
+This server runs code locally. Each code tool call is executed in a Deno subprocess on the
+same machine as the MCP server, restricted to reading the server's own files and to making
+network requests to your API host.
 
-- `--code-execution-mode=local` runs each code tool call in a Deno subprocess on the same
-  machine as the MCP server, restricted to reading the server's own files and to making network
-  requests to your API host. Nothing is sent to Stainless. Deno must be installed for this mode
-  to work: install it from https://deno.land, or add it to the MCP server's dependencies with
-  `npm install deno`.
-
-- `--code-execution-mode=stainless-sandbox` sends the code to a Stainless-hosted sandbox to be
-  executed there. This mode is deprecated and is being turned off, so use `local` instead.
+Deno must be installed for the code tool to work. Install it from https://deno.land, or add it
+to the MCP server's dependencies with `npm install deno`.
 
 ## Running remotely
 
