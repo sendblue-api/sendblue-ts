@@ -1264,7 +1264,7 @@ export interface MessageSendParams {
     | 'slam';
 
   /**
-   * Webhook URL for message status updates
+   * Webhook URL for message status updates (test)
    */
   status_callback?: string;
 }
