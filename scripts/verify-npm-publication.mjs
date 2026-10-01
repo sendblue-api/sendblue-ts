@@ -66,7 +66,7 @@ export async function waitForPublication(
   {
     read = readVersion,
     sleep = (ms) => new Promise((done) => setTimeout(done, ms)),
-    attempts = 12,
+    attempts = 60,
     intervalMs = 10_000,
   } = {},
 ) {
