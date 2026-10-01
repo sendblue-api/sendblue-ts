@@ -1,51 +1,94 @@
-# This workflow is triggered when a GitHub release is created.
-# It can also be run manually to re-publish to NPM in case it failed for some reason.
-# You can run this workflow by navigating to https://www.github.com/sendblue-api/sendblue-ts/actions/workflows/publish-npm.yml
 name: Publish NPM
 on:
-  workflow_dispatch:
-    inputs:
-      path:
-        description: The path to run the release in, e.g. '.' or 'packages/mcp-server'
-        required: true
-
   release:
     types: [published]
-
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to verify or recover
+        type: string
+        required: true
+      path:
+        description: Package to recover
+        type: choice
+        options: [all, '.', packages/mcp-server]
+        default: all
+concurrency:
+  group: publish-npm-${{ github.event.release.tag_name || inputs.tag }}
+  cancel-in-progress: false
+  queue: max
+permissions:
+  contents: read
+  id-token: write
 jobs:
-  publish:
-    name: publish
+  library:
+    if: github.event_name == 'release' || inputs.path != 'packages/mcp-server'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+          persist-credentials: false
+      - name: Verify tag checkout
+        env:
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          test -n "$TAG"
+          git check-ref-format "refs/tags/$TAG"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/tags/$TAG^{commit}")"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: corepack enable
+      - run: yarn install --frozen-lockfile
+      - name: Publish or verify library
+        run: bash bin/publish-npm
+      - uses: actions/create-github-app-token@v3
+        id: docs
+        with:
+          app-id: ${{ vars.STLC_APP_ID }}
+          private-key: ${{ secrets.STLC_APP_PRIVATE_KEY }}
+          owner: sendblue-api
+          repositories: sendblue-api-docs
+      - name: Refresh docs after verified publication
+        env:
+          GH_TOKEN: ${{ steps.docs.outputs.token }}
+        run: gh workflow run deploy.yml --repo sendblue-api/sendblue-api-docs --ref main
+
+  mcp:
+    if: github.event_name == 'release' || inputs.path != '.'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write
       id-token: write
-
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Set up Node
-        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+          persist-credentials: false
+      - name: Verify tag checkout
+        env:
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          test -n "$TAG"
+          git check-ref-format "refs/tags/$TAG"
+          test "$(git rev-parse HEAD)" = "$(git rev-parse "refs/tags/$TAG^{commit}")"
+      - uses: actions/setup-node@v4
         with:
           node-version: '24'
-
-      - name: Install dependencies
-        run: |
-          yarn install
-
-      - name: Publish to NPM
-        run: |
-          if [ -n "$INPUT_PATH" ]; then
-            PATHS_RELEASED="[\"$INPUT_PATH\"]"
-          else
-            PATHS_RELEASED='[\".\", \"packages/mcp-server\"]'
-          fi
-          yarn tsn scripts/publish-packages.ts "{ \"paths_released\": \"$PATHS_RELEASED\" }"
+      - run: corepack enable
+      - run: yarn install --frozen-lockfile
+      - name: Build root dependency without bundling the tool package
+        run: SKIP_SUBPACKAGES=1 yarn build
+      - run: yarn install --frozen-lockfile
+        working-directory: packages/mcp-server
+      - name: Publish or verify tool package
+        run: bash ../../bin/publish-npm
+        working-directory: packages/mcp-server
+      - name: Upload tool asset to the exact release
         env:
-          INPUT_PATH: ${{ github.event.inputs.path }}
-
-      - name: Upload MCP Server DXT GitHub release asset
-        run: |
-          gh release upload ${{ github.event.release.tag_name }} \
-            packages/mcp-server/sendblue_api.mcpb
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: gh release upload "$TAG" packages/mcp-server/sendblue_api.mcpb --clobber

@@ -34,6 +34,9 @@ jobs:
       - name: Check types
         run: ./scripts/lint
 
+      - name: Test publication recovery
+        run: node --test scripts/verify-npm-publication.test.mjs
+
   build:
     timeout-minutes: 5
     name: build
