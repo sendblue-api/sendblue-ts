@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.18.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.17.0...v3.18.0) (2026-09-30)
+
+
+### Features
+
+* add error_key and pre_reply_override (sendblue-api/sb-api-v2[#1950](https://github.com/sendblue-api/sendblue-ts/issues/1950)) ([3a80337](https://github.com/sendblue-api/sendblue-ts/commit/3a8033793309d786579375aa8887a4c7a667eba4))
+
 ## 3.17.0 (2026-09-22)
 
 Full Changelog: [v3.16.1...v3.17.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.16.1...v3.17.0)
