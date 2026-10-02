@@ -166,7 +166,7 @@ export interface SendCarouselSendParams {
     | 'slam';
 
   /**
-   * Webhook URL for message status updates
+   * Webhook URL that receives message status updates
    */
   status_callback?: string;
 }
