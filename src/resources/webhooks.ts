@@ -78,6 +78,12 @@ export interface WebhookCreateResponse {
 export namespace WebhookCreateResponse {
   export interface Webhooks {
     /**
+     * Webhooks fired once per call when its recording and transcript are final
+     * (deduplicate on call_id)
+     */
+    call_completed?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
      * Webhooks for call log events
      */
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
@@ -140,6 +146,12 @@ export interface WebhookUpdateResponse {
 export namespace WebhookUpdateResponse {
   export interface Webhooks {
     /**
+     * Webhooks fired once per call when its recording and transcript are final
+     * (deduplicate on call_id)
+     */
+    call_completed?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
+    /**
      * Webhooks for call log events
      */
     call_log?: Array<string | WebhooksAPI.WebhookConfiguration>;
@@ -199,6 +211,12 @@ export interface WebhookListResponse {
 
 export namespace WebhookListResponse {
   export interface Webhooks {
+    /**
+     * Webhooks fired once per call when its recording and transcript are final
+     * (deduplicate on call_id)
+     */
+    call_completed?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
     /**
      * Webhooks for call log events
      */
@@ -278,6 +296,7 @@ export interface WebhookCreateParams {
     | 'outbound'
     | 'typing_indicator'
     | 'call_log'
+    | 'call_completed'
     | 'inbound_call'
     | 'contact_profile'
     | 'contact_created';
@@ -289,6 +308,12 @@ export interface WebhookUpdateParams {
 
 export namespace WebhookUpdateParams {
   export interface Webhooks {
+    /**
+     * Webhooks fired once per call when its recording and transcript are final
+     * (deduplicate on call_id)
+     */
+    call_completed?: Array<string | WebhooksAPI.WebhookConfiguration>;
+
     /**
      * Webhooks for call log events
      */
@@ -357,6 +382,7 @@ export interface WebhookDeleteParams {
     | 'outbound'
     | 'typing_indicator'
     | 'call_log'
+    | 'call_completed'
     | 'inbound_call'
     | 'contact_profile'
     | 'contact_created';

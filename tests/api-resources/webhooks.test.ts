@@ -46,6 +46,7 @@ describe('resource webhooks', () => {
   test.skip('update: required and optional params', async () => {
     const response = await client.webhooks.update({
       webhooks: {
+        call_completed: ['https://example.com'],
         call_log: ['https://example.com'],
         contact_created: ['https://example.com'],
         contact_profile: ['https://example.com'],
