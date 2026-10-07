@@ -26,7 +26,17 @@ export {
   type GroupModifyParams,
   type GroupSendMessageParams,
 } from './groups';
-export { Lines, type LineState, type LineGetStateResponse } from './lines/lines';
+export {
+  Lines,
+  type LineContactStatusResponse,
+  type LineUsageDailyWindow,
+  type LineUsageResponse,
+  type LineUsageSnapshot,
+  type LineUsageWindow,
+  type LineState,
+  type LineGetStateResponse,
+  type LineGetContactStatusParams,
+} from './lines/lines';
 export {
   Location,
   type LocationRetrieveResponse,

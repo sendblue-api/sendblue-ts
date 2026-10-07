@@ -83,7 +83,17 @@ import {
   ContactVerifyResponse,
   Contacts,
 } from './resources/contacts/contacts';
-import { LineGetStateResponse, LineState, Lines } from './resources/lines/lines';
+import {
+  LineContactStatusResponse,
+  LineGetContactStatusParams,
+  LineGetStateResponse,
+  LineState,
+  LineUsageDailyWindow,
+  LineUsageResponse,
+  LineUsageSnapshot,
+  LineUsageWindow,
+  Lines,
+} from './resources/lines/lines';
 import {
   MessageContent,
   MessageGetStatusParams,
@@ -994,7 +1004,17 @@ export declare namespace SendblueAPI {
 
   export { V2 as V2 };
 
-  export { Lines as Lines, type LineState as LineState, type LineGetStateResponse as LineGetStateResponse };
+  export {
+    Lines as Lines,
+    type LineContactStatusResponse as LineContactStatusResponse,
+    type LineUsageDailyWindow as LineUsageDailyWindow,
+    type LineUsageResponse as LineUsageResponse,
+    type LineUsageSnapshot as LineUsageSnapshot,
+    type LineUsageWindow as LineUsageWindow,
+    type LineState as LineState,
+    type LineGetStateResponse as LineGetStateResponse,
+    type LineGetContactStatusParams as LineGetContactStatusParams,
+  };
 
   export {
     RequestLocation as RequestLocation,
