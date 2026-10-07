@@ -1322,6 +1322,67 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     },
   },
   {
+    name: 'get_contact_status',
+    endpoint: '/api/v2/lines/contact-status',
+    httpMethod: 'get',
+    summary: 'Check whether a contact is known on a line',
+    description:
+      'Check whether a contact is known or new on one of your Sendblue lines.\nThe result uses the same message history and inactivity window as new-contact limits.\nIncoming messages and outgoing messages accepted for sending count as activity; rejected requests do not.\nA saved contact is not required, and activity on another line or account does not count.\n\nThe lookup does not reserve capacity. Other sending rules still apply.\nLine-scoped temporary tokens can query only the lines they allow.\nOnly number and sendblue_number query parameters are accepted.\n',
+    stainlessPath: '(resource) lines > (method) get_contact_status',
+    qualified: 'client.lines.getContactStatus',
+    params: ['number: string;', 'sendblue_number: string;'],
+    response:
+      "{ classification: 'known' | 'new' | 'not_applicable' | 'unavailable'; known_contact: boolean; new_contact_lookback_days: number; number: string; sampled_at: string; sendblue_number: string; status: 'OK'; }",
+    markdown:
+      "## get_contact_status\n\n`client.lines.getContactStatus(number: string, sendblue_number: string): { classification: 'known' | 'new' | 'not_applicable' | 'unavailable'; known_contact: boolean; new_contact_lookback_days: number; number: string; sampled_at: string; sendblue_number: string; status: 'OK'; }`\n\n**get** `/api/v2/lines/contact-status`\n\nCheck whether a contact is known or new on one of your Sendblue lines.\nThe result uses the same message history and inactivity window as new-contact limits.\nIncoming messages and outgoing messages accepted for sending count as activity; rejected requests do not.\nA saved contact is not required, and activity on another line or account does not count.\n\nThe lookup does not reserve capacity. Other sending rules still apply.\nLine-scoped temporary tokens can query only the lines they allow.\nOnly number and sendblue_number query parameters are accepted.\n\n\n### Parameters\n\n- `number: string`\n  Contact phone number (E.164 format). Formatted phone numbers are converted to E.164; email addresses are not supported.\n\n- `sendblue_number: string`\n  Your Sendblue phone number (E.164 format). Old lines still available during a replacement grace period are also supported.\n\n### Returns\n\n- `{ classification: 'known' | 'new' | 'not_applicable' | 'unavailable'; known_contact: boolean; new_contact_lookback_days: number; number: string; sampled_at: string; sendblue_number: string; status: 'OK'; }`\n\n  - `classification: 'known' | 'new' | 'not_applicable' | 'unavailable'`\n  - `known_contact: boolean`\n  - `new_contact_lookback_days: number`\n  - `number: string`\n  - `sampled_at: string`\n  - `sendblue_number: string`\n  - `status: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst lineContactStatusResponse = await client.lines.getContactStatus({ number: 'number', sendblue_number: 'sendblue_number' });\n\nconsole.log(lineContactStatusResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.lines.getContactStatus',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst lineContactStatusResponse = await client.lines.getContactStatus({\n  number: 'number',\n  sendblue_number: 'sendblue_number',\n});\n\nconsole.log(lineContactStatusResponse.classification);",
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/lines/contact-status \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+      python: {
+        method: 'lines.get_contact_status',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nline_contact_status_response = client.lines.get_contact_status(\n    number="number",\n    sendblue_number="sendblue_number",\n)\nprint(line_contact_status_response.classification)',
+      },
+    },
+  },
+  {
+    name: 'get_usage',
+    endpoint: '/api/v2/lines/usage',
+    httpMethod: 'get',
+    summary: 'Get live line usage and capacity',
+    description:
+      "Get each line's hourly and daily new-contact usage, limits, remaining capacity,\nand when capacity becomes available again. Includes your account's phone lines\nand old lines still available during a replacement grace period.\nThe hourly window is a rolling 60 minutes; daily usage resets at 3 AM ET (America/New_York).\nCounts apply to new contacts you message, rather than contacts you add to your account.\nDashboard messages and automations use the same limits.\n\nRequests do not reserve capacity. Recovery times assume no further sends.\nThis endpoint accepts no query parameters. Use API credentials or an account-scoped temporary token.\n",
+    stainlessPath: '(resource) lines > (method) get_usage',
+    qualified: 'client.lines.getUsage',
+    response:
+      "{ enabled: boolean; lines: { availableAt: string; daily: line_usage_daily_window; hourly: line_usage_window; phone: string; sampledAt: string; state: 'available' | 'limited' | 'paused' | 'not_applicable' | 'unavailable'; newContactLookbackDays?: number; }[]; status: 'OK'; }",
+    markdown:
+      "## get_usage\n\n`client.lines.getUsage(): { enabled: boolean; lines: line_usage_snapshot[]; status: 'OK'; }`\n\n**get** `/api/v2/lines/usage`\n\nGet each line's hourly and daily new-contact usage, limits, remaining capacity,\nand when capacity becomes available again. Includes your account's phone lines\nand old lines still available during a replacement grace period.\nThe hourly window is a rolling 60 minutes; daily usage resets at 3 AM ET (America/New_York).\nCounts apply to new contacts you message, rather than contacts you add to your account.\nDashboard messages and automations use the same limits.\n\nRequests do not reserve capacity. Recovery times assume no further sends.\nThis endpoint accepts no query parameters. Use API credentials or an account-scoped temporary token.\n\n\n### Returns\n\n- `{ enabled: boolean; lines: { availableAt: string; daily: line_usage_daily_window; hourly: line_usage_window; phone: string; sampledAt: string; state: 'available' | 'limited' | 'paused' | 'not_applicable' | 'unavailable'; newContactLookbackDays?: number; }[]; status: 'OK'; }`\n\n  - `enabled: boolean`\n  - `lines: { availableAt: string; daily: object; hourly: { limit: number; nextSlotAt: string; remaining: number; used: number; }; phone: string; sampledAt: string; state: 'available' | 'limited' | 'paused' | 'not_applicable' | 'unavailable'; newContactLookbackDays?: number; }[]`\n  - `status: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst lineUsageResponse = await client.lines.getUsage();\n\nconsole.log(lineUsageResponse);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.lines.getUsage',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst lineUsageResponse = await client.lines.getUsage();\n\nconsole.log(lineUsageResponse.enabled);",
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/lines/usage \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET"',
+      },
+      python: {
+        method: 'lines.get_usage',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nline_usage_response = client.lines.get_usage()\nprint(line_usage_response.enabled)',
+      },
+    },
+  },
+  {
     name: 'retrieve',
     endpoint: '/api/lines/{sendblue_number}/call-forwarding',
     httpMethod: 'get',

@@ -197,11 +197,23 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/lines/lines.ts">LineContactStatusResponse</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineUsageDailyWindow</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineUsageResponse</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineUsageSnapshot</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineUsageWindow</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineContactStatusResponse</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineUsageResponse</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineUsageSnapshot</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineUsageWindow</a></code>
+- <code><a href="./src/resources/lines/lines.ts">LineUsageDailyWindow</a></code>
 - <code><a href="./src/resources/lines/lines.ts">LineState</a></code>
 - <code><a href="./src/resources/lines/lines.ts">LineGetStateResponse</a></code>
 
 Methods:
 
+- <code title="get /api/v2/lines/contact-status">client.lines.<a href="./src/resources/lines/lines.ts">getContactStatus</a>({ ...params }) -> LineContactStatusResponse</code>
+- <code title="get /api/v2/lines/usage">client.lines.<a href="./src/resources/lines/lines.ts">getUsage</a>() -> LineUsageResponse</code>
 - <code title="get /api/v2/lines/state">client.lines.<a href="./src/resources/lines/lines.ts">getState</a>() -> LineGetStateResponse</code>
 
 ## CallForwarding

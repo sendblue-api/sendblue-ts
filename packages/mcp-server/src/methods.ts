@@ -233,6 +233,18 @@ export const sdkMethods: SdkMethod[] = [
     httpPath: '/api/v2/groups/{group_id}/photo',
   },
   {
+    clientCallName: 'client.lines.getContactStatus',
+    fullyQualifiedName: 'lines.getContactStatus',
+    httpMethod: 'get',
+    httpPath: '/api/v2/lines/contact-status',
+  },
+  {
+    clientCallName: 'client.lines.getUsage',
+    fullyQualifiedName: 'lines.getUsage',
+    httpMethod: 'get',
+    httpPath: '/api/v2/lines/usage',
+  },
+  {
     clientCallName: 'client.lines.getState',
     fullyQualifiedName: 'lines.getState',
     httpMethod: 'get',
