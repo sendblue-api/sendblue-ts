@@ -85,7 +85,7 @@ describe('resource messages', () => {
 
   // Mock server tests are disabled
   test.skip('send: only required params', async () => {
-    const responsePromise = client.messages.send({ from_number: '+19998887777', number: '+19998887777' });
+    const responsePromise = client.messages.send({ number: '+19998887777' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -98,7 +98,6 @@ describe('resource messages', () => {
   // Mock server tests are disabled
   test.skip('send: required and optional params', async () => {
     const response = await client.messages.send({
-      from_number: '+19998887777',
       number: '+19998887777',
       app_card: {
         appName: 'My App',
@@ -121,6 +120,7 @@ describe('resource messages', () => {
         sessionIdentifier: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       },
       content: 'Hello, World!',
+      from_number: '+19998887777',
       media_url: 'https://example.com/image.jpg',
       pre_reply_override: true,
       reply_to: { message_handle: 'msg_parent123', part_index: 0 },

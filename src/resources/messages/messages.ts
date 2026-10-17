@@ -75,12 +75,27 @@ export class Messages extends APIResource {
   }
 
   /**
-   * Send an iMessage, SMS, MMS, or Sendblue App Card to a single recipient
+   * Send an iMessage, SMS, MMS, or Sendblue App Card to a single recipient. For
+   * enabled dedicated and enterprise accounts, omit from_number on ordinary direct
+   * sends to preserve an eligible known-contact line or choose an account-owned
+   * online line with effective hourly and daily new-contact capacity. An account
+   * admin enables Automatic API line selection in the dashboard API settings
+   * (Settings > API keys in the Beta Dashboard, or Settings > API Settings in the
+   * legacy dashboard). Both dashboards control the same account-wide setting, which
+   * defaults off; other accounts keep their existing omitted-sender routing. An
+   * eligible saved conversation line stays selected during temporary outages while
+   * the contact is still known on that line. Expired offline routes are excluded.
+   * Retained replacement lines can only continue contacts known on that same line.
+   * Explicit senders remain authoritative. Other sending rules still apply. The
+   * accepted response identifies the selected line in from_number and
+   * sendblue_number. If all eligible lines reach a new-contact cap, the response is
+   * HTTP 400 with status ERROR, body error_code 429, and error_key
+   * LINE_HOURLY_LIMIT_REACHED or LINE_DAILY_LIMIT_REACHED. HTTP 429 is reserved for
+   * request-rate limiting.
    *
    * @example
    * ```ts
    * const messageResponse = await client.messages.send({
-   *   from_number: '+19998887777',
    *   number: '+19998887777',
    * });
    * ```
@@ -1193,13 +1208,6 @@ export interface MessageGetStatusParams {
 
 export interface MessageSendParams {
   /**
-   * **REQUIRED** - The phone number to send from. Must be one of your registered
-   * Sendblue phone numbers in E.164 format. Without this parameter, the message will
-   * fail to send.
-   */
-  from_number: string;
-
-  /**
    * Recipient phone number in E.164 format
    */
   number: string;
@@ -1219,6 +1227,15 @@ export interface MessageSendParams {
    * Message text content. Optional when `media_url` or `app_card` is provided.
    */
   content?: string;
+
+  /**
+   * Your registered Sendblue phone number in E.164 format. Optional on dedicated and
+   * enterprise ordinary direct sends; automatic capacity-aware selection requires
+   * account enablement. Required on free shared-line plans. Provide a sender for App
+   * Cards and inline replies; those requests do not use automatic capacity-aware
+   * selection.
+   */
+  from_number?: string;
 
   /**
    * URL of media file to send (images, videos, etc.)
