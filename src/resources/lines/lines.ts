@@ -116,6 +116,44 @@ export interface LineContactStatusResponse {
   sendblue_number: string;
 
   status: 'OK';
+
+  pacing?: LineContactStatusResponse.Pacing;
+}
+
+export namespace LineContactStatusResponse {
+  export interface Pacing {
+    activity: 'active' | 'warm' | 'cold' | 'unknown';
+
+    service: 'iMessage';
+
+    version: 1;
+
+    /**
+     * Optional advice for subsequent non-active one-to-one iMessage sends. Never a
+     * retry instruction or an admission decision.
+     */
+    warning?: Pacing.Warning;
+  }
+
+  export namespace Pacing {
+    /**
+     * Optional advice for subsequent non-active one-to-one iMessage sends. Never a
+     * retry instruction or an admission decision.
+     */
+    export interface Warning {
+      expires_at: string;
+
+      reasons: Array<'warm_hourly' | 'cold_hourly' | 'line_hourly' | 'line_burst' | 'new_contacts_daily'>;
+
+      version: 1;
+
+      new_contacts_remaining?: 0;
+
+      new_contacts_reset_at?: string;
+
+      suggested_delay_ms?: number;
+    }
+  }
 }
 
 export interface LineUsageDailyWindow extends LineUsageWindow {
@@ -135,6 +173,122 @@ export interface LineUsageResponse {
   lines: Array<LineUsageSnapshot>;
 
   status: 'OK';
+
+  /**
+   * Independently enrolled advisory pacing. May be present when enforced capacity
+   * enabled is false. Omitted when pacing is disabled.
+   */
+  pacing?: LineUsageResponse.Pacing;
+}
+
+export namespace LineUsageResponse {
+  /**
+   * Independently enrolled advisory pacing. May be present when enforced capacity
+   * enabled is false. Omitted when pacing is disabled.
+   */
+  export interface Pacing {
+    enabled: boolean;
+
+    lines: Array<Pacing.Line>;
+
+    unavailable: boolean;
+
+    version: 1;
+  }
+
+  export namespace Pacing {
+    export interface Line {
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      burst: Line.Burst | null;
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      cold: Line.Cold | null;
+
+      expiresAt: string | null;
+
+      newContacts: Line.NewContacts | null;
+
+      phone: string;
+
+      sampledAt: string | null;
+
+      state: 'ready' | 'unknown' | 'stale' | 'unavailable';
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      total: Line.Total | null;
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      warm: Line.Warm | null;
+    }
+
+    export namespace Line {
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      export interface Burst {
+        limit: number;
+
+        remaining: number;
+
+        suggestedDelayMs: number;
+      }
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      export interface Cold {
+        limit: number;
+
+        remaining: number;
+
+        suggestedDelayMs: number;
+      }
+
+      export interface NewContacts {
+        remaining: number;
+
+        resetsAt: string;
+      }
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      export interface Total {
+        limit: number;
+
+        remaining: number;
+
+        suggestedDelayMs: number;
+      }
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      export interface Warm {
+        limit: number;
+
+        remaining: number;
+
+        suggestedDelayMs: number;
+      }
+    }
+  }
 }
 
 export interface LineUsageSnapshot {
@@ -228,6 +382,44 @@ export interface LineContactStatusResponse {
   sendblue_number: string;
 
   status: 'OK';
+
+  pacing?: LineContactStatusResponse.Pacing;
+}
+
+export namespace LineContactStatusResponse {
+  export interface Pacing {
+    activity: 'active' | 'warm' | 'cold' | 'unknown';
+
+    service: 'iMessage';
+
+    version: 1;
+
+    /**
+     * Optional advice for subsequent non-active one-to-one iMessage sends. Never a
+     * retry instruction or an admission decision.
+     */
+    warning?: Pacing.Warning;
+  }
+
+  export namespace Pacing {
+    /**
+     * Optional advice for subsequent non-active one-to-one iMessage sends. Never a
+     * retry instruction or an admission decision.
+     */
+    export interface Warning {
+      expires_at: string;
+
+      reasons: Array<'warm_hourly' | 'cold_hourly' | 'line_hourly' | 'line_burst' | 'new_contacts_daily'>;
+
+      version: 1;
+
+      new_contacts_remaining?: 0;
+
+      new_contacts_reset_at?: string;
+
+      suggested_delay_ms?: number;
+    }
+  }
 }
 
 export interface LineUsageResponse {
@@ -239,6 +431,122 @@ export interface LineUsageResponse {
   lines: Array<LineUsageSnapshot>;
 
   status: 'OK';
+
+  /**
+   * Independently enrolled advisory pacing. May be present when enforced capacity
+   * enabled is false. Omitted when pacing is disabled.
+   */
+  pacing?: LineUsageResponse.Pacing;
+}
+
+export namespace LineUsageResponse {
+  /**
+   * Independently enrolled advisory pacing. May be present when enforced capacity
+   * enabled is false. Omitted when pacing is disabled.
+   */
+  export interface Pacing {
+    enabled: boolean;
+
+    lines: Array<Pacing.Line>;
+
+    unavailable: boolean;
+
+    version: 1;
+  }
+
+  export namespace Pacing {
+    export interface Line {
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      burst: Line.Burst | null;
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      cold: Line.Cold | null;
+
+      expiresAt: string | null;
+
+      newContacts: Line.NewContacts | null;
+
+      phone: string;
+
+      sampledAt: string | null;
+
+      state: 'ready' | 'unknown' | 'stale' | 'unavailable';
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      total: Line.Total | null;
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      warm: Line.Warm | null;
+    }
+
+    export namespace Line {
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      export interface Burst {
+        limit: number;
+
+        remaining: number;
+
+        suggestedDelayMs: number;
+      }
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      export interface Cold {
+        limit: number;
+
+        remaining: number;
+
+        suggestedDelayMs: number;
+      }
+
+      export interface NewContacts {
+        remaining: number;
+
+        resetsAt: string;
+      }
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      export interface Total {
+        limit: number;
+
+        remaining: number;
+
+        suggestedDelayMs: number;
+      }
+
+      /**
+       * Continuously refilling provisional message budget. Null means observation
+       * coverage is incomplete or stale; it never means zero.
+       */
+      export interface Warm {
+        limit: number;
+
+        remaining: number;
+
+        suggestedDelayMs: number;
+      }
+    }
+  }
 }
 
 export interface LineUsageSnapshot {
