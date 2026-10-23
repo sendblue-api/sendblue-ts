@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.21.0](https://github.com/sendblue-api/sendblue-ts/compare/v3.20.1...v3.21.0) (2026-10-22)
+
+
+### Features
+
+* regenerate clients from source a1f48eed07bc ([9083e26](https://github.com/sendblue-api/sendblue-ts/commit/9083e261ec9a1f3da7e8be6ab1d9dcbaa2fa336e))
+
 ## [3.20.1](https://github.com/sendblue-api/sendblue-ts/compare/v3.20.0...v3.20.1) (2026-10-17)
 
 
