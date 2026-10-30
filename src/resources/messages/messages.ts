@@ -308,6 +308,13 @@ export interface MessageResponse {
   is_outbound?: boolean;
 
   /**
+   * Present as true only for positively identified inbound reaction additions or
+   * removals on supported V2 lines. The handle identifies the reaction event and
+   * cannot be an inline-reply target. Absence does not establish replyability.
+   */
+  is_reaction?: boolean;
+
+  /**
    * Decoded Find My location share coordinates.
    */
   location?: MessageResponse.Location;
@@ -624,6 +631,13 @@ export namespace MessageRetrieveResponse {
     is_outbound?: boolean;
 
     /**
+     * Present as true only for positively identified inbound reaction additions or
+     * removals on supported V2 lines. The handle identifies the reaction event and
+     * cannot be an inline-reply target. Absence does not establish replyability.
+     */
+    is_reaction?: boolean;
+
+    /**
      * Decoded Find My location share coordinates.
      */
     location?: Data.Location;
@@ -874,6 +888,13 @@ export namespace MessageListResponse {
      * Whether this is an outbound message
      */
     is_outbound?: boolean;
+
+    /**
+     * Present as true only for positively identified inbound reaction additions or
+     * removals on supported V2 lines. The handle identifies the reaction event and
+     * cannot be an inline-reply target. Absence does not establish replyability.
+     */
+    is_reaction?: boolean;
 
     /**
      * Decoded Find My location share coordinates.
