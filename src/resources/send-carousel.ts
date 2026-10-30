@@ -129,6 +129,11 @@ export interface SendCarouselSendParams {
   number: string;
 
   /**
+   * Optional caption; formatting ranges index this exact text.
+   */
+  content?: string;
+
+  /**
    * Additional metadata to attach to the message
    */
   metadata?: unknown;
@@ -169,6 +174,17 @@ export interface SendCarouselSendParams {
    * Webhook URL that receives message status updates
    */
   status_callback?: string;
+
+  /**
+   * Optional additive native text styles indexed in UTF-16 code units of the exact
+   * submitted content. Empty array retains the ordinary plain-text path. Ranges
+   * cannot split surrogate pairs. Requires an updated V2 Mac worker/native helper,
+   * macOS 15+ and an existing native iMessage path. Other transports, older
+   * workers/hosts and AppleScript paths remain plain text; routing and fallback
+   * policy do not change. Cannot be combined with app_card. Recipient rendering
+   * requires compatible Apple Messages.
+   */
+  text_formatting?: Array<SendCarouselSendParams.TextFormatting>;
 }
 
 export namespace SendCarouselSendParams {
@@ -190,6 +206,14 @@ export namespace SendCarouselSendParams {
      * Responses omit it when no authoritative immediate-parent part is available.
      */
     part_index?: number;
+  }
+
+  export interface TextFormatting {
+    length: number;
+
+    start: number;
+
+    styles: Array<'bold' | 'italic' | 'underline' | 'strikethrough'>;
   }
 }
 

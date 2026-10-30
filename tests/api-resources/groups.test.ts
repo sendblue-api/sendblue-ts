@@ -60,6 +60,13 @@ describe('resource groups', () => {
       numbers: ['+19998887777', '+18887776666'],
       reply_to: { message_handle: 'msg_parent123', part_index: 0 },
       seat_id: '550e8400-e29b-41d4-a716-446655440000',
+      text_formatting: [
+        {
+          length: 1,
+          start: 0,
+          styles: ['bold'],
+        },
+      ],
     });
   });
 });
