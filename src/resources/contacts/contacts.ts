@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as ContactsAPI from './contacts';
 import * as BulkAPI from './bulk';
 import { Bulk, BulkCreateParams, BulkCreateResponse, BulkDeleteParams, BulkDeleteResponse } from './bulk';
 import { APIPromise } from '../../core/api-promise';
@@ -59,7 +60,12 @@ export class Contacts extends APIResource {
   }
 
   /**
-   * Retrieve a list of contacts for the authenticated account
+   * Retrieve contacts with tags for the authenticated account. Legacy offset
+   * requests return an array. Use pagination=cursor to retrieve the complete list
+   * beyond the offset ceiling, then follow next_cursor until null. Cursor mode sorts
+   * by created_at DESC, contact_id ASC and requires the same account and filters on
+   * every page. It is a live walk, not a snapshot or a tag-update feed. Cursor pages
+   * and phone-batch lookup share a limit of 20 requests per 10 seconds per account.
    *
    * @example
    * ```ts
@@ -95,6 +101,24 @@ export class Contacts extends APIResource {
    */
   count(options?: RequestOptions): APIPromise<ContactCountResponse> {
     return this._client.get('/api/v2/contacts/count', options);
+  }
+
+  /**
+   * Send 1–100 phone numbers, bounded before normalization and deduplication.
+   * Contacts follow normalized input order; tags=[] means an existing untagged
+   * contact, while not_found lists normalized phones with no matching contact. A
+   * failed tag read fails the request. Company scope comes from authentication.
+   * Shares the cursor-page budget of 20 requests per 10 seconds per account.
+   *
+   * @example
+   * ```ts
+   * const response = await client.contacts.lookup({
+   *   phone_numbers: ['x'],
+   * });
+   * ```
+   */
+  lookup(body: ContactLookupParams, options?: RequestOptions): APIPromise<ContactLookupResponse> {
+    return this._client.post('/api/v2/contacts/lookup', { body, ...options });
   }
 
   /**
@@ -209,7 +233,17 @@ export interface ContactUpdateResponse {
   status?: string;
 }
 
-export type ContactListResponse = Array<Contact>;
+export type ContactListResponse = Array<Contact> | ContactListResponse.UnionMember1;
+
+export namespace ContactListResponse {
+  export interface UnionMember1 {
+    contacts: Array<ContactsAPI.Contact>;
+
+    next_cursor: string | null;
+
+    status: 'OK';
+  }
+}
 
 export interface ContactDeleteResponse {
   status?: string;
@@ -220,6 +254,24 @@ export interface ContactCountResponse {
    * Total number of contacts
    */
   count?: number;
+}
+
+export interface ContactLookupResponse {
+  contacts: Array<ContactLookupResponse.Contact>;
+
+  not_found: Array<string>;
+
+  status: 'OK';
+}
+
+export namespace ContactLookupResponse {
+  export interface Contact {
+    contact_id: string;
+
+    phone: string;
+
+    tags: Array<string>;
+  }
 }
 
 export interface ContactOptOutResponse {
@@ -395,29 +447,45 @@ export interface ContactListParams {
   created_at_gte?: string;
 
   /**
-   * Maximum number of contacts to return. Defaults to 100, capped at 1000.
+   * Opaque next_cursor from the previous page. Also selects cursor pagination.
+   */
+  cursor?: string;
+
+  /**
+   * Maximum contacts to return. Default 100; legacy capped at 1000, cursor mode
+   * at 100.
    */
   limit?: number;
 
   /**
-   * Number of contacts to skip. Capped at 10000.
+   * Number of contacts to skip. Above 10000 returns 400. Cannot be combined with
+   * cursor mode.
    */
   offset?: number;
 
   /**
-   * Field to sort by
+   * Field to sort by; cursor mode permits only created_at.
    */
-  order_by?: string;
+  order_by?: 'created_at' | 'firstName' | 'lastName' | 'phone';
 
   /**
-   * Sort direction
+   * Sort direction; cursor mode permits only desc.
    */
   order_direction?: 'asc' | 'desc';
+
+  /**
+   * Select cursor pagination and its response envelope.
+   */
+  pagination?: 'cursor';
 
   /**
    * Filter by phone number
    */
   phone_number?: string;
+}
+
+export interface ContactLookupParams {
+  phone_numbers: Array<string>;
 }
 
 export interface ContactOptOutParams {
@@ -450,11 +518,13 @@ export declare namespace Contacts {
     type ContactListResponse as ContactListResponse,
     type ContactDeleteResponse as ContactDeleteResponse,
     type ContactCountResponse as ContactCountResponse,
+    type ContactLookupResponse as ContactLookupResponse,
     type ContactOptOutResponse as ContactOptOutResponse,
     type ContactVerifyResponse as ContactVerifyResponse,
     type ContactCreateParams as ContactCreateParams,
     type ContactUpdateParams as ContactUpdateParams,
     type ContactListParams as ContactListParams,
+    type ContactLookupParams as ContactLookupParams,
     type ContactOptOutParams as ContactOptOutParams,
     type ContactVerifyParams as ContactVerifyParams,
   };
