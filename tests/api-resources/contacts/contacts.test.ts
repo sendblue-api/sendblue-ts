@@ -85,10 +85,12 @@ describe('resource contacts', () => {
         {
           cid: 'cid',
           created_at_gte: '2019-12-27T18:11:19.117Z',
+          cursor: 'x',
           limit: 1,
           offset: 0,
-          order_by: 'order_by',
+          order_by: 'created_at',
           order_direction: 'asc',
+          pagination: 'cursor',
           phone_number: 'phone_number',
         },
         { path: '/_stainless_unknown_path' },
@@ -118,6 +120,23 @@ describe('resource contacts', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('lookup: only required params', async () => {
+    const responsePromise = client.contacts.lookup({ phone_numbers: ['x'] });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('lookup: required and optional params', async () => {
+    const response = await client.contacts.lookup({ phone_numbers: ['x'] });
   });
 
   // Mock server tests are disabled

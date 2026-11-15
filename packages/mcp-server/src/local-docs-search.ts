@@ -486,22 +486,25 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/v2/contacts',
     httpMethod: 'get',
     summary: 'Get contacts',
-    description: 'Retrieve a list of contacts for the authenticated account',
+    description:
+      'Retrieve contacts with tags for the authenticated account. Legacy offset requests\nreturn an array. Use pagination=cursor to retrieve the complete list beyond the\noffset ceiling, then follow next_cursor until null. Cursor mode sorts by\ncreated_at DESC, contact_id ASC and requires the same account and filters on every page.\nIt is a live walk, not a snapshot or a tag-update feed. Cursor pages and phone-batch\nlookup share a limit of 20 requests per 10 seconds per account.\n',
     stainlessPath: '(resource) contacts > (method) list',
     qualified: 'client.contacts.list',
     params: [
       'cid?: string;',
       'created_at_gte?: string;',
+      'cursor?: string;',
       'limit?: number;',
       'offset?: number;',
-      'order_by?: string;',
+      "order_by?: 'created_at' | 'firstName' | 'lastName' | 'phone';",
       "order_direction?: 'asc' | 'desc';",
+      "pagination?: 'cursor';",
       'phone_number?: string;',
     ],
     response:
-      '{ assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]',
+      "{ assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[] | { contacts: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]; next_cursor: string; status: 'OK'; }",
     markdown:
-      "## list\n\n`client.contacts.list(cid?: string, created_at_gte?: string, limit?: number, offset?: number, order_by?: string, order_direction?: 'asc' | 'desc', phone_number?: string): object[]`\n\n**get** `/api/v2/contacts`\n\nRetrieve a list of contacts for the authenticated account\n\n### Parameters\n\n- `cid?: string`\n  Filter by contact ID\n\n- `created_at_gte?: string`\n  Filter contacts created at or after this ISO 8601 timestamp (event recovery)\n\n- `limit?: number`\n  Maximum number of contacts to return. Defaults to 100, capped at 1000.\n\n- `offset?: number`\n  Number of contacts to skip. Capped at 10000.\n\n- `order_by?: string`\n  Field to sort by\n\n- `order_direction?: 'asc' | 'desc'`\n  Sort direction\n\n- `phone_number?: string`\n  Filter by phone number\n\n### Returns\n\n- `{ assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contacts = await client.contacts.list();\n\nconsole.log(contacts);\n```",
+      "## list\n\n`client.contacts.list(cid?: string, created_at_gte?: string, cursor?: string, limit?: number, offset?: number, order_by?: 'created_at' | 'firstName' | 'lastName' | 'phone', order_direction?: 'asc' | 'desc', pagination?: 'cursor', phone_number?: string): object[] | { contacts: contact[]; next_cursor: string; status: 'OK'; }`\n\n**get** `/api/v2/contacts`\n\nRetrieve contacts with tags for the authenticated account. Legacy offset requests\nreturn an array. Use pagination=cursor to retrieve the complete list beyond the\noffset ceiling, then follow next_cursor until null. Cursor mode sorts by\ncreated_at DESC, contact_id ASC and requires the same account and filters on every page.\nIt is a live walk, not a snapshot or a tag-update feed. Cursor pages and phone-batch\nlookup share a limit of 20 requests per 10 seconds per account.\n\n\n### Parameters\n\n- `cid?: string`\n  Filter by contact ID\n\n- `created_at_gte?: string`\n  Filter contacts created at or after this ISO 8601 timestamp (event recovery)\n\n- `cursor?: string`\n  Opaque next_cursor from the previous page. Also selects cursor pagination.\n\n- `limit?: number`\n  Maximum contacts to return. Default 100; legacy capped at 1000, cursor mode at 100.\n\n- `offset?: number`\n  Number of contacts to skip. Above 10000 returns 400. Cannot be combined with cursor mode.\n\n- `order_by?: 'created_at' | 'firstName' | 'lastName' | 'phone'`\n  Field to sort by; cursor mode permits only created_at.\n\n- `order_direction?: 'asc' | 'desc'`\n  Sort direction; cursor mode permits only desc.\n\n- `pagination?: 'cursor'`\n  Select cursor pagination and its response envelope.\n\n- `phone_number?: string`\n  Filter by phone number\n\n### Returns\n\n- `{ assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[] | { contacts: { assigned_to_email?: string; company_name?: string; contact_id?: string; created_at?: string; custom_variables?: object; first_name?: string; last_name?: string; opt_out?: boolean; phone?: string; sendblue_number?: string; tags?: string[]; verified?: boolean; }[]; next_cursor: string; status: 'OK'; }`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contacts = await client.contacts.list();\n\nconsole.log(contacts);\n```",
     perLanguage: {
       typescript: {
         method: 'client.contacts.list',
@@ -516,6 +519,37 @@ const EMBEDDED_METHODS: MethodEntry[] = [
         method: 'contacts.list',
         example:
           'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\ncontacts = client.contacts.list()\nprint(contacts)',
+      },
+    },
+  },
+  {
+    name: 'lookup',
+    endpoint: '/api/v2/contacts/lookup',
+    httpMethod: 'post',
+    summary: 'Look up contacts and tags by phone batch',
+    description:
+      'Send 1–100 phone numbers, bounded before normalization and deduplication. Contacts\nfollow normalized input order; tags=[] means an existing untagged contact, while\nnot_found lists normalized phones with no matching contact. A failed tag read fails\nthe request. Company scope comes from authentication. Shares the cursor-page budget\nof 20 requests per 10 seconds per account.\n',
+    stainlessPath: '(resource) contacts > (method) lookup',
+    qualified: 'client.contacts.lookup',
+    params: ['phone_numbers: string[];'],
+    response:
+      "{ contacts: { contact_id: string; phone: string; tags: string[]; }[]; not_found: string[]; status: 'OK'; }",
+    markdown:
+      "## lookup\n\n`client.contacts.lookup(phone_numbers: string[]): { contacts: object[]; not_found: string[]; status: 'OK'; }`\n\n**post** `/api/v2/contacts/lookup`\n\nSend 1–100 phone numbers, bounded before normalization and deduplication. Contacts\nfollow normalized input order; tags=[] means an existing untagged contact, while\nnot_found lists normalized phones with no matching contact. A failed tag read fails\nthe request. Company scope comes from authentication. Shares the cursor-page budget\nof 20 requests per 10 seconds per account.\n\n\n### Parameters\n\n- `phone_numbers: string[]`\n\n### Returns\n\n- `{ contacts: { contact_id: string; phone: string; tags: string[]; }[]; not_found: string[]; status: 'OK'; }`\n\n  - `contacts: { contact_id: string; phone: string; tags: string[]; }[]`\n  - `not_found: string[]`\n  - `status: 'OK'`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst response = await client.contacts.lookup({ phone_numbers: ['x'] });\n\nconsole.log(response);\n```",
+    perLanguage: {
+      typescript: {
+        method: 'client.contacts.lookup',
+        example:
+          "import SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI({\n  apiKey: process.env['SENDBLUE_API_API_KEY'], // This is the default and can be omitted\n  apiSecret: process.env['SENDBLUE_API_API_SECRET'], // This is the default and can be omitted\n});\n\nconst response = await client.contacts.lookup({ phone_numbers: ['x'] });\n\nconsole.log(response.contacts);",
+      },
+      http: {
+        example:
+          'curl https://api.sendblue.co/api/v2/contacts/lookup \\\n    -H \'Content-Type: application/json\' \\\n    -H "sb-api-key-id: $SENDBLUE_API_API_KEY" \\\n    -H "sb-api-secret-key: $SENDBLUE_API_API_SECRET" \\\n    -d \'{\n          "phone_numbers": [\n            "x"\n          ]\n        }\'',
+      },
+      python: {
+        method: 'contacts.lookup',
+        example:
+          'import os\nfrom sendblue_api import SendblueAPI\n\nclient = SendblueAPI(\n    api_key=os.environ.get("SENDBLUE_API_API_KEY"),  # This is the default and can be omitted\n    api_secret=os.environ.get("SENDBLUE_API_API_SECRET"),  # This is the default and can be omitted\n)\nresponse = client.contacts.lookup(\n    phone_numbers=["x"],\n)\nprint(response.contacts)',
       },
     },
   },
