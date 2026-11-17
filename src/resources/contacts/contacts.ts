@@ -180,6 +180,12 @@ export interface Contact {
   custom_variables?: { [key: string]: string };
 
   /**
+   * Contact's own email address, included for enabled accounts when available. For
+   * Firestore-backed contacts, reads reflect edits after synchronization.
+   */
+  email?: string;
+
+  /**
    * First name
    */
   first_name?: string;
@@ -390,6 +396,15 @@ export interface ContactUpdateParams {
    * Custom key-value pairs. Merged with existing variables (not replaced).
    */
   custom_variables?: { [key: string]: string };
+
+  /**
+   * Contact's own email address. For enabled accounts, send a valid address to set
+   * it or null to clear it. Omit the field to preserve its value. Blank strings and
+   * unknown.com addresses are invalid. If the feature is disabled or its
+   * availability cannot be checked, the API ignores email and processes other fields
+   * as usual.
+   */
+  email?: string | null;
 
   /**
    * Contact's first name (preferred)
