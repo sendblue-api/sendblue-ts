@@ -32,8 +32,11 @@ export class CallForwarding extends APIResource {
   }
 
   /**
-   * Sets a call forwarding number for a specific dedicated phone line. Inbound calls
-   * to this line will be forwarded to the specified number.
+   * Sets a call forwarding number for a specific dedicated phone line. Saving a
+   * number does not enable forwarding. If the line belongs to a company, the company
+   * must enable **Forward inbound calls** in Calling settings before this number can
+   * be used. Dashboard routing and eligible lead-owner forwarding can take priority.
+   * Standalone API accounts can use a saved line number without a company setting.
    *
    * The `forwarding_number` is normalized to E.164 format before storage. US numbers
    * can be supplied in local format (e.g. `2125550199`).
