@@ -10,7 +10,10 @@ import { RequestOptions } from '../../internal/request-options';
  */
 export class Bulk extends APIResource {
   /**
-   * Create multiple contacts in bulk
+   * Create multiple contacts in bulk. HTTP 200 can contain both successful contacts
+   * and per-item failures. An enabled item's explicitly supplied email requires a
+   * saved-value acknowledgment. A failed item may already have been created or
+   * updated before acknowledgment failed; check its saved state before retrying.
    *
    * @example
    * ```ts
@@ -41,7 +44,32 @@ export class Bulk extends APIResource {
 export interface BulkCreateResponse {
   contacts?: Array<ContactsAPI.Contact>;
 
+  /**
+   * Present when one or more items fail. An acknowledgment failure can follow a
+   * committed creation or update.
+   */
+  failures?: Array<BulkCreateResponse.Failure>;
+
+  /**
+   * Number of successfully acknowledged items returned in contacts.
+   */
+  numberOfContactsCreated?: number;
+
   status?: string;
+}
+
+export namespace BulkCreateResponse {
+  export interface Failure {
+    /**
+     * The submitted contact item that failed.
+     */
+    contact: { [key: string]: unknown };
+
+    /**
+     * Per-item failure message.
+     */
+    error: string;
+  }
 }
 
 export interface BulkDeleteResponse {
@@ -74,6 +102,13 @@ export namespace BulkCreateParams {
      * auto-created.
      */
     custom_variables?: { [key: string]: string };
+
+    /**
+     * Contact's own email address. Enabled accounts may send a valid address or null.
+     * Surrounding whitespace is trimmed. Blank strings and unknown.com addresses are
+     * invalid. Disabled accounts and unavailable feature checks ignore this field.
+     */
+    email?: string | null;
 
     /**
      * Contact's first name

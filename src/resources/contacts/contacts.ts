@@ -15,7 +15,11 @@ export class Contacts extends APIResource {
   bulk: BulkAPI.Bulk = new BulkAPI.Bulk(this._client);
 
   /**
-   * Create a new contact or update existing if update_if_exists is true
+   * Create a new contact or update existing if update_if_exists is true. For enabled
+   * accounts, an explicitly supplied email requires an acknowledgment of the saved
+   * value. Creation or earlier updates may commit before an acknowledgment failure
+   * returns 503. Check the contact before retrying; a 503 does not guarantee that
+   * nothing was saved.
    *
    * @example
    * ```ts
@@ -180,8 +184,10 @@ export interface Contact {
   custom_variables?: { [key: string]: string };
 
   /**
-   * Contact's own email address, included for enabled accounts when available. For
-   * Firestore-backed contacts, reads reflect edits after synchronization.
+   * Contact's saved email address, included for enabled accounts when available in
+   * create, bulk-create, read, and update responses. Cleared and unavailable values
+   * are omitted. For Firestore-backed contacts, subsequent reads reflect edits after
+   * synchronization.
    */
   email?: string;
 
@@ -319,6 +325,14 @@ export interface ContactCreateParams {
    * auto-created.
    */
   custom_variables?: { [key: string]: string };
+
+  /**
+   * Contact's own email address. Enabled accounts may send a valid address or null.
+   * Surrounding whitespace is trimmed. With update_if_exists, null clears the saved
+   * email and omission preserves it. Blank strings and unknown.com addresses are
+   * invalid. Disabled accounts and unavailable feature checks ignore this field.
+   */
+  email?: string | null;
 
   /**
    * Contact's first name (preferred)
