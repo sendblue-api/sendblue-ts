@@ -29,6 +29,7 @@ describe('resource bulk', () => {
           phone: 'phone',
           company_name: 'company_name',
           custom_variables: { 'Lead Source': 'Website' },
+          email: 'jane@example.com',
           first_name: 'first_name',
           last_name: 'last_name',
           tags: ['string'],
