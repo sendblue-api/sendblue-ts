@@ -372,7 +372,11 @@ export interface MessageResponse {
    */
   sender_email?: string | null;
 
-  status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'ERROR';
+  /**
+   * Current message status. GET /api/status can return READ for a read receipt; GET
+   * /api/v2/messages represents a stored outbound read as RECEIVED.
+   */
+  status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'READ' | 'ERROR';
 
   /**
    * Message that originated an iMessage inline-reply thread.
