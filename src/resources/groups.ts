@@ -3,6 +3,7 @@
 import { APIResource } from '../core/resource';
 import * as MessagesAPI from './messages/messages';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 
 /**
@@ -45,10 +46,18 @@ export class Groups extends APIResource {
    * ```
    */
   sendMessage(
-    body: GroupSendMessageParams,
+    params: GroupSendMessageParams,
     options?: RequestOptions,
   ): APIPromise<MessagesAPI.MessageResponse> {
-    return this._client.post('/api/send-group-message', { body, ...options });
+    const { 'Idempotency-Key': idempotencyKey, ...body } = params;
+    return this._client.post('/api/send-group-message', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 }
 
@@ -113,56 +122,65 @@ export interface GroupModifyParams {
 
 export interface GroupSendMessageParams {
   /**
-   * Message text content
+   * Body param: Message text content
    */
   content: string;
 
   /**
-   * **REQUIRED** - The phone number to send from. Must be one of your registered
-   * Sendblue phone numbers in E.164 format. Without this parameter, the message will
-   * fail to send.
+   * Body param: **REQUIRED** - The phone number to send from. Must be one of your
+   * registered Sendblue phone numbers in E.164 format. Without this parameter, the
+   * message will fail to send.
    */
   from_number: string;
 
   /**
-   * Unique identifier for an existing group
+   * Body param: Unique identifier for an existing group
    */
   group_id?: string;
 
   /**
-   * URL of media file to send
+   * Body param: URL of media file to send
    */
   media_url?: string;
 
   /**
-   * Array of recipient phone numbers in E.164 format
+   * Body param: Array of recipient phone numbers in E.164 format
    */
   numbers?: Array<string>;
 
   /**
-   * Immediate parent of an iMessage inline reply. The target must belong to the same
-   * account, conversation, and sending line.
+   * Body param: Immediate parent of an iMessage inline reply. The target must belong
+   * to the same account, conversation, and sending line.
    */
   reply_to?: GroupSendMessageParams.ReplyTo;
 
   /**
-   * Optional. Identifies the seat (user) sending the group message so it is
-   * attributed to a specific rep. Accepts either the seat UUID or the Firebase Auth
-   * subject. When provided, `sender_email` is auto-populated on the message record
-   * and webhook payloads. Returns 400 if the seat is not found.
+   * Body param: Optional. Identifies the seat (user) sending the group message so it
+   * is attributed to a specific rep. Accepts either the seat UUID or the Firebase
+   * Auth subject. When provided, `sender_email` is auto-populated on the message
+   * record and webhook payloads. Returns 400 if the seat is not found.
    */
   seat_id?: string;
 
   /**
-   * Optional additive native text styles indexed in UTF-16 code units of the exact
-   * submitted content. Empty array retains the ordinary plain-text path. Ranges
-   * cannot split surrogate pairs. Requires an updated V2 Mac worker/native helper,
-   * macOS 15+ and an existing native iMessage path. Other transports, older
+   * Body param: Optional additive native text styles indexed in UTF-16 code units of
+   * the exact submitted content. Empty array retains the ordinary plain-text path.
+   * Ranges cannot split surrogate pairs. Requires an updated V2 Mac worker/native
+   * helper, macOS 15+ and an existing native iMessage path. Other transports, older
    * workers/hosts and AppleScript paths remain plain text; routing and fallback
    * policy do not change. Cannot be combined with app_card. Recipient rendering
    * requires compatible Apple Messages.
    */
   text_formatting?: Array<GroupSendMessageParams.TextFormatting>;
+
+  /**
+   * Header param: Account-scoped key for one intentional send. Repeat the same key
+   * and JSON request to recover its original handle. Conflicting reuse returns 409.
+   * Keys remain reserved, including after errors, uncertainty or message deletion.
+   * Do not combine with sb_msg_uuid. A different key admits a distinct message even
+   * with identical content.
+   */
+  'Idempotency-Key'?: string;
 }
 
 export namespace GroupSendMessageParams {

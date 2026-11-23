@@ -67,6 +67,7 @@ describe('resource groups', () => {
           styles: ['bold'],
         },
       ],
+      'Idempotency-Key': 'Idempotency-Key',
     });
   });
 });

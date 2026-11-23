@@ -134,6 +134,7 @@ describe('resource messages', () => {
           styles: ['bold'],
         },
       ],
+      'Idempotency-Key': 'Idempotency-Key',
     });
   });
 
