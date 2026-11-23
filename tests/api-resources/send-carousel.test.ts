@@ -52,6 +52,7 @@ describe('resource sendCarousel', () => {
           styles: ['bold'],
         },
       ],
+      'Idempotency-Key': 'Idempotency-Key',
     });
   });
 });

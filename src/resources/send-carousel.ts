@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { buildHeaders } from '../internal/headers';
 import { RequestOptions } from '../internal/request-options';
 
 /**
@@ -26,8 +27,16 @@ export class SendCarousel extends APIResource {
    * });
    * ```
    */
-  send(body: SendCarouselSendParams, options?: RequestOptions): APIPromise<SendCarouselSendResponse> {
-    return this._client.post('/api/send-carousel', { body, ...options });
+  send(params: SendCarouselSendParams, options?: RequestOptions): APIPromise<SendCarouselSendResponse> {
+    const { 'Idempotency-Key': idempotencyKey, ...body } = params;
+    return this._client.post('/api/send-carousel', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 }
 
@@ -114,46 +123,47 @@ export namespace SendCarouselSendResponse {
 
 export interface SendCarouselSendParams {
   /**
-   * Your Sendblue phone number in E.164 format (must be a V2/Mac Mini line)
+   * Body param: Your Sendblue phone number in E.164 format (must be a V2/Mac Mini
+   * line)
    */
   from_number: string;
 
   /**
-   * Array of HTTPS image URLs to send as a carousel (2-20 items)
+   * Body param: Array of HTTPS image URLs to send as a carousel (2-20 items)
    */
   media_urls: Array<string>;
 
   /**
-   * Recipient phone number in E.164 format
+   * Body param: Recipient phone number in E.164 format
    */
   number: string;
 
   /**
-   * Optional caption; formatting ranges index this exact text.
+   * Body param: Optional caption; formatting ranges index this exact text.
    */
   content?: string;
 
   /**
-   * Additional metadata to attach to the message
+   * Body param: Additional metadata to attach to the message
    */
   metadata?: unknown;
 
   /**
-   * Immediate parent of an iMessage inline reply. The target must belong to the same
-   * account, conversation, and sending line.
+   * Body param: Immediate parent of an iMessage inline reply. The target must belong
+   * to the same account, conversation, and sending line.
    */
   reply_to?: SendCarouselSendParams.ReplyTo;
 
   /**
-   * Optional. Identifies the seat (user) sending the carousel so it is attributed to
-   * a specific rep. Accepts either the seat UUID or the Firebase Auth subject. When
-   * provided, `sender_email` is auto-populated on the message record and webhook
-   * payloads. Returns 400 if the seat is not found.
+   * Body param: Optional. Identifies the seat (user) sending the carousel so it is
+   * attributed to a specific rep. Accepts either the seat UUID or the Firebase Auth
+   * subject. When provided, `sender_email` is auto-populated on the message record
+   * and webhook payloads. Returns 400 if the seat is not found.
    */
   seat_id?: string;
 
   /**
-   * The iMessage expressive message style
+   * Body param: The iMessage expressive message style
    */
   send_style?:
     | 'celebration'
@@ -171,20 +181,29 @@ export interface SendCarouselSendParams {
     | 'slam';
 
   /**
-   * Webhook URL that receives message status updates
+   * Body param: Webhook URL that receives message status updates
    */
   status_callback?: string;
 
   /**
-   * Optional additive native text styles indexed in UTF-16 code units of the exact
-   * submitted content. Empty array retains the ordinary plain-text path. Ranges
-   * cannot split surrogate pairs. Requires an updated V2 Mac worker/native helper,
-   * macOS 15+ and an existing native iMessage path. Other transports, older
+   * Body param: Optional additive native text styles indexed in UTF-16 code units of
+   * the exact submitted content. Empty array retains the ordinary plain-text path.
+   * Ranges cannot split surrogate pairs. Requires an updated V2 Mac worker/native
+   * helper, macOS 15+ and an existing native iMessage path. Other transports, older
    * workers/hosts and AppleScript paths remain plain text; routing and fallback
    * policy do not change. Cannot be combined with app_card. Recipient rendering
    * requires compatible Apple Messages.
    */
   text_formatting?: Array<SendCarouselSendParams.TextFormatting>;
+
+  /**
+   * Header param: Account-scoped key for one intentional send. Repeat the same key
+   * and JSON request to recover its original handle. Conflicting reuse returns 409.
+   * Keys remain reserved, including after errors, uncertainty or message deletion.
+   * Do not combine with sb_msg_uuid. A different key admits a distinct message even
+   * with identical content.
+   */
+  'Idempotency-Key'?: string;
 }
 
 export namespace SendCarouselSendParams {

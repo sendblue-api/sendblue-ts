@@ -4,6 +4,7 @@ import { APIResource } from '../../core/resource';
 import * as V2API from './v2/v2';
 import { V2 } from './v2/v2';
 import { APIPromise } from '../../core/api-promise';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -100,8 +101,16 @@ export class Messages extends APIResource {
    * });
    * ```
    */
-  send(body: MessageSendParams, options?: RequestOptions): APIPromise<MessageResponse> {
-    return this._client.post('/api/send-message', { body, ...options });
+  send(params: MessageSendParams, options?: RequestOptions): APIPromise<MessageResponse> {
+    const { 'Idempotency-Key': idempotencyKey, ...body } = params;
+    return this._client.post('/api/send-message', {
+      body,
+      ...options,
+      headers: buildHeaders([
+        { ...(idempotencyKey != null ? { 'Idempotency-Key': idempotencyKey } : undefined) },
+        options?.headers,
+      ]),
+    });
   }
 
   /**
@@ -172,6 +181,13 @@ export interface MessageContent {
   message_handle?: string;
 
   /**
+   * Processing of the original logical message, separate from an individual attempt.
+   * Unknown means authoritative lifecycle evidence is unavailable. Later native
+   * success can refine an earlier uncertain outcome.
+   */
+  processing?: MessageContent.Processing;
+
+  /**
    * Immediate parent of an iMessage inline reply. The target must belong to the same
    * account, conversation, and sending line.
    */
@@ -218,6 +234,27 @@ export interface MessageContent {
 }
 
 export namespace MessageContent {
+  /**
+   * Processing of the original logical message, separate from an individual attempt.
+   * Unknown means authoritative lifecycle evidence is unavailable. Later native
+   * success can refine an earlier uncertain outcome.
+   */
+  export interface Processing {
+    state: 'processing' | 'succeeded' | 'failed' | 'uncertain' | 'unknown';
+
+    /**
+     * An automatic retry reservation is pending. False alone does not establish
+     * finality or non-delivery.
+     */
+    retry_pending?: boolean;
+
+    /**
+     * Monotonically increasing per message; use this to order lifecycle notifications.
+     * Absent for unknown legacy records.
+     */
+    revision?: number;
+  }
+
   /**
    * Immediate parent of an iMessage inline reply. The target must belong to the same
    * account, conversation, and sending line.
@@ -337,6 +374,13 @@ export interface MessageResponse {
   number?: string;
 
   /**
+   * Processing of the original logical message, separate from an individual attempt.
+   * Unknown means authoritative lifecycle evidence is unavailable. Later native
+   * success can refine an earlier uncertain outcome.
+   */
+  processing?: MessageResponse.Processing;
+
+  /**
    * Immediate parent of an iMessage inline reply. The target must belong to the same
    * account, conversation, and sending line.
    */
@@ -376,7 +420,17 @@ export interface MessageResponse {
    * Current message status. GET /api/status can return READ for a read receipt; GET
    * /api/v2/messages represents a stored outbound read as RECEIVED.
    */
-  status?: 'QUEUED' | 'SENT' | 'DELIVERED' | 'READ' | 'ERROR';
+  status?:
+    | 'REGISTERED'
+    | 'PENDING'
+    | 'DECLINED'
+    | 'QUEUED'
+    | 'ACCEPTED'
+    | 'SENT'
+    | 'DELIVERED'
+    | 'READ'
+    | 'ERROR'
+    | 'UNKNOWN';
 
   /**
    * Message that originated an iMessage inline-reply thread.
@@ -521,6 +575,27 @@ export namespace MessageResponse {
     duration?: string;
 
     timestamp?: string;
+  }
+
+  /**
+   * Processing of the original logical message, separate from an individual attempt.
+   * Unknown means authoritative lifecycle evidence is unavailable. Later native
+   * success can refine an earlier uncertain outcome.
+   */
+  export interface Processing {
+    state: 'processing' | 'succeeded' | 'failed' | 'uncertain' | 'unknown';
+
+    /**
+     * An automatic retry reservation is pending. False alone does not establish
+     * finality or non-delivery.
+     */
+    retry_pending?: boolean;
+
+    /**
+     * Monotonically increasing per message; use this to order lifecycle notifications.
+     * Absent for unknown legacy records.
+     */
+    revision?: number;
   }
 
   /**
@@ -679,6 +754,13 @@ export namespace MessageRetrieveResponse {
     plan?: string;
 
     /**
+     * Processing of the original logical message, separate from an individual attempt.
+     * Unknown means authoritative lifecycle evidence is unavailable. Later native
+     * success can refine an earlier uncertain outcome.
+     */
+    processing?: Data.Processing;
+
+    /**
      * Immediate parent of an iMessage inline reply. The target must belong to the same
      * account, conversation, and sending line.
      */
@@ -777,6 +859,27 @@ export namespace MessageRetrieveResponse {
       duration?: string;
 
       timestamp?: string;
+    }
+
+    /**
+     * Processing of the original logical message, separate from an individual attempt.
+     * Unknown means authoritative lifecycle evidence is unavailable. Later native
+     * success can refine an earlier uncertain outcome.
+     */
+    export interface Processing {
+      state: 'processing' | 'succeeded' | 'failed' | 'uncertain' | 'unknown';
+
+      /**
+       * An automatic retry reservation is pending. False alone does not establish
+       * finality or non-delivery.
+       */
+      retry_pending?: boolean;
+
+      /**
+       * Monotonically increasing per message; use this to order lifecycle notifications.
+       * Absent for unknown legacy records.
+       */
+      revision?: number;
     }
 
     /**
@@ -938,6 +1041,13 @@ export namespace MessageListResponse {
     plan?: string;
 
     /**
+     * Processing of the original logical message, separate from an individual attempt.
+     * Unknown means authoritative lifecycle evidence is unavailable. Later native
+     * success can refine an earlier uncertain outcome.
+     */
+    processing?: Data.Processing;
+
+    /**
      * Immediate parent of an iMessage inline reply. The target must belong to the same
      * account, conversation, and sending line.
      */
@@ -1036,6 +1146,27 @@ export namespace MessageListResponse {
       duration?: string;
 
       timestamp?: string;
+    }
+
+    /**
+     * Processing of the original logical message, separate from an individual attempt.
+     * Unknown means authoritative lifecycle evidence is unavailable. Later native
+     * success can refine an earlier uncertain outcome.
+     */
+    export interface Processing {
+      state: 'processing' | 'succeeded' | 'failed' | 'uncertain' | 'unknown';
+
+      /**
+       * An automatic retry reservation is pending. False alone does not establish
+       * finality or non-delivery.
+       */
+      retry_pending?: boolean;
+
+      /**
+       * Monotonically increasing per message; use this to order lifecycle notifications.
+       * Absent for unknown legacy records.
+       */
+      revision?: number;
     }
 
     /**
@@ -1235,62 +1366,63 @@ export interface MessageGetStatusParams {
 
 export interface MessageSendParams {
   /**
-   * Recipient phone number in E.164 format
+   * Body param: Recipient phone number in E.164 format
    */
   number: string;
 
   /**
-   * A Sendblue App Card rendered with Apple's Messages framework. App Cards require
-   * a V2 Mac line and an iMessage-capable recipient; they never fall back to SMS.
-   * The URL is delivered to the identified Messages extension when the recipient
-   * taps the card. An initial App Card may include `reply_to` to create an inline
-   * reply. Later state changes use the update endpoint, which sends a new Apple
-   * message in the same App Card session. The feature is unavailable on the free
-   * plan.
+   * Body param: A Sendblue App Card rendered with Apple's Messages framework. App
+   * Cards require a V2 Mac line and an iMessage-capable recipient; they never fall
+   * back to SMS. The URL is delivered to the identified Messages extension when the
+   * recipient taps the card. An initial App Card may include `reply_to` to create an
+   * inline reply. Later state changes use the update endpoint, which sends a new
+   * Apple message in the same App Card session. The feature is unavailable on the
+   * free plan.
    */
   app_card?: MessageSendParams.AppCard;
 
   /**
-   * Message text content. Optional when `media_url` or `app_card` is provided.
+   * Body param: Message text content. Optional when `media_url` or `app_card` is
+   * provided.
    */
   content?: string;
 
   /**
-   * Your registered Sendblue phone number in E.164 format. Optional on dedicated and
-   * enterprise ordinary direct sends; automatic capacity-aware selection requires
-   * account enablement. Required on free shared-line plans. Provide a sender for App
-   * Cards and inline replies; those requests do not use automatic capacity-aware
-   * selection.
+   * Body param: Your registered Sendblue phone number in E.164 format. Optional on
+   * dedicated and enterprise ordinary direct sends; automatic capacity-aware
+   * selection requires account enablement. Required on free shared-line plans.
+   * Provide a sender for App Cards and inline replies; those requests do not use
+   * automatic capacity-aware selection.
    */
   from_number?: string;
 
   /**
-   * URL of media file to send (images, videos, etc.)
+   * Body param: URL of media file to send (images, videos, etc.)
    */
   media_url?: string;
 
   /**
-   * Let one otherwise-blocked message through to a contact who has not replied yet,
-   * once per contact per line per day. Must be the boolean `true`.
+   * Body param: Let one otherwise-blocked message through to a contact who has not
+   * replied yet, once per contact per line per day. Must be the boolean `true`.
    */
   pre_reply_override?: boolean;
 
   /**
-   * Optional inline-reply target. This may be combined with `app_card`; the
-   * resulting App Card is sent as an inline reply to the target.
+   * Body param: Optional inline-reply target. This may be combined with `app_card`;
+   * the resulting App Card is sent as an inline reply to the target.
    */
   reply_to?: MessageSendParams.ReplyTo;
 
   /**
-   * Optional. Identifies the seat (user) sending the message so the message is
-   * attributed to a specific rep. Accepts either the seat UUID or the Firebase Auth
-   * subject. When provided, `sender_email` is auto-populated on the message record
-   * and webhook payloads. Returns 400 if the seat is not found.
+   * Body param: Optional. Identifies the seat (user) sending the message so the
+   * message is attributed to a specific rep. Accepts either the seat UUID or the
+   * Firebase Auth subject. When provided, `sender_email` is auto-populated on the
+   * message record and webhook payloads. Returns 400 if the seat is not found.
    */
   seat_id?: string;
 
   /**
-   * The iMessage expressive message style
+   * Body param: The iMessage expressive message style
    */
   send_style?:
     | 'celebration'
@@ -1308,20 +1440,29 @@ export interface MessageSendParams {
     | 'slam';
 
   /**
-   * Webhook URL that receives message status updates
+   * Body param: Webhook URL that receives message status updates
    */
   status_callback?: string;
 
   /**
-   * Optional additive native text styles indexed in UTF-16 code units of the exact
-   * submitted content. Empty array retains the ordinary plain-text path. Ranges
-   * cannot split surrogate pairs. Requires an updated V2 Mac worker/native helper,
-   * macOS 15+ and an existing native iMessage path. Other transports, older
+   * Body param: Optional additive native text styles indexed in UTF-16 code units of
+   * the exact submitted content. Empty array retains the ordinary plain-text path.
+   * Ranges cannot split surrogate pairs. Requires an updated V2 Mac worker/native
+   * helper, macOS 15+ and an existing native iMessage path. Other transports, older
    * workers/hosts and AppleScript paths remain plain text; routing and fallback
    * policy do not change. Cannot be combined with app_card. Recipient rendering
    * requires compatible Apple Messages.
    */
   text_formatting?: Array<MessageSendParams.TextFormatting>;
+
+  /**
+   * Header param: Account-scoped key for one intentional send. Repeat the same key
+   * and JSON request to recover its original handle. Conflicting reuse returns 409.
+   * Keys remain reserved, including after errors, uncertainty or message deletion.
+   * Do not combine with sb_msg_uuid. A different key admits a distinct message even
+   * with identical content.
+   */
+  'Idempotency-Key'?: string;
 }
 
 export namespace MessageSendParams {
