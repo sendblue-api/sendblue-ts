@@ -87,7 +87,8 @@ export class Contacts extends APIResource {
   }
 
   /**
-   * Delete a specific contact
+   * Delete a specific contact. If an earlier delete of the same contact did not
+   * finish, repeating the request removes what is left and returns 200.
    *
    * @example
    * ```ts

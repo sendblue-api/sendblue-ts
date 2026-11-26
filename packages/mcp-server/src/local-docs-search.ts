@@ -742,13 +742,14 @@ const EMBEDDED_METHODS: MethodEntry[] = [
     endpoint: '/api/v2/contacts/{phone_number}',
     httpMethod: 'delete',
     summary: 'Delete a contact',
-    description: 'Delete a specific contact',
+    description:
+      'Delete a specific contact. If an earlier delete of the same contact did not finish, repeating the request removes what is left and returns 200.',
     stainlessPath: '(resource) contacts > (method) delete',
     qualified: 'client.contacts.delete',
     params: ['phone_number: string;'],
     response: '{ status?: string; }',
     markdown:
-      "## delete\n\n`client.contacts.delete(phone_number: string): { status?: string; }`\n\n**delete** `/api/v2/contacts/{phone_number}`\n\nDelete a specific contact\n\n### Parameters\n\n- `phone_number: string`\n\n### Returns\n\n- `{ status?: string; }`\n\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.delete('+1234567890');\n\nconsole.log(contact);\n```",
+      "## delete\n\n`client.contacts.delete(phone_number: string): { status?: string; }`\n\n**delete** `/api/v2/contacts/{phone_number}`\n\nDelete a specific contact. If an earlier delete of the same contact did not finish, repeating the request removes what is left and returns 200.\n\n### Parameters\n\n- `phone_number: string`\n\n### Returns\n\n- `{ status?: string; }`\n\n  - `status?: string`\n\n### Example\n\n```typescript\nimport SendblueAPI from 'sendblue';\n\nconst client = new SendblueAPI();\n\nconst contact = await client.contacts.delete('+1234567890');\n\nconsole.log(contact);\n```",
     perLanguage: {
       typescript: {
         method: 'client.contacts.delete',
